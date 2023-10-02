@@ -27,9 +27,10 @@ const AdminLoginForm = () => {
     const [loading, setLoading] = React.useState(null)
     const dispatch = useDispatch()
     const handleSubmit = (e) => {
-        enqueueSnackbar('OK!', {
-            variant: 'success'
-          });
+      navigate('/admin-dashboard')
+        // enqueueSnackbar('OK!', {
+        //     variant: 'success'
+        //   });
         // setLoading(true)
         e.preventDefault()
         // console.log(formValues)
