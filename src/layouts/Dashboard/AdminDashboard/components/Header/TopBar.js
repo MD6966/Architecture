@@ -3,7 +3,7 @@ import { AppBar, Toolbar, styled, Typography, Stack, Avatar, Box, Menu, MenuItem
 import React, {useState, useRef} from 'react'
 import {bgBlur} from './../../../../../utils/cssStyles'
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import NotificationsPopover from '../../../../../components/NotificationsPopover';
 import SearchIcon from '@mui/icons-material/Search';
@@ -33,6 +33,7 @@ const StyledRoot = styled(AppBar)(({theme})=> ({
 const TopBar = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const location = useLocation()
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const [openNotifications, setOpenNotifications] = useState(false);
@@ -61,7 +62,11 @@ const TopBar = () => {
       <StyledRoot >
         <StyledToolbar>
           <Typography sx={{color:'#000000', fontWeight:800, fontSize:'1.5rem'}}>
-           Dashboard
+           {location.pathname == '/admin/dashboard' ? 'Dashboard' :
+           location.pathname == '/admin/leaderboard' ? 'LeaderBoard' :
+           location.pathname == '/admin/order' ? 'Orders' : 'Dashboard'
+
+           }
           </Typography>
           <Box>
           <FormControl sx={{ m: 1, width:'400px'}} variant="outlined">
