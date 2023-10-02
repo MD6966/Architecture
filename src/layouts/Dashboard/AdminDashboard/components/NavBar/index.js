@@ -1,7 +1,7 @@
 import React,  { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { styled, alpha } from '@mui/material/styles';
-import { Box, Link, Button, Drawer, Typography, Avatar, 
+import { Box, Button, Drawer, Typography, Avatar, 
     List, ListItem,ListItemButton, ListItemIcon,ListItemText } from '@mui/material';
 import Scrollbar from '../../../../../components/scrollbar';
 import useResponsive from '../../../../../components/hooks/useResponsive';
@@ -13,15 +13,9 @@ import TimelineIcon from '@mui/icons-material/Timeline';
 import MessageIcon from '@mui/icons-material/Message';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import PeopleIcon from "@mui/icons-material/People";
-import ReceiptIcon from "@mui/icons-material/Receipt";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { makeStyles } from '@mui/styles';
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import clsx from 'clsx'
-import {navConfig} from './navConfig'
-import NavSection from '../../../../../components/NavSection';
-// import NavSection from '../../../../components/NavSection/NavSection'
 
 const NAV_WIDTH = 280;
 const StyledAccount = styled('div')(({ theme }) => ({
@@ -34,7 +28,7 @@ const StyledAccount = styled('div')(({ theme }) => ({
   const useStyles = makeStyles((theme) => ({
     selected: {
       background: "#474bd1",
-      borderRadius: 10
+      borderRadius: 10,
     },
     icon: {
       marginLeft: "auto",
@@ -48,49 +42,49 @@ const StyledAccount = styled('div')(({ theme }) => ({
           id: 1,
           title: "Dashboard",
           icon: <DashboardIcon />,
-          to: "/admin-dashboard/dashboard",
+          to: "/admin/dashboard",
         },
         {
           id: 2,
           title: "LeaderBoard",
           icon: <LeaderboardIcon />,
-          to: "/admin-dashboard/leaderboard",
+          to: "/admin/leaderboard",
         },
         {
           id: 3,
           title: "Order",
           icon: <ShoppingCartIcon />,
-          to: "/admin/invoices",
+          to: "/admin/order",
         },
         {
           id: 4,
           title: "Products",
           icon: <Inventory2Icon />,
-          to: "/admin/categories",
+          // to: "/admin/categories",
         },
         {
           id: 5,
           title: "Sales Report",
           icon: <TimelineIcon />,
-          to: "/admin/vendors",
+          // to: "/admin/vendors",
         },
         {
           id: 6,
           title: "Messages",
           icon: <MessageIcon />,
-          to: "/admin/users",
+          // to: "/admin/users",
         },
         {
           id: 7,
           title: "Settings",
           icon: <SettingsIcon />,
-          to: "/admin/new-invoices",
+          // to: "/admin/new-invoices",
         },
         {
           id: 8,
           title: "Signout",
           icon: <ExitToAppIcon />,
-          to: "/admin/approved-by-admin",
+          // to: "/admin/approved-by-admin",
         },
       ];
     // const { pathname } = useLocation();
@@ -123,26 +117,13 @@ const StyledAccount = styled('div')(({ theme }) => ({
           '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' },
         }}
       >
-        <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
-          <img src="/assets/images/logo.webp" alt='logo' width='170px' />
-        </Box>
-  
-        <Box sx={{ mb: 5, mx: 2.5 }}>
-          <Link underline="none">
-            <StyledAccount>
-              <Avatar  alt="photoURL" src="" />
-  
-              <Box sx={{ ml: 2 }}>
-                <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                    User Name 
-                </Typography>
-  
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  User
-                </Typography>
-              </Box>
-            </StyledAccount>
-          </Link>
+        <Box sx={{ px: 2.5, py: 3, display: 'inline-flex', }}>
+        <Box sx={{display:'flex'}}>
+                        <img src='/assets/images/log.png' alt="logo" width="55px" />
+                        <Typography variant="h6" component="div" sx={{mt:1.5, fontSize:'1.5rem', fontWeight:'bold'}}>
+                            Architecture
+                        </Typography>
+                        </Box>
         </Box>
         <Box sx={{p:2}}>
         <List component="nav">
@@ -164,6 +145,11 @@ const StyledAccount = styled('div')(({ theme }) => ({
                             onClick={(event) =>
                               handleListItemClick(event, val.id)
                             }
+                            sx={{
+                                "&:hover": {
+                                  borderRadius: "10px",
+                                },
+                              }}
                           >
                             <ListItemIcon
                               sx={{
@@ -187,10 +173,7 @@ const StyledAccount = styled('div')(({ theme }) => ({
                   );
                 })}
               </List>
-        </Box>
-  
-        {/* <NavSection data={navConfig} /> */}
-  
+        </Box>  
         <Box sx={{ flexGrow: 1 }} />
 
         

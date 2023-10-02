@@ -7,7 +7,9 @@ import SignUp from "./views/SignUp";
 import AdminLogin from "./views/Admin/Auth/AdminLogin";
 import ErrorPage from "./components/ErrorBoundary/components/ErrorPage";
 import AdminDashboard from "./layouts/Dashboard/AdminDashboard";
-
+import DashboardAdmin from './views/Admin/AdminDashboard/Dashboard'
+import LeaderBoard from './views/Admin/AdminDashboard/LeaderBoard'
+import Order from './views/Admin/AdminDashboard/Order'
 export default function Router() {
     let element = useRoutes([
         {
@@ -23,10 +25,12 @@ export default function Router() {
         ]
        },
        {
-        path:'admin-dashboard',
+        path:'admin',
         element: <AdminDashboard />,
         children: [
-
+            {path:'dashboard', element:<DashboardAdmin /> },
+            {path:'leaderboard', element: <LeaderBoard />},
+            {path:'order', element: <Order />},
         ]
        },
        {

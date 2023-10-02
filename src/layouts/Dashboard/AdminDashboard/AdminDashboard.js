@@ -2,6 +2,7 @@ import { Drawer, styled } from '@mui/material';
 import React from 'react'
 import TopBar from './components/Header/TopBar';
 import Nav from './components/NavBar';
+import { Outlet } from 'react-router';
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 92;
 const StyledRoot = styled('div')({
@@ -30,6 +31,9 @@ const AdminDashboard = () => {
     <StyledRoot>
       <TopBar  onOpenNav={() => setOpen(true)}  />
       <Nav openNav={open} onCloseNav={() => setOpen(false)} />
+      <Main>
+        <Outlet />
+      </Main>
     </StyledRoot>
   )
 }
