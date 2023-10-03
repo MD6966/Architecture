@@ -7,6 +7,7 @@ import NavBarLinks from './NavBarLinks'
 import Page from '../../components/page/page'
 import Nav from '../../components/AppBar/Header'
 import Footer from './Footer'
+import MainSection from '../../views/Landing/MainSection'
 const useStyles = makeStyles((theme) => ({
     root:{
       minHeight:'70vh'
@@ -20,7 +21,7 @@ const Landing = () => {
     >
       <Nav />
         <Box className={classes.root}>
-      Welcome To the Website 
+          <MainSection />
         </Box>
         <Footer /> 
     </Page>

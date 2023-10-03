@@ -1,5 +1,5 @@
 import { StyledEngineProvider, ThemeProvider } from '@mui/material';
-import './App.css';
+import './index.css';
 import {theme} from './Theme'
 import Test from './Test';
 import Dashboard from './layouts/Dashboard';

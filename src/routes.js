@@ -16,14 +16,14 @@ export default function Router() {
         path:'/',
         element : <Landing /> ,
        },
-       {
-        path:'auth',
-        element: <AuthLayout />, 
-        children : [
-            { path: 'login', element: <Login />},
-            { path: 'register' , element: <SignUp /> }
-        ]
-       },
+       { path: '/login', element: <Login />},
+       { path: '/signup' , element: <SignUp /> },
+    //    {
+    //     path:'auth',
+    //     element: <AuthLayout />, 
+    //     children : [
+    //     ]
+    //    },
        {
         path:'admin',
         element: <AdminDashboard />,
