@@ -87,7 +87,6 @@ const StyledAccount = styled('div')(({ theme }) => ({
           // to: "/admin/approved-by-admin",
         },
       ];
-    // const { pathname } = useLocation();
   const location = useLocation();
   const [dOpen, setDopen] = React.useState(false);
     const [selectedIndex, setSelectedIndex] = React.useState(1);

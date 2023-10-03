@@ -2,14 +2,13 @@ import React from 'react'
 import { Button, styled, TextField, Stack   } from '@mui/material'
 import { RotatingLines } from 'react-loader-spinner'
 import { useNavigate } from 'react-router'
-import { Link } from 'react-router-dom'
 import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux'
 const StyledButton = styled(Button)(({theme})=> ({
     margin:'10px 0',
     background:theme.palette.primary.main,
     '&:hover' : {
-        background:theme.palette.secondary.main
+        background:theme.palette.primary.main
     }
 }))
 const initialValues = {
@@ -59,7 +58,8 @@ const AdminLoginForm = () => {
           animationDuration="0.75"
           width="30"
           visible={loading}/> </StyledButton> :
-          <StyledButton type='submit' sx={{color:'#fff'}}
+          <StyledButton type='submit' sx={{color:'#fff',}}
+          className="bg-pink-600"
           > Login </StyledButton>
         }
         

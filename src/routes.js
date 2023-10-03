@@ -21,14 +21,14 @@ export default function Router() {
             path: '/',
             element: <Landing />,
         },
-        {
-            path: 'auth',
-            element: <AuthLayout />,
-            children: [
-                { path: 'login', element: <Login /> },
-                { path: 'register', element: <SignUp /> }
-            ]
-        },
+        { path: '/login', element: <Login /> },
+        { path: '/signup', element: <SignUp /> },
+        //    {
+        //     path:'auth',
+        //     element: <AuthLayout />, 
+        //     children : [
+        //     ]
+        //    },
         {
             path: 'admin',
             element: <AdminDashboard />,
@@ -36,16 +36,6 @@ export default function Router() {
                 { path: 'dashboard', element: <DashboardAdmin /> },
                 { path: 'leaderboard', element: <LeaderBoard /> },
                 { path: 'order', element: <Order /> },
-            ]
-        },
-        {
-            path: 'user',
-            element: <UserDashboard />,
-            children: [
-                { path: 'dashboard', element: <DashboardUser /> },
-                { path: 'edit', element: <Edit /> },
-                { path: 'event', element: <Event /> },
-                { path: 'trophy', element: <Trophy /> },
             ]
         },
         {

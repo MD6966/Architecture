@@ -1,10 +1,13 @@
 import React from 'react'
 import Page from '../../../../components/page'
-import { Box, Grid } from '@mui/material'
+import { Box, Button, Divider, Grid, Typography } from '@mui/material'
 import { StyledBox, StyledRoot } from './styles'
 import BarChart from './components/BarChart'
 import {data} from './components/Data'
 import LineChartComp from './components/LineChartComp'
+import PieChartComp from './components/PieChartComp'
+import IosShareIcon from '@mui/icons-material/IosShare';
+import Cardcomp from './components/Cardcomp'
 const DashboardAdmin = () => {
   const [userData, setUserData] = React.useState({
     labels:data.map((data)=>data.year),
@@ -15,7 +18,20 @@ const DashboardAdmin = () => {
   const [lineData, setlineData] = React.useState({
     labels:data.map((data)=>data.year),
     datasets:[
-      {label:'Users Gained', data: data.map((data)=> data.userGained), backgroundColor:["#3E51D7"]}
+      {label:'Users Gained', data: data.map((data)=> data.userGained), 
+      borderColor: "#3E51D7", // Color of the line
+      fill: true, // Fill the area below the line
+      backgroundColor: "rgba(62, 81, 215, 0.5)",
+    }
+    ]
+  })
+
+  const [pieData, setPieData] = React.useState({
+    labels:data.map((data)=>data.year),
+    datasets:[
+      {label:'Users Gained', data: data.map((data)=> data.userGained), 
+      backgroundColor: ["#3E51D7", "#FFA500", "#FFFF00", "#008000", "#4B0082", "#FF0000", "#800080", "#00CED1", "#800000", "#8A2BE2", "#B22222", "#32CD32", "#9370DB", "#D2691E"],
+    }
     ]
   })
   return (
@@ -23,14 +39,41 @@ const DashboardAdmin = () => {
     title="Dashboard"
     >
       <StyledRoot>
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Grid item
             xs={12}
             md={8}
             lg={8}
             >
               <StyledBox elevation='none'>
-              This is grid 1
+                <Box sx={{display:'flex', justifyContent:'space-between'}}>
+                  <Box>
+                <Typography sx={{fontWeight:'bold', fontSize:'1.25rem'}}>
+                  Today's Sales
+                </Typography>
+                <Typography sx={{color:'#b7b7b7', ml:0.5}}>
+                  Sales Summary 
+                </Typography>
+                  </Box>
+                  <Button variant='outlined' sx={{height:'35px'}} endIcon={<IosShareIcon />}>
+                    Export 
+                  </Button>
+                </Box>
+                <Divider />
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md={6} lg={3}>
+                    <Cardcomp main ='rgb(248, 220, 224)' av="#FB5581" total="$1k" title="Total sales" />
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={3}>
+                    <Cardcomp main ='#FFF4DE' av="#F1A28C" total="300" title="Total Order" />
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={3}>
+                    <Cardcomp main ='#DEFBE9' av="#45C95A" total="5" title="Product Sold" />
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={3}>
+                    <Cardcomp main ='#F5E7FE' av="#C082FE" total="8" title="New Customer" />
+                  </Grid>
+                </Grid>
               </StyledBox>
             </Grid>
             <Grid item
@@ -39,9 +82,12 @@ const DashboardAdmin = () => {
             lg={4}
             >
                <StyledBox elevation='none' >
-                <Box>
+               <Typography sx={{fontWeight:'bold', fontSize:'1.25rem', mb:2}}>
+                  Visitor's Insights
+                </Typography>
+                {/* <Box> */}
                   <LineChartComp chartData={lineData} />
-                </Box>
+                {/* </Box> */}
               </StyledBox>
             </Grid>
             <Grid
@@ -51,9 +97,11 @@ const DashboardAdmin = () => {
           lg={6}
           >
                  <StyledBox elevation='none'>
-                  <Box>
+                 <Typography sx={{fontWeight:'bold', fontSize:'1.25rem'}}>
+                  Total Revenue
+                </Typography>
                  <BarChart chartData={userData}/>
-                  </Box>
+                  
               </StyledBox>
           </Grid>
           <Grid
@@ -63,7 +111,10 @@ const DashboardAdmin = () => {
           lg={3}
           >
                  <StyledBox elevation='none'>
-              This is grid 4
+                 <Typography sx={{fontWeight:'bold', fontSize:'1.05rem'}}>
+                  Customer Satisfaction
+                </Typography>
+                  <PieChartComp chartData={pieData} />
               </StyledBox>
           </Grid>
           <Grid
