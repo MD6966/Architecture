@@ -43,6 +43,12 @@ const Header = () => {
                         </Button>
                         </Box>
                         <Box sx={{display:'flex'}}>
+                          <Button color='secondary' variant='outlined' sx={{mr:3}}
+                          component={Link}
+                          to="/wiki"
+                          >
+                            Wiki
+                          </Button>
                         <Avatar src="/assets/images/user.png" 
                         sx={{cursor:'pointer'}} 
                         aria-controls={open ? 'basic-menu' : undefined}
