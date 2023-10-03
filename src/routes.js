@@ -22,7 +22,7 @@ export default function Router() {
         },
         { path: '/login', element: <Login /> },
         { path: '/signup', element: <SignUp /> },
-        {path:'/wiki', element:<WikiPage />},
+        { path: '/wiki', element: <WikiPage /> },
         {
             path: 'admin',
             element: <AdminDashboard />,
