@@ -8,7 +8,11 @@ import {
 
 import useResponsive from '../../../../../components/hooks/useResponsive';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import CardMembershipIcon from '@mui/icons-material/CardMembership';
+import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
+import EditIcon from '@mui/icons-material/Edit';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import TimelineIcon from '@mui/icons-material/Timeline';
@@ -52,21 +56,27 @@ export default function UserNav({ openNav, onCloseNav }) {
         {
             id: 2,
             title: "Edit",
-            icon: <LeaderboardIcon />,
+            icon: <EditIcon />,
             to: "/user/edit",
         },
         {
             id: 3,
             title: "Event",
-            icon: <ShoppingCartIcon />,
+            icon: <EventAvailableIcon />,
             to: "/user/event",
         },
         {
             id: 4,
             title: "Trophy",
-            icon: <ShoppingCartIcon />,
+            icon: <MilitaryTechIcon />,
             to: "/user/trophy",
         },
+        {
+            id: 5,
+            title: "Certificate",
+            icon: <CardMembershipIcon />,
+            to: "/user/certificate",
+        }
 
 
     ];
@@ -100,16 +110,21 @@ export default function UserNav({ openNav, onCloseNav }) {
                 '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' },
             }}
         >
-            <Box sx={{}}>
-                <Typography>Overlaw</Typography>
-                <Box>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', p: '20px', alignItems: 'center' }}>
+                <Typography sx={{ fontWeight: 600, fontSize: '18px' }}>Overlaw</Typography>
+                <Box sx={{ display: 'flex', gap: '12px' }}>
                     <Badge badgeContent={4} color="primary">
                         <LocalPostOfficeOutlinedIcon color="action" />
                     </Badge>
                     <Badge badgeContent={4} color="primary">
-                        <LocalPostOfficeOutlinedIcon color="action" />
+                        < NotificationsOutlinedIcon color="action" />
                     </Badge>
                 </Box>
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', my: '30px', justifyContent: 'center', alignItems: 'center' }}>
+                <Avatar alt="Remy Sharp" src="https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
+                <Typography>Hello Moaz</Typography>
+                <Typography>devbymoaz@gmail.com</Typography>
 
             </Box>
 

@@ -11,10 +11,11 @@ import DashboardAdmin from './views/Admin/AdminDashboard/Dashboard';
 import LeaderBoard from './views/Admin/AdminDashboard/LeaderBoard';
 import Order from './views/Admin/AdminDashboard/Order';
 import UserDashboard from "./layouts/Dashboard/UserDashboard";
-import DashboardUser from "./views/User/UserDashboard/Dashboard/component/DashboardUser";
 import Event from "./views/User/UserDashboard/Event & Competition/Event";
 import Edit from "./views/User/UserDashboard/Edit Profile/Edit";
 import Trophy from "./views/User/UserDashboard/Trophy";
+import Certificate from "./views/User/UserDashboard/Certificate Download";
+import DashboardUser from "./views/User/UserDashboard/Dashboard/DashboardUser";
 export default function Router() {
     let element = useRoutes([
         {
@@ -36,6 +37,17 @@ export default function Router() {
                 { path: 'dashboard', element: <DashboardAdmin /> },
                 { path: 'leaderboard', element: <LeaderBoard /> },
                 { path: 'order', element: <Order /> },
+            ]
+        },
+        {
+            path: 'user',
+            element: <UserDashboard />,
+            children: [
+                { path: 'dashboard', element: <DashboardUser /> },
+                { path: 'edit', element: <Edit /> },
+                { path: 'event', element: <Event /> },
+                { path: 'trophy', element: <Trophy /> },
+                { path: 'certificate', element: <Certificate /> },
             ]
         },
         {
