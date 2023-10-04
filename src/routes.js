@@ -14,9 +14,6 @@ import UserDashboard from "./layouts/Dashboard/UserDashboard";
 import Event from "./views/User/UserDashboard/Event & Competition/Event";
 import Edit from "./views/User/UserDashboard/Edit Profile/Edit";
 import Trophy from "./views/User/UserDashboard/Trophy";
-import WikiPage from './views/WikiPage';
-import DashboardUser from "./views/User/UserDashboard/Dashboard/DashboardUser";
-import Certificate from "./views/User/UserDashboard/Certificate Download/Certificate";
 export default function Router() {
     let element = useRoutes([
         {
