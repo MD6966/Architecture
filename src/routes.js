@@ -17,6 +17,10 @@ import Trophy from "./views/User/UserDashboard/Trophy";
 import WikiPage from './views/WikiPage';
 import DashboardUser from "./views/User/UserDashboard/Dashboard/DashboardUser";
 import Certificate from "./views/User/UserDashboard/Certificate";
+
+import Sponsers from "./views/Sponsers";
+import ContactUs from "./views/ContactUs";
+
 export default function Router() {
     let element = useRoutes([
         {
@@ -57,6 +61,14 @@ export default function Router() {
         {
             path: '*',
             element: <ErrorPage />
+        },
+        {
+            path: '/sponser',
+            element: <Sponsers />
+        },
+        {
+            path: '/contactus',
+            element: <ContactUs />
         }
     ]);
     return element;
