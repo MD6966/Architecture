@@ -29,7 +29,7 @@ export default function Router() {
         { path: '/signup', element: <SignUp /> },
         { path: '/wiki', element: <WikiPage /> },
         { path: '/messages', element: <Messages /> },
-        { path: '/competition', element: <CompetetionPage /> },
+        // { path: '/competition', element: <CompetetionPage /> },
 
 
         {
@@ -64,14 +64,14 @@ export default function Router() {
             path: '*',
             element: <ErrorPage />
         },
-        {
-            path: '/sponser',
-            element: <Sponsers />
-        },
-        {
-            path: '/contactus',
-            element: <ContactUs />
-        }
+        // {
+        //     path: '/sponser',
+        //     element: <Sponsers />
+        // },
+        // {
+        //     path: '/contactus',
+        //     element: <ContactUs />
+        // }
     ]);
     return element;
 }
