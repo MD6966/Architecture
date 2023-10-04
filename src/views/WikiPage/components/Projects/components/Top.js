@@ -31,7 +31,7 @@ const Top = () => {
       <Box sx={{ display: "flex" }}>
         <Box sx={{ width: "40%",  }} 
         >
-            <img src="/assets/images/img3.jpg" style={{height:"85%", width:'85%',  border: "2px solid #000",}}/>
+            <img src="/assets/images/img3.jpg" alt="img" style={{height:"85%", width:'85%',  border: "2px solid #000",}}/>
         </Box>
         <Box sx={{ width: "60%",}}>
             <Typography
@@ -66,14 +66,14 @@ const Top = () => {
         }}
             >
                 <Box sx={{display:'flex'}}>
-                    <img src="/assets/images/img1.webp" style={{width:'100px'}}/>
-                    <img src="/assets/images/img2.webp" style={{width:'60px'}}/>
-                    <img src="/assets/images/img1.webp" style={{width:'100px'}}/>
-                    <img src="/assets/images/img2.webp" style={{width:'60px'}}/>
-                    <img src="/assets/images/img1.webp" style={{width:'100px'}}/>
-                    <img src="/assets/images/img2.webp" style={{width:'60px'}}/>
-                    <img src="/assets/images/img1.webp" style={{width:'100px'}}/>
-                    <img src="/assets/images/img2.webp" style={{width:'60px'}}/>
+                    <img src="/assets/images/img1.webp" alt="img" style={{width:'100px'}}/>
+                    <img src="/assets/images/img2.webp" alt="img" style={{width:'60px'}}/>
+                    <img src="/assets/images/img1.webp" alt="img" style={{width:'100px'}}/>
+                    <img src="/assets/images/img2.webp" alt="img" style={{width:'60px'}}/>
+                    <img src="/assets/images/img1.webp" alt="img" style={{width:'100px'}}/>
+                    <img src="/assets/images/img2.webp" alt="img" style={{width:'60px'}}/>
+                    <img src="/assets/images/img1.webp" alt="img" style={{width:'100px'}}/>
+                    <img src="/assets/images/img2.webp" alt="img" style={{width:'60px'}}/>
             
                 </Box>
             </Box>
