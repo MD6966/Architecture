@@ -87,7 +87,7 @@ const MainSection = () => {
     <div>
         <StyledRoot>
         <ImageList
-      sx={{ width: '100%', height: 800, border:'2px solid black' }}
+      sx={{ width: '100%', height: 800, }}
       variant="quilted"
       cols={4}
       rowHeight={121}

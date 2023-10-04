@@ -1,10 +1,11 @@
-import { AppBar, Avatar, Box, IconButton, TextField, Toolbar, Typography, Button } from '@mui/material';
+import { AppBar, Avatar, Box, IconButton, TextField, Toolbar, Typography, Button, Badge, Tooltip } from '@mui/material';
 import { useTheme } from '@emotion/react';
 import SearchIcon from '@mui/icons-material/Search';
 import { ExitToApp } from '@mui/icons-material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import React from 'react';
+import ChatIcon from '@mui/icons-material/Chat';
 // import MainSection from '../MainSection/MainSection';
 import { Link } from 'react-router-dom';
 const Header = () => {
@@ -49,6 +50,16 @@ const Header = () => {
                           >
                             Wiki
                           </Button>
+                          <IconButton sx={{mr:2}}
+                          component={Link}
+                          to="/messages"
+                          >
+                            <Badge badgeContent={13} color='custom' >
+                              <Tooltip title="Messages">
+                              < ChatIcon sx={{color:'#fff', fontSize:'30px'}} />
+                              </Tooltip>
+                            </Badge>
+                          </IconButton>
                         <Avatar src="/assets/images/user.png" 
                         sx={{cursor:'pointer'}} 
                         aria-controls={open ? 'basic-menu' : undefined}
