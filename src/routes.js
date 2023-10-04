@@ -17,10 +17,6 @@ import Trophy from "./views/User/UserDashboard/Trophy";
 import WikiPage from './views/WikiPage';
 import DashboardUser from "./views/User/UserDashboard/Dashboard/DashboardUser";
 import Certificate from "./views/User/UserDashboard/Certificate";
-
-import Sponsers from "./views/Sponsers";
-import ContactUs from "./views/ContactUs";
-
 export default function Router() {
     let element = useRoutes([
         {
@@ -30,6 +26,8 @@ export default function Router() {
         { path: '/login', element: <Login /> },
         { path: '/signup', element: <SignUp /> },
         { path: '/wiki', element: <WikiPage /> },
+        { path: '/messages', element: <Messages /> },
+
         {
             path: 'admin',
             element: <AdminDashboard />,
