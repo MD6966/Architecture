@@ -18,7 +18,6 @@ import WikiPage from './views/WikiPage'
 import DashboardUser from './views/User/UserDashboard/Dashboard'
 import Certificate from './views/User/UserDashboard/Certificate'
 import Messages from "./views/Messages";
-import CompetetionPage from "./views/CompetetionPage";
 
 export default function Router() {
     let element = useRoutes([
@@ -64,6 +63,14 @@ export default function Router() {
         {
             path: '*',
             element: <ErrorPage />
+        },
+        {
+            path: '/sponser',
+            element: <Sponsers />
+        },
+        {
+            path: '/contactus',
+            element: <ContactUs />
         }
     ]);
     return element;

@@ -48,8 +48,8 @@ const DashboardUser = () => {
                             <Grid container spacing={6}>
                                 <Grid item lg={3}>
                                     <StyledBox sx={{ height: '25vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                                        <MessageIcon sx={{ fontSize: 48, backgroundColor: '#ee05fa', color: 'white', padding: '8px', borderRadius: '7px' }} />
-                                        <Typography sx={{ fontWeight: 'bold', color: 'gray' }}>Total Comments</Typography>
+                                        <MessageIcon sx={{ fontSize: 48, backgroundColor: '#ee05fa', color: 'white', padding: '8px', borderRadius: '7px', top: 43, position: 'absolute' }} />
+                                        <Typography sx={{ mt: '30px', fontWeight: 'bold', color: 'gray' }}>Total Comments</Typography>
                                         <Typography sx={{ fontSize: '2rem', fontWeight: 'bold' }}>155</Typography>
                                         <Typography sx={{ color: '#ee05fa', fontWeight: 'bold' }}>Growth rate: 20%</Typography>
                                     </StyledBox>
@@ -58,8 +58,8 @@ const DashboardUser = () => {
                                 <Grid item lg={3}>
 
                                     <StyledBox sx={{ height: '25vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                                        <VisibilityIcon sx={{ fontSize: 48, backgroundColor: '#05fa22', color: 'white', padding: '8px', borderRadius: '7px' }} />
-                                        <Typography sx={{ fontWeight: 'bold', color: 'gray' }}>Total Video's View</Typography>
+                                        <VisibilityIcon sx={{ fontSize: 48, backgroundColor: '#05fa22', color: 'white', padding: '8px', borderRadius: '7px', top: 43, position: 'absolute' }} />
+                                        <Typography sx={{ mt: '30px', fontWeight: 'bold', color: 'gray' }}>Total Video's View</Typography>
                                         <Typography sx={{ fontSize: '2rem', fontWeight: 'bold' }}>660</Typography>
                                         <Typography sx={{ color: '#05fa22', fontWeight: 'bold' }}>Growth rate: 30%</Typography>
                                     </StyledBox>
@@ -68,8 +68,8 @@ const DashboardUser = () => {
                                 <Grid item lg={3}>
 
                                     <StyledBox sx={{ height: '25vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                                        <FavoriteIcon sx={{ fontSize: 48, backgroundColor: '#fcb900', color: 'red', padding: '8px', borderRadius: '7px' }} />
-                                        <Typography sx={{ fontWeight: 'bold', color: 'gray' }}>Total likes</Typography>
+                                        <FavoriteIcon sx={{ fontSize: 48, backgroundColor: '#fcb900', color: 'red', padding: '8px', borderRadius: '7px', top: 43, position: 'absolute' }} />
+                                        <Typography sx={{ mt: '30px', fontWeight: 'bold', color: 'gray' }}>Total likes</Typography>
                                         <Typography sx={{ fontSize: '2rem', fontWeight: 'bold' }}>100</Typography>
                                         <Typography sx={{ color: '#fcb900', fontWeight: 'bold' }}>Growth rate: 40%</Typography>
                                     </StyledBox>
@@ -79,10 +79,10 @@ const DashboardUser = () => {
 
                                     <StyledBox sx={{ height: '25vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                                         <VisibilityIcon sx={{
-                                            fontSize: 48, backgroundColor: '#474acc',  // You can adjust this color code
-                                            color: 'white', padding: '8px', borderRadius: '7px'
+                                            fontSize: 48, backgroundColor: '#474acc',
+                                            color: 'white', padding: '8px', borderRadius: '7px', top: 43, position: 'absolute'
                                         }} />
-                                        <Typography sx={{ fontWeight: 'bold', color: 'gray' }}>Total Project Views</Typography>
+                                        <Typography sx={{ mt: '30px', fontWeight: 'bold', color: 'gray' }}>Total Project Views</Typography>
                                         <Typography sx={{ fontSize: '2rem', fontWeight: 'bold' }}>305</Typography>
                                         <Typography sx={{ color: '#474acc', fontWeight: 'bold' }}>Growth rate: 50%</Typography>
                                     </StyledBox>
