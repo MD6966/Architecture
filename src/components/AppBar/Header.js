@@ -50,6 +50,12 @@ const Header = () => {
                           >
                             Wiki
                           </Button>
+                           <Button color='secondary' variant='contained' sx={{mr:3}}
+                          component={Link}
+                          to="/competition"
+                          >
+                            Comp
+                          </Button>
                           <IconButton sx={{mr:2}}
                           component={Link}
                           to="/messages"

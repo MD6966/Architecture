@@ -49,7 +49,7 @@ const Texts = ({isSent, val}) => {
             mb: 2,
             p: 2,
             borderRadius: 7,
-            background: isSent ? '#e2e2e2' : '#002448',
+            background: isSent ? '#e2e2e2' : '#3E3A57',
             maxWidth: '450px',
             minWidth:'350px',
             overflowWrap: 'break-word', 

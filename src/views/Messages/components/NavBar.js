@@ -7,7 +7,8 @@ const NavBar = () => {
     <div>
       <AppBar position='static' sx={{background:theme.palette.secondary.main}}>
         <Toolbar>
-                <Avatar sx={{height:'30px', width:'30px', background:'#e2e2e2'}} src="/assets/images/user.png" />
+                <Avatar sx={{height:'30px', width:'30px', background:'#e2e2e2'}} 
+                src="/assets/images/user.png" />
             <Typography sx={{ml:2}}>
                 Mudasser Anayat
             </Typography>
