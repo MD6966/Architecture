@@ -1,64 +1,6 @@
-// import React, { useState, useEffect } from 'react';
-// import { Card, CardContent, CardMedia, Typography, Grid } from '@mui/material';
-
-// const imageDescriptions = [
-//   {
-//     imageSrc: 'https://via.placeholder.com/200',
-//     description: 'Description for Image 1',
-//   },
-//   {
-//     imageSrc: 'https://via.placeholder.com/300',
-//     description: 'Description for Image 2',
-//   },
-//   {
-//     imageSrc: 'https://via.placeholder.com/400',
-//     description: 'Description for Image 3',
-//   },
-// ];
-
-// const Sponser = () => {
-//   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-//   // Function to change the image and description
-//   const changeImageAndDescription = () => {
-//     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageDescriptions.length);
-//   };
-
-//   useEffect(() => {
-//     // Automatically change the image and description every 3 seconds
-//     const interval = setInterval(changeImageAndDescription, 3000);
-
-//     return () => {
-//       // Clear the interval when the component unmounts
-//       clearInterval(interval);
-//     };
-//   }, []);
-
-//   return (
-//     <Grid container justifyContent="center">
-//       <Grid item xs={12} sm={6}>
-//         <Card>
-//           <CardMedia
-//             component="img"
-//             alt="Image"
-//             src={imageDescriptions[currentImageIndex].imageSrc}
-//             sx={{ objectFit: 'cover', height: '200px', width: '200px' }}
-//           />
-//           <CardContent>
-//             <Typography variant="body2" color="textSecondary">
-//               {imageDescriptions[currentImageIndex].description}
-//             </Typography>
-//           </CardContent>
-//         </Card>
-//       </Grid>
-//     </Grid>
-//   );
-// };
-
-// export default Sponser;
 import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography, styled } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useNavigation } from 'react-router';
+import { useLocation, useNavigate, } from 'react-router';
 const ImageData = [
   {
     imageSrc: 'https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',

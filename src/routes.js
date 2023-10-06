@@ -18,7 +18,10 @@ import WikiPage from './views/WikiPage'
 import DashboardUser from './views/User/UserDashboard/Dashboard'
 import Certificate from './views/User/UserDashboard/Certificate'
 import Messages from "./views/Messages";
-
+import CompetetionPage from "./views/CompetetionPage/CompetetionPage";
+import Sponsers from './views/Sponsers'
+import ContactUs from './views/ContactUs'
+import EventsPage from "./views/EventsPage";
 export default function Router() {
     let element = useRoutes([
         {
@@ -29,7 +32,9 @@ export default function Router() {
         { path: '/signup', element: <SignUp /> },
         { path: '/wiki', element: <WikiPage /> },
         { path: '/messages', element: <Messages /> },
-        // { path: '/competition', element: <CompetetionPage /> },
+        { path: '/competition', element: <CompetetionPage /> },
+        { path: '/events', element: <EventsPage /> },
+
 
 
         {
@@ -39,6 +44,7 @@ export default function Router() {
                 { path: 'dashboard', element: <DashboardAdmin /> },
                 { path: 'leaderboard', element: <LeaderBoard /> },
                 { path: 'order', element: <Order /> },
+                
             ]
         },
         {
@@ -64,14 +70,14 @@ export default function Router() {
             path: '*',
             element: <ErrorPage />
         },
-        // {
-        //     path: '/sponser',
-        //     element: <Sponsers />
-        // },
-        // {
-        //     path: '/contactus',
-        //     element: <ContactUs />
-        // }
+        {
+            path: '/sponser',
+            element: <Sponsers />
+        },
+        {
+            path: '/contactus',
+            element: <ContactUs />
+        }
     ]);
     return element;
 }

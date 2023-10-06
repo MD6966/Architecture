@@ -43,8 +43,8 @@ const Header = () => {
                             <SearchIcon />
                         </Button>
                         </Box>
-                        <Box sx={{display:'flex'}}>
-                          <Button color='secondary' variant='outlined' sx={{mr:3}}
+                        <Box sx={{display:'flex', alignItems:'center'}}>
+                          <Button color='secondary' variant='outlined' sx={{mr:3,}}
                           component={Link}
                           to="/wiki"
                           >
@@ -55,6 +55,12 @@ const Header = () => {
                           to="/competition"
                           >
                             Comp
+                          </Button>
+                          <Button color='secondary' variant='contained' sx={{mr:3}}
+                          component={Link}
+                          to="/events"
+                          >
+                            Events
                           </Button>
                           <IconButton sx={{mr:2}}
                           component={Link}
