@@ -28,3 +28,4 @@ export const StyledProjectBottom = styled (Box)(({theme})=>({
     height:'50vh',
     marginTop:'2rem'
 }))
+

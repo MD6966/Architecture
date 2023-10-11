@@ -9,9 +9,12 @@ import RateReviewIcon from '@mui/icons-material/RateReview';
 import MessageIcon from '@mui/icons-material/Message';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+// import { useSelector } from 'react-redux';
 
 const DashboardUser = () => {
     // This is for Profile View
+    // const selector = useSelector(state => state.user)
+
     const [profileV, setProfileV] = React.useState({
         labels: datas.map((datas) => datas.ProfileView),
         datasets: [

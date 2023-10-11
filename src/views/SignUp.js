@@ -5,47 +5,100 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 
-import { useTheme } from "@mui/material";
+import { Alert, Snackbar, useTheme } from "@mui/material";
 import { RiGoogleFill } from 'react-icons/ri';
 import { LiaFacebookF } from 'react-icons/lia';
 import { TiSocialLinkedin } from 'react-icons/ti';
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { UserSignUp } from '../store/actions/adminActions';
+import { useState } from 'react';
 
 const steps = [
   '', '', '' // Update step labels
 ];
+const initialValues = {
+  name: '',
+  email: '',
+  password: '',
+  verificationCode:''
+}
 
 export default function HorizontalLinearAlternativeLabelStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [showVerificationCode, setShowVerificationCode] = React.useState(false); // New state variable
+  const [formValues, setFormValues] = React.useState(initialValues)
+  const [snackbarMessage, setSnackbarMessage] = useState('')
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [disableButtons, setDisableButtons] = useState(false);
+  // const [emailError, setEmailError] = useState('')
+  // const [passwordError, setPasswordError] = useState('')
+  const [showVerificationCode, setShowVerificationCode] = React.useState(false); 
+  // const [verificationCodeError, setVerificationCodeError] = useState('');
+
   const theme = useTheme();
   const navigate = useNavigate();
-
+  const handleChange = (e) =>{
+    const{name, value} = e.target;
+    setFormValues({...formValues,[name]:value})
+  }
+  const handleSignupSuccess = ()=>{
+    setSnackbarMessage("You are Registered")
+setSnackbarOpen(true)
+  }
+const handleClose = ()=> {
+setSnackbarOpen(false)
+}
   const handleStepClick = (step) => {
     setActiveStep(step);
   };
-
-  const handleNext = () => {
-    setShowVerificationCode(true);
-    setActiveStep((prevStep) => prevStep + 1);
-
-  };
+  const handleParagraphClick = () => {
+    setDisableButtons(true); // Disable buttons when the paragraph is clicked
+  }
+ const handleNext = () => {  
+      setShowVerificationCode(true);
+      setActiveStep((prevStep) => prevStep + 1);
+    
+  }
   const handleBack = () => {
     setActiveStep((prevStep) => prevStep - 1);
 
   };
 
-  // Define a function to handle the submission of the verification code
+  
   const handleVerificationCodeSubmit = () => {
-    // Perform your verification code submission logic here
-    // You can also transition to the next step if needed
+  
     setActiveStep((prevStep) => prevStep + 1);
   };
 
   const handleLoginButtonClick = () => {
-    // Redirect to the login page when the button is clicked
+  
     navigate('/login');
   };
+  const dispatch = useDispatch()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // setShowVerificationCode('')
+    // if (!/^[0-9]{6}$/.test(formValues.verificationCode)) {
+    //   setVerificationCodeError('Verification code must be a 6-digit number');
+    //   return;
+    
+  
+    try {
+      const res = await dispatch(UserSignUp(formValues));
+
+      
+      if (res.status === 200) {
+       
+        handleSignupSuccess()
+        console.log(res, 'sb ok ha');
+      } else {
+        console.log('Response status is not 200');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
 
 
   return (
@@ -59,7 +112,7 @@ export default function HorizontalLinearAlternativeLabelStepper() {
       <div className="min-h-screen flex flex-col items-center justify-center ">
 
         {/* Form */}
-        <form className="flex flex-col gap-1.5 shadow-lg p-8 rounded-lg">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-1.5 shadow-lg p-8 rounded-lg">
           <Box>
             <Stepper className='flex justify-center items-center'
               sx={{
@@ -78,9 +131,9 @@ export default function HorizontalLinearAlternativeLabelStepper() {
                 </Step>
               ))}
             </Stepper>
-            <div>
-              <p>{steps[activeStep]}</p>
-            </div>
+            <div onClick={handleParagraphClick}>
+          <p>{console.log(steps[activeStep])}</p>
+        </div>
             <Box>
               {/* Add Back button logic here */}
             </Box>
@@ -93,53 +146,60 @@ export default function HorizontalLinearAlternativeLabelStepper() {
           {/* Conditionally render form fields based on the step */}
           {activeStep === 0 && (
             <div className="w-72 flex flex-col gap-2">
-              <label htmlFor="email">UserName</label>
-              <input type="text" name="username" className="border rounded-md w-full h-8" />
+              <label htmlFor="email">Name</label>
+              <input type="text" name="name" value={formValues.name} onChange={handleChange} className="border rounded-md w-full h-8" />
             </div>
           )}
 
           {activeStep === 0 && (
             <div className="w-72 flex flex-col gap-2">
               <label htmlFor="email">Email</label>
-              <input type="email" id="email" name="email" className="border rounded-md w-full h-8" />
+              <input type="email" id="email" name="email" value={formValues.email} onChange={handleChange} className="border rounded-md w-full h-8" />
+              {/* {emailError && <span className="text-red-500">{emailError}</span>} */}
             </div>
           )}
 
           {activeStep === 0 && (
             <div className="w-72 flex flex-col gap-2">
               <label htmlFor="email">Password</label>
-              <input type="password" name="password" className="border rounded-md w-full h-8" />
-              <div className='felx justify-center items-center text-sm text-gray-700' >
+              <input type="password" name="password" value={formValues.password} onChange={handleChange} className="border rounded-md w-full h-8" />
+              <div className='flex justify-center items-center text-sm text-gray-700' >
                 Must be 8 or More characters and contain at least 1 number and 1 special character
               </div>
+              {/* {passwordError && <span className="text-red-500">{passwordError}</span>} */}
             </div>
           )}
 
-          {showVerificationCode && activeStep === 1 && (
-            <div className="w-72 flex flex-col gap-2">
-              <label htmlFor="verificationCode">Verification Code</label>
-              <input type="text" id="verificationCode" name="verificationCode" className="border rounded-md w-full h-8" />
-              {/* Add any validation or additional information for this step */}
-            </div>
-          )}
+{showVerificationCode && activeStep === 1 && (
+    <div className="w-72 flex flex-col gap-2">
+      <label htmlFor="verificationCode">Verification Code</label>
+      <input type="text" id="verificationCode" name="verificationCode" value={formValues.verificationCode} onChange={handleChange} className="border rounded-md w-full h-8" />
+      {/* {verificationCodeError && <span className="text-red-500">{verificationCodeError}</span>} */}
+    </div>
+  )}
 
-          {/* Next Button */}
-          <Button
-            variant="contained"
-            className="bg-pink-600"
-            onClick={
-              activeStep === 1
-                ? handleLoginButtonClick // Use handleLoginButtonClick when activeStep is 2
-                : showVerificationCode
-                  ? handleVerificationCodeSubmit
-                  : handleNext
-            }
-            disabled={(activeStep === steps.length - 1) && !showVerificationCode}
-          >
-            Next
-          </Button>
+  <Button
+    variant="contained"
+    className="bg-pink-600"
+    type='submit'
+    onClick={
+      activeStep === steps.length - 1
+      ? () => {
+navigate('/login')
+      }
+      : activeStep === 1
+        ? handleLoginButtonClick
+        : showVerificationCode
+          ? handleVerificationCodeSubmit
+          : handleNext
+  }
+  disabled={disableButtons}
+          
+  >
+    Next
+  </Button>
           <Box>
-            {/* Conditionally render Back button */}
+            
             {activeStep > 0 && (
               <Link
                 className='text-red-600 underline flex justify-center items-center'
@@ -176,6 +236,11 @@ export default function HorizontalLinearAlternativeLabelStepper() {
         </form>
 
       </div>
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+{snackbarMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 }

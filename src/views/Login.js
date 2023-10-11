@@ -1,25 +1,72 @@
-import { Button, Checkbox, FormControlLabel, useTheme } from "@mui/material";
+import { Alert, Button, Checkbox, FormControlLabel, Snackbar, useTheme } from "@mui/material";
 import { RiGoogleFill } from 'react-icons/ri';
 import { LiaFacebookF } from 'react-icons/lia';
 import { LoginSocialFacebook, LoginSocialGoogle } from 'reactjs-social-login';
 import { TiSocialLinkedin } from 'react-icons/ti';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { UserLogin } from "../store/actions/adminActions";
+const initialValue = {
+    email:'',
+    password:'',
+}
 const Login = () => {
+    const [formValues, setFromValues] = useState(initialValue)
+    const handleChange = (e) =>{
+        const {name, value} = e.target
+        setFromValues({...formValues, [name]:value})
+    }
+    const navigate = useNavigate()
+  
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    
+    const handleLoginSuccess = () => {
+       navigate('/user/dashboard')
+      };
+    const dispatch = useDispatch()
+    const handleSubmit = (e)=>{
+        e.preventDefault()
+        setEmailError('')
+        setPasswordError('')
+        if (!/^\S+@\S+\.\S+$/.test(formValues.email)) {
+            setEmailError('Please enter a valid email address');
+            return;
+          }
+          if(formValues.password.length < 8){
+            setPasswordError('password must be greater than the 8 characters')
+            return;
+          }
+        dispatch(UserLogin(formValues)).then((res)=>{
+            if(res.status === 200){
+                console.log(res)
+                if(res.status === 200){
+                    handleLoginSuccess()
+console.log('you are login')
+                }
+            }
+        }).catch((err)=>{
+            console.log(err)
+        })
+    }
 
     const theme = useTheme();
     return (
         <>
             <div className="min-h-screen flex flex-col items-center justify-center ">
                 {/* Form  */}
-                <form className="flex flex-col gap-3 shadow-lg p-6 rounded-lg">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-3 shadow-lg p-6 rounded-lg">
                     <h4 className="mb-4 text-xl">Login</h4>
                     <div className="w-72 flex flex-col gap-2">
                         <label htmlFor="email">Email</label>
-                        <input type="email" id="email" name="email" className="border rounded-md w-full h-8" />
+                        <input type="email" id="email" value={formValues.email} onChange={handleChange} name="email" className="border rounded-md w-full h-8" />
+                        {emailError && <span className="text-red-500">{emailError}</span>}
                     </div>
                     <div className="w-72 flex flex-col gap-2">
                         <label htmlFor="email">Password</label>
-                        <input type="password" name="password" className="border rounded-md w-full h-8" />
+                        <input type="password" value={formValues.password} onChange={handleChange} name="password" className="border rounded-md w-full h-8" />
+                        {passwordError && <span className="text-red-500">{passwordError}</span>}
                     </div>
 
                     <div className="flex items-center">
@@ -32,7 +79,7 @@ const Login = () => {
                             },
                         }} />} label="Remember me?" />
                     </div>
-                    <Button variant="contained" className="bg-pink-600" >Submit</Button>
+                    <Button type="submit" variant="contained" className="bg-pink-600" >Submit</Button>
                     <div className="flex justify-end text-gray-500">
                         <h4>Forget Password</h4>
                     </div>
@@ -78,6 +125,19 @@ const Login = () => {
 
 
             </div >
+{/* <Snackbar
+  anchorOrigin={{
+    vertical: 'bottom',
+    horizontal: 'right',
+  }}
+  open={snackbarOpen}
+  autoHideDuration={6000}
+  onClose={handleSnackbarClose}
+>
+  <Alert onClose={handleSnackbarClose} severity="success">
+    {snackbarMessage}
+  </Alert>
+</Snackbar> */}
         </>
     );
 };
