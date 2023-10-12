@@ -31,8 +31,8 @@ const WikiPage = () => {
                     <Box sx={{display: 'flex', justifyContent: 'center', flexGrow:1 }}>
                     <Tabs value={value} onChange={handleChange}>
                         <Tab value={0} label="Shop Drawing" />
-                        <Tab value={1} label="Projects" />
                         <Tab value={2} label="Data" />
+                        <Tab value={1} label="Projects" />
                     </Tabs>
                     </Box>
                 </Toolbar>

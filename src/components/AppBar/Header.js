@@ -6,6 +6,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import React from 'react';
 import ChatIcon from '@mui/icons-material/Chat';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 // import MainSection from '../MainSection/MainSection';
 import { Link } from 'react-router-dom';
 const Header = () => {
@@ -35,7 +36,7 @@ const Header = () => {
                         <TextField placeholder='Search Anything'
                         size='small'
                         sx={{
-                            width:'500px',
+                            width:'350px',
                             background:'#fff'
                         }}
                         />
@@ -56,12 +57,20 @@ const Header = () => {
                           >
                             Comp
                           </Button>
-                          <Button color='secondary' variant='contained' sx={{mr:3}}
+                          <Button color='secondary' variant='contained' sx={{mr:2}}
                           component={Link}
                           to="/events"
                           >
                             Events
                           </Button>
+                          <IconButton sx={{mr:1}}
+                          component={Link}
+                          to="/add-post"
+                          >
+                            <Tooltip title="Add Post">
+                              <AddCircleIcon />
+                            </Tooltip>
+                          </IconButton>
                           <IconButton sx={{mr:2}}
                           component={Link}
                           to="/messages"

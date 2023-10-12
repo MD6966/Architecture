@@ -28,7 +28,7 @@ export const UserLogin = ({email, password}) => async(dispatch)=>{
 
 try {
  
-    const res = await axios.post('https://socialbacked.saeedantechnology.com/api/auth/login', body, {
+    const res = await axios.post(`${process.env.REACT_APP_URL}api/auth/login`, body, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -56,7 +56,7 @@ export const UserSignUp = ({ name, email, password, verificationCode }) => async
       verificationCode,
     };
     try {
-      const res = await axios.post('https://socialbacked.saeedantechnology.com/api/auth/register', body, {
+      const res = await axios.post(`${process.env.REACT_APP_URL}api/auth/register`, body, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -77,8 +77,22 @@ export const UserSignUp = ({ name, email, password, verificationCode }) => async
       console.error('API Error:', error);
     }
   };
-  
-// export const LoginSuccess = (userData)=>({
-//     type: 'LOGIN_SUCCESS',
-//     payload: userData
-// })
+
+  export const verificationCode = ({verificationCode})=> async(dispatch)=>{
+    const body = {
+        verificationCode,
+    };
+    try{
+    const res = await axios.post(`${process.env.REACT_APP_URL}api/auth/otp/verify`, body,{
+    headers: {'Content-Type': 'application/json'}
+    })
+    if(res.status === 200){
+        dispatch({type: "VERIFIED",
+        payload: res.data,})
+    }
+    return res
+    }catch(error){
+    
+    throw error
+    }
+      }

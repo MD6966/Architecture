@@ -1,96 +1,51 @@
-import React, { useState } from 'react';
-import { Container, Typography, TextField, Button, Card, CardContent, Input, Grid, Skeleton } from '@mui/material';
-
+import React from 'react';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { CardData } from './components/CardData';
+import { Grid } from '@mui/material';
 const CreatePinPage = () => {
-  const [pinTitle, setPinTitle] = useState('');
-  const [pinDescription, setPinDescription] = useState('');
-  const [selectedImage, setSelectedImage] = useState(null);
 
-  const handlePinTitleChange = (event) => {
-    setPinTitle(event.target.value);
-  };
-
-  const handlePinDescriptionChange = (event) => {
-    setPinDescription(event.target.value);
-  };
-
-  const handleImageChange = (event) => {
-    // Handle image selection
-    const file = event.target.files[0];
-    setSelectedImage(file);
-  };
-
-  const handleCreatePin = () => {
-    // Handle pin creation logic here (e.g., send data to a server)
-    console.log('Pin Title:', pinTitle);
-    console.log('Pin Description:', pinDescription);
-    console.log('Selected Image:', selectedImage);
-    // Reset the form fields
-    setPinTitle('');
-    setPinDescription('');
-    setSelectedImage(null);
-  };
 
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom>
-        Create Pin
-      </Typography>
-      <Card>
-        <CardContent>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              {selectedImage ? (
-                <img
-                  src={URL.createObjectURL(selectedImage)}
-                  alt="Selected"
-                  style={{ maxWidth: '100%' }}
-                />
-              ) : (
-                <Skeleton
-                variant="regular"
-               style={{maxWidth: '100%', height: '80%'}}
-              />
-              )}
-              <Input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                style={{ marginTop: '16px' }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Title"
-                variant="outlined"
-                fullWidth
-                value={pinTitle}
-                onChange={handlePinTitleChange}
-                margin="normal"
-              />
-              <TextField
-                label="Description"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={4}
-                value={pinDescription}
-                onChange={handlePinDescriptionChange}
-                margin="normal"
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleCreatePin}
-                style={{ marginTop: '16px', backgroundColor:'black' }}
-              >
-                Create Pin
-              </Button>
-            </Grid>
+    <div>
+    <Grid container spacing={2}>
+      {CardData.map((val, ind) => {
+        return (
+          <Grid item xs={12} md={6} lg={3}>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardMedia sx={{ height: 140 }} image={val.image} title={val.title} />
+              <CardContent style={{ height: '100%' }}>
+                <Typography gutterBottom variant="h5" component="div">
+                  {val.title}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  style={{
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 4, 
+                    WebkitBoxOrient: 'vertical',
+                  }}
+                >
+                  {val.desc}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" variant='outlined'>Share</Button>
+                <Button size="small" variant='contained' className='bg-pink-600'>Learn More</Button>
+              </CardActions>
+            </Card>
           </Grid>
-        </CardContent>
-      </Card>
-    </Container>
+        );
+      })}
+    </Grid>
+  </div>
   );
 };
 

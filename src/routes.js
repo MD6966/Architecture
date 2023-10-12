@@ -22,6 +22,7 @@ import CompetetionPage from "./views/CompetetionPage/CompetetionPage";
 import Sponsers from './views/Sponsers'
 import ContactUs from './views/ContactUs'
 import EventsPage from "./views/EventsPage";
+import AddPost from "./views/AddPost";
 export default function Router() {
     let element = useRoutes([
         {
@@ -61,6 +62,10 @@ export default function Router() {
         {
             path: '/home',
             element: <Home />,
+        },
+        {
+            path:'/add-post',
+            element:<AddPost/>
         },
         {
             path: '/admin-login',

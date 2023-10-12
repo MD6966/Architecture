@@ -1,4 +1,4 @@
-import { Box, Typography, styled } from '@mui/material'
+import { Box, Grid, Typography, styled } from '@mui/material'
 import React from 'react'
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -77,6 +77,25 @@ function srcset(image, size, rows = 1, cols = 1) {
       cols: 2,
     },
   ];
+  const imgData = [
+    {src:"/assets/images/img1.webp"},
+    {src:"/assets/images/img2.webp"},
+    {src:"/assets/images/img3.jpg"},
+    {src:"/assets/images/img4.jpg"},
+    {src:"/assets/images/img1.webp"},
+    {src:"/assets/images/img2.webp"},
+    {src:"/assets/images/img3.jpg"},
+    {src:"/assets/images/img4.jpg"},
+    {src:"/assets/images/img1.webp"},
+    {src:"/assets/images/img2.webp"},
+    {src:"/assets/images/img3.jpg"},
+    {src:"/assets/images/img4.jpg"},
+    {src:"/assets/images/img1.webp"},
+    {src:"/assets/images/img2.webp"},
+    {src:"/assets/images/img3.jpg"},
+    {src:"/assets/images/img4.jpg"},
+    
+  ]
 
 const MainSection = () => {
     const navigate = useNavigate()
@@ -86,6 +105,9 @@ const MainSection = () => {
   return (
     <div>
         <StyledRoot>
+          <Typography variant='h4' sx={{mb:3, fontWeight:'bold', textAlign:'center', mt:2}}>
+            Posts Section
+          </Typography>
         <ImageList
       sx={{ width: '100%', height: 800, }}
       variant="quilted"
@@ -106,6 +128,30 @@ const MainSection = () => {
         </ImageListItem>
       ))}
     </ImageList>
+    <Typography variant='h4' sx={{mb:3, fontWeight:'bold', textAlign:'center', mt:2}}>
+            Project Section
+          </Typography>
+          <Grid container spacing={2}>
+                {
+                  imgData.map((val)=> {
+                    return(
+                      <Grid item
+                      xs={6}
+                      sm={6}
+                      md={3}
+                      lg={2}
+                      >
+                      <Box
+                      sx={{height:'200px', width:'280px', border:'1px solid grey', borderRadius:'8px'}} 
+                      component="img"
+                      src={val.src}
+                      />
+
+                      </Grid>
+                    )
+                  })
+                }
+          </Grid>
         </StyledRoot>
     </div>
   )
