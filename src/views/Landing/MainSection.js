@@ -1,8 +1,10 @@
-import { Box, Grid, Typography, styled } from '@mui/material'
+import { Box, Button, Grid, Typography, styled, IconButton, Avatar, MobileStepper } from '@mui/material'
 import React from 'react'
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { Link, useNavigate } from 'react-router-dom';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 const StyledRoot = styled(Box)(({theme})=> ({
     minHeight:'100vh',
     padding:theme.spacing(2),
@@ -77,31 +79,52 @@ function srcset(image, size, rows = 1, cols = 1) {
       cols: 2,
     },
   ];
+  const imgData2 = [
+    {src:"/assets/images/img1.webp"},
+    {src:"/assets/images/img2.webp"},
+    {src:"/assets/images/img3.jpg"},
+    {src:"/assets/images/img4.jpg"},
+    {src:"/assets/images/img1.webp"},
+    {src:"/assets/images/img2.webp"},
+    {src:"/assets/images/img3.jpg"},
+    {src:"/assets/images/img4.jpg"},
+    {src:"/assets/images/img1.webp"},
+    {src:"/assets/images/img2.webp"},
+    {src:"/assets/images/img3.jpg"},
+    {src:"/assets/images/img4.jpg"},
+    {src:"/assets/images/img1.webp"},
+    {src:"/assets/images/img2.webp"},
+    {src:"/assets/images/img3.jpg"},
+    {src:"/assets/images/img4.jpg"},
+  ]
   const imgData = [
-    {src:"/assets/images/img1.webp"},
-    {src:"/assets/images/img2.webp"},
-    {src:"/assets/images/img3.jpg"},
-    {src:"/assets/images/img4.jpg"},
-    {src:"/assets/images/img1.webp"},
-    {src:"/assets/images/img2.webp"},
-    {src:"/assets/images/img3.jpg"},
-    {src:"/assets/images/img4.jpg"},
-    {src:"/assets/images/img1.webp"},
-    {src:"/assets/images/img2.webp"},
-    {src:"/assets/images/img3.jpg"},
-    {src:"/assets/images/img4.jpg"},
-    {src:"/assets/images/img1.webp"},
-    {src:"/assets/images/img2.webp"},
-    {src:"/assets/images/img3.jpg"},
-    {src:"/assets/images/img4.jpg"},
-    
+    "/assets/images/img1.webp",
+    "/assets/images/img2.webp",
+    "/assets/images/img3.jpg",
+    "/assets/images/img4.jpg"
+
   ]
 
 const MainSection = () => {
     const navigate = useNavigate()
+    const [currentImage, setCurrentImage] = React.useState(0);
+
+    const handleNext = () => {
+      setCurrentImage((prevImage) => (prevImage + 1) % imgData.length);
+    };
+  
+    const handlePrev = () => {
+      setCurrentImage((prevImage) =>
+        prevImage === 0 ? imgData.length - 1 : prevImage - 1
+      );
+    };
     const handleClick = () => {
-        // navigate('/posts')
+      // navigate('/single-post')
+  }
+    const handleClickBox = () => {
+        navigate('/single-post')
     }
+    
   return (
     <div>
         <StyledRoot>
@@ -131,27 +154,202 @@ const MainSection = () => {
     <Typography variant='h4' sx={{mb:3, fontWeight:'bold', textAlign:'center', mt:2}}>
             Project Section
           </Typography>
-          <Grid container spacing={2}>
-                {
-                  imgData.map((val)=> {
-                    return(
-                      <Grid item
-                      xs={6}
-                      sm={6}
-                      md={3}
-                      lg={2}
-                      >
-                      <Box
-                      sx={{height:'200px', width:'280px', border:'1px solid grey', borderRadius:'8px'}} 
-                      component="img"
-                      src={val.src}
-                      />
+          <Grid container>
+            <Grid item
+            xs={12}
+            md={6}
+            lg={4}
+            >
+               <Box sx={{px:5}}
+               
+               >
+          <Box position="relative" 
+          sx={{ overflow: 'hidden', mt:2, border: '1px solid black' }}
+           width={300} 
+          height={200}
+          >
+            <div
+            style={{
+              display: 'flex',
+              width: `${imgData.length * 100}%`,
+              height:'100%',
+              transform: `translateX(-${currentImage * (100 / imgData.length)}%)`,
+              transition: 'transform 0.3s ease-in-out',
+            }}
+          >
+            {imgData.map((img, index) => (
+              <img
+                key={index}
+                src={img}
+                alt={`Image ${index}`}
+                style={{ objectFit: 'cover', width: `${100 / imgData.length}%`, height: '100%' }}
+          onClick={handleClickBox}
 
-                      </Grid>
-                    )
-                  })
-                }
+              />
+            ))}
+          </div>
+      <IconButton
+      className="hover-button"
+        style={{ position: 'absolute', top: '50%', left: 0, transform: 'translateY(-50%)',
+      
+      }}
+        onClick={handlePrev}
+        >
+        <Avatar sx={{background:'#fff'}}>
+        <ArrowBackIosNewIcon sx={{color:'#000'}} />
+        </Avatar>
+      </IconButton>
+
+      <IconButton
+      className="hover-button"
+        style={{ position: 'absolute', top: '50%', right: 0, transform: 'translateY(-50%)',}}
+        onClick={handleNext}
+      >
+        <Avatar sx={{background:'#fff'}}>
+        <ArrowForwardIosIcon sx={{color:'#000'}} />
+        </Avatar>
+      </IconButton>
+      <Typography
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }}
+      >
+        Image {currentImage + 1} of {imgData.length}
+      </Typography>
+          </Box>
+          </Box>
+            </Grid>
+            <Grid item
+            xs={12}
+            md={6}
+            lg={4}
+            >
+               <Box sx={{px:5}}
+               >
+          <Box position="relative" 
+          sx={{ overflow: 'hidden', mt:2, border: '1px solid black' }}
+           width={300} 
+          height={200}>
+            <div
+            style={{
+              display: 'flex',
+              width: `${imgData.length * 100}%`,
+              height:'100%',
+              transform: `translateX(-${currentImage * (100 / imgData.length)}%)`,
+              transition: 'transform 0.3s ease-in-out',
+            }}
+          >
+            {imgData.map((img, index) => (
+              <img
+                key={index}
+                src={img}
+                alt={`Image ${index}`}
+                style={{ objectFit: 'cover', width: `${100 / imgData.length}%`, height: '100%' }}
+              />
+            ))}
+          </div>
+      <IconButton
+      className="hover-button"
+        style={{ position: 'absolute', top: '50%', left: 0, transform: 'translateY(-50%)',
+      
+      }}
+        onClick={handlePrev}
+        >
+        <Avatar sx={{background:'#fff'}}>
+        <ArrowBackIosNewIcon sx={{color:'#000'}} />
+        </Avatar>
+      </IconButton>
+
+      <IconButton
+      className="hover-button"
+        style={{ position: 'absolute', top: '50%', right: 0, transform: 'translateY(-50%)',}}
+        onClick={handleNext}
+      >
+        <Avatar sx={{background:'#fff'}}>
+        <ArrowForwardIosIcon sx={{color:'#000'}} />
+        </Avatar>
+      </IconButton>
+      <Typography
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }}
+      >
+        Image {currentImage + 1} of {imgData.length}
+      </Typography>
+          </Box>
+          </Box>
+            </Grid>
+            <Grid item
+            xs={12}
+            md={6}
+            lg={4}
+            >
+               <Box sx={{px:5}}>
+          <Box position="relative" 
+          sx={{ overflow: 'hidden', mt:2, border: '1px solid black' }}
+           width={300} 
+          height={200}>
+            <div
+            style={{
+              display: 'flex',
+              width: `${imgData.length * 100}%`,
+              height:'100%',
+              transform: `translateX(-${currentImage * (100 / imgData.length)}%)`,
+              transition: 'transform 0.3s ease-in-out',
+            }}
+          >
+            {imgData.map((img, index) => (
+              <img
+                key={index}
+                src={img}
+                alt={`Image ${index}`}
+                style={{ objectFit: 'cover', width: `${100 / imgData.length}%`, height: '100%' }}
+              />
+            ))}
+          </div>
+      <IconButton
+      className="hover-button"
+        style={{ position: 'absolute', top: '50%', left: 0, transform: 'translateY(-50%)',
+      
+      }}
+        onClick={handlePrev}
+        >
+        <Avatar sx={{background:'#fff'}}>
+        <ArrowBackIosNewIcon sx={{color:'#000'}} />
+        </Avatar>
+      </IconButton>
+
+      <IconButton
+      className="hover-button"
+        style={{ position: 'absolute', top: '50%', right: 0, transform: 'translateY(-50%)',}}
+        onClick={handleNext}
+      >
+        <Avatar sx={{background:'#fff'}}>
+        <ArrowForwardIosIcon sx={{color:'#000'}} />
+        </Avatar>
+      </IconButton>
+      <Typography
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }}
+      >
+        Image {currentImage + 1} of {imgData.length}
+      </Typography>
+          </Box>
+          </Box>
+            </Grid>
           </Grid>
+         
+
         </StyledRoot>
     </div>
   )

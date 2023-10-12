@@ -23,6 +23,7 @@ import Sponsers from './views/Sponsers'
 import ContactUs from './views/ContactUs'
 import EventsPage from "./views/EventsPage";
 import AddPost from "./views/AddPost";
+import SinglePost from "./views/SinglePost";
 export default function Router() {
     let element = useRoutes([
         {
@@ -78,6 +79,10 @@ export default function Router() {
         {
             path: '/sponser',
             element: <Sponsers />
+        },
+        {
+            path:'/single-post',
+            element: <SinglePost />
         },
         {
             path: '/contactus',

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Typography, TextField, Button, Card, CardContent, Input, Grid, InputAdornment, Divider } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
-import Header from '../../components/AppBar/Header';
+import Page from '../../components/page/page';
 const AddPost = () => {
   const [pinTitle, setPinTitle] = useState('');
   const [pinDescription, setPinDescription] = useState('');
@@ -26,6 +26,7 @@ const AddPost = () => {
     setSelectedImage(null);
   };
   return (
+    <Page title="Create Pin">
     <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
     <Container>
       <Card variant="outlined" style={{ borderRadius: '12px' }}>
@@ -46,7 +47,11 @@ const AddPost = () => {
                     onChange={handleImageChange}
                     style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0, cursor: 'pointer' }}
                   />
-                  <Button variant="contained" color="primary" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                  <Button variant="contained" 
+                  color="primary" 
+                  style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+                 
+                  >
                     Add Picture
                   </Button>
                 </div>
@@ -102,6 +107,7 @@ const AddPost = () => {
       </Card>
     </Container>
   </div>
+  </Page>
 );
 };
 
