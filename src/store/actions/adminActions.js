@@ -96,3 +96,15 @@ export const UserSignUp = ({ name, email, password, verificationCode }) => async
     throw error
     }
       }
+
+      export const getAdminDashboardStats = ()=> async(dispatch)=>{ 
+       try{
+        const res = await api.get(`${process.env.REACT_APP_URL}api/admin/getAdminDashboardCounts`,{
+        headers: {'Content-Type': 'application/json'}
+        })
+        return res
+        }catch(error){
+        
+        throw error
+        }
+          }
