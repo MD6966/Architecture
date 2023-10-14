@@ -24,7 +24,11 @@ import ContactUs from './views/ContactUs'
 import EventsPage from "./views/EventsPage";
 import AddPost from "./views/AddPost";
 import SinglePost from "./views/SinglePost";
+import { useSelector } from "react-redux";
+import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
 export default function Router() {
+    const isAuthenticatedAdmin = useSelector((state)=>state.admin.isAuthenticatedAdmin)
+    const isAuthenticatedUser = useSelector((state)=>state.admin.isAuthenticatedUser)
     let element = useRoutes([
         {
             path: '/',
@@ -38,26 +42,37 @@ export default function Router() {
         { path: '/events', element: <EventsPage /> },
 
 
-
         {
-            path: 'admin',
-            element: <AdminDashboard />,
-            children: [
-                { path: 'dashboard', element: <DashboardAdmin /> },
-                { path: 'leaderboard', element: <LeaderBoard /> },
-                { path: 'order', element: <Order /> },
-                
+            element: <ProtectedRoutes isLogged={isAuthenticatedAdmin}/>,
+            children:[
+
+                {
+                    path: 'admin',
+                    element: <AdminDashboard />,
+                    children: [
+                        { path: 'dashboard', element: <DashboardAdmin /> },
+                        { path: 'leaderboard', element: <LeaderBoard /> },
+                        { path: 'order', element: <Order /> },
+                        
+                    ]
+                },
             ]
         },
         {
-            path: 'user',
-            element: <UserDashboard />,
-            children: [
-                { path: 'dashboard', element: <DashboardUser /> },
-                { path: 'edit', element: <Edit /> },
-                { path: 'event', element: <Event /> },
-                { path: 'trophy', element: <Trophy /> },
-                { path: 'certificate', element: <Certificate /> },
+            element: <ProtectedRoutes isLogged={isAuthenticatedUser}/>,
+            children:[
+                
+                {
+                    path: 'user',
+                    element: <UserDashboard />,
+                    children: [
+                        { path: 'dashboard', element: <DashboardUser /> },
+                        { path: 'edit', element: <Edit /> },
+                        { path: 'event', element: <Event /> },
+                        { path: 'trophy', element: <Trophy /> },
+                        { path: 'certificate', element: <Certificate /> },
+                    ]
+                },
             ]
         },
         {

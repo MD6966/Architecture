@@ -8,6 +8,8 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import NotificationsPopover from '../../../../../components/NotificationsPopover';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { ExitToApp } from '@mui/icons-material';
+import { logOut } from '../../../../../store/actions/adminActions';
 const NAV_WIDTH = 280;
 
 const HEADER_MOBILE = 54;
@@ -57,6 +59,10 @@ const TopBar = () => {
       const handleNotificationsClose = () => {
         setOpenNotifications(false);
       };
+      const handleSignOut = () => {
+        dispatch(logOut())
+        navigate('/')
+      }
   return (
     <div>
       <StyledRoot >
@@ -120,7 +126,11 @@ const TopBar = () => {
               </IconButton>
             </Box>
           </Stack>
-
+            <Button variant='outlined' endIcon={<ExitToApp />}
+            onClick={handleSignOut}
+            >
+              Sign Out
+            </Button>
         </StyledToolbar>
     </StyledRoot>
     <NotificationsPopover

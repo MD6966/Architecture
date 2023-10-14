@@ -50,7 +50,7 @@ const DashboardAdmin = () => {
 
   const getAdminStats = () => {
     dispatch(getAdminDashboardStats()).then((result) => {
-      console.log(result)
+      setStats(result.data.payload)
     }).catch((err) => {
       console.log(err)
     });
@@ -59,17 +59,16 @@ const DashboardAdmin = () => {
       getAdminStats()
   }, [])
   const cardData = [
-    { main: 'rgb(248, 220, 224)', av: "#FB5581", total: "$1k", title: "Total Users", Avatar: <PeopleIcon /> },
-    { main: '#FFF4DE', av: "#F1A28C", total: "300", title: "Total Posts", Avatar: <DynamicFeedIcon /> },
-    { main: '#F5E7FE', av: "#C082FE", total: "5", title: "Total Comments", Avatar: <CommentIcon /> },
-    { main: '#DEFBE9', av: "#45C95A", total: "8", title: "Users Online", Avatar: <CheckCircleOutlineIcon /> },
-    { main: '#FFF4DE', av: "#F1A28C", total: "8", title: "Total Messages", Avatar: <ForumIcon /> },
-    { main: 'rgb(248, 220, 224)', av: "#FB5581", total: "8", title: "Total Videos", Avatar: <OndemandVideoIcon /> },
-    { main: '#DEFBE9', av: "#45C95A", total: "8", title: "Total Projects", Avatar: <AccountTreeIcon /> },
-    { main: '#FFF4DE', av: "#F1A28C", total: "8", title: "Total Photos", Avatar: <PhotoSizeSelectActualIcon /> },
-    { main: '#F5E7FE', av: "#C082FE", total: "8", title: "Total Posts Likes", Avatar: <ThumbUpIcon /> }
-];
-
+    { main: 'rgb(248, 220, 224)', av: "#FB5581", total: stats.total_users, title: "Total Users", Avatar: <PeopleIcon /> },
+    { main: '#FFF4DE', av: "#F1A28C", total: stats.total_Posts, title: "Total Posts", Avatar: <DynamicFeedIcon /> },
+    { main: '#F5E7FE', av: "#C082FE", total: stats.total_Comments, title: "Total Comments", Avatar: <CommentIcon /> },
+    { main: '#DEFBE9', av: "#45C95A", total: stats.total_Online_Users, title: "Users Online", Avatar: <CheckCircleOutlineIcon /> },
+    { main: '#FFF4DE', av: "#F1A28C", total: stats.total_Messages, title: "Total Messages", Avatar: <ForumIcon /> },
+    { main: 'rgb(248, 220, 224)', av: "#FB5581", total: stats.total_Videos, title: "Total Videos", Avatar: <OndemandVideoIcon /> },
+    { main: '#DEFBE9', av: "#45C95A", total: stats.total_Projects, title: "Total Projects", Avatar: <AccountTreeIcon /> },
+    { main: '#FFF4DE', av: "#F1A28C", total: stats.total_Pictures, title: "Total Photos", Avatar: <PhotoSizeSelectActualIcon /> },
+    { main: '#F5E7FE', av: "#C082FE", total: stats.total_Post_Likes, title: "Total Posts Likes", Avatar: <ThumbUpIcon /> }
+]
   return (
     <Page
     title="Dashboard"

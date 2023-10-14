@@ -2,23 +2,26 @@ import axios from "axios";
 
 
 const api = axios.create({
-    baseURL: process.env.REACT_APP_URL,
-})
-const getToken = ()=>{
-    return localStorage.getItem('token')
-}
+  baseURL: process.env.REACT_APP_URL,
+});
+
+const getToken = () => {
+  return localStorage.getItem('token');
+};
+
 api.interceptors.request.use(
-    (Config) =>{
-        const Token = getToken()
-        if(Token){
-Config.headers['Authorization'] = `bearer ${Token}`
-        }
-        return Config
-    },
-    (error)=>{
-        return Promise.reject(error)
+  (config) => {
+    const token = getToken();
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
     }
-)
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 
 export const UserLogin = ({email, password}) => async(dispatch)=>{
     const body = {
@@ -33,20 +36,30 @@ try {
           'Content-Type': 'application/json',
         },
       });
-      console.log(res)
-    if(res.status === 200){
-        
+      if(res.data.payload.user.is_admin == 1){
         dispatch({
-            type: 'LOGIN_SUCCESS',
+            type: 'LOGIN_SUCCESS_ADMIN',
             payload: res.data
         });
         return res
-    }
+      }
+      else {
+        dispatch({
+          type: 'LOGIN_SUCCESS_USER',
+          payload: res.data
+      });
+      return res
+      }
 }catch(error){
     throw error
 }
 }
 
+export const logOut = () => (dispatch) => {
+  dispatch({
+      type: 'LOGOUT_SUUCCESS'
+    });
+}
 
 export const UserSignUp = ({ name, email, password, verificationCode }) => async (dispatch) => {
     const body = {
