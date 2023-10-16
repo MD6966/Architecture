@@ -1,38 +1,43 @@
 const initialState = {
-    isAuthenticated: false,
+    isAuthenticatedAdmin: false,
+    isAuthenticatedUser: false,
     token : localStorage.getItem('token'),
 }
 
 const adminReducer = (state=initialState, action) => {
     switch(action.type) {
-        case 'LOGIN_SUCCESS': {
+        case 'LOGIN_SUCCESS_ADMIN': {
 
             localStorage.setItem('token', action.payload.payload.token);
+            console.log("ADMIN_LOGIN")
             return {
                 ...state,
                 ...action.payload.payload,
                 token: action.payload.payload.token,
-                isAuthenticated: true
+                isAuthenticatedAdmin: true
+            };
+        };
+        case 'LOGIN_SUCCESS_USER': {
+            localStorage.setItem('token', action.payload.payload.token);
+            console.log("USER_LOGIN")
+            return {
+                ...state,
+                ...action.payload.payload,
+                token: action.payload.payload.token,
+                isAuthenticatedUser: true
             };
         };
         case 'LOGOUT_SUUCCESS' : {
             localStorage.removeItem('token')
             return {
                 token: null,
-                isAuthenticated: false,
+                isAuthenticatedAdmin: false,
+                isAuthenticatedAdmin:false
               };
         };
         default :  return state
         
     }
 }
-// export const userReducer = (state = null, action) => {
-//     switch (action.type) {
-//       case 'LOGIN_SUCCESS':
-//         return action.payload;
-//       default:
-//         return state;
-//     }
-//   };
 
 export default adminReducer

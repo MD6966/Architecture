@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { styled, alpha } from '@mui/material/styles';
 import {
     Box, Button, Drawer, Typography, Avatar,
-    List, ListItem, ListItemButton, ListItemIcon, ListItemText, Badge
+    List, ListItem, ListItemButton, ListItemIcon, ListItemText, Badge, Tooltip
 } from '@mui/material';
 
 import useResponsive from '../../../../../components/hooks/useResponsive';
@@ -23,8 +23,11 @@ import LocalPostOfficeOutlinedIcon from '@mui/icons-material/LocalPostOfficeOutl
 import { makeStyles } from '@mui/styles';
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
+import VerifiedIcon from '@mui/icons-material/Verified';
 import clsx from 'clsx';
 import Scrollbar from '../../../../../components/scrollbar';
+import { AddOutlined } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
 
 const NAV_WIDTH = 280;
 const StyledAccount = styled('div')(({ theme }) => ({
@@ -55,24 +58,30 @@ export default function UserNav({ openNav, onCloseNav }) {
         },
         {
             id: 2,
-            title: "Edit",
-            icon: <EditIcon />,
-            to: "/user/edit",
+            title: "Add Post",
+            icon: <AddOutlined />,
+            to: "/user/add-post",
         },
         {
             id: 3,
+            title: "All Posts",
+            icon: <VerifiedIcon />,
+            to: "/user/all-posts",
+        },
+        {
+            id: 4,
             title: "Event",
             icon: <EventAvailableIcon />,
             to: "/user/event",
         },
         {
-            id: 4,
+            id: 5,
             title: "Trophy",
             icon: <MilitaryTechIcon />,
             to: "/user/trophy",
         },
         {
-            id: 5,
+            id: 6,
             title: "Certificate",
             icon: <CardMembershipIcon />,
             to: "/user/certificate",
@@ -86,6 +95,8 @@ export default function UserNav({ openNav, onCloseNav }) {
     const [selectedIndex, setSelectedIndex] = React.useState(1);
     const isDesktop = useResponsive('up', 'lg');
     const classes = useStyles();
+    const user = useSelector((state)=>state.admin.user)
+    // console.log(user.admin.user)
     React.useEffect(() => {
         const matchingItem = ListItems.find((item) => item.to === location.pathname);
         if (matchingItem) {
@@ -122,9 +133,18 @@ export default function UserNav({ openNav, onCloseNav }) {
                 </Box>
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'column', my: '30px', justifyContent: 'center', alignItems: 'center' }}>
-                <Avatar alt="Remy Sharp" src="https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
-                <Typography>Hello Moaz</Typography>
-                <Typography>devbymoaz@gmail.com</Typography>
+                <Tooltip
+                title="View Profile"
+                >
+                <Avatar alt="Remy Sharp" 
+                src="https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                sx={{height:'60px', width:'60px', mb:2, cursor:'pointer'}}
+                component={Link}
+                to="/user/profile"
+                />
+                </Tooltip>
+                <Typography fontWeight="bold" variant='h6'>{user.name}</Typography>
+                <Typography>{user.email}</Typography>
 
             </Box>
 

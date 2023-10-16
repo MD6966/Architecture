@@ -183,7 +183,7 @@ const MainSection = () => {
                 src={img}
                 alt={`Image ${index}`}
                 style={{ objectFit: 'cover', width: `${100 / imgData.length}%`, height: '100%' }}
-          onClick={handleClickBox}
+                onClick={handleClickBox}
 
               />
             ))}

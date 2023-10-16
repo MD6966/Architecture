@@ -8,7 +8,20 @@ import LineChartComp from './components/LineChartComp'
 import PieChartComp from './components/PieChartComp'
 import IosShareIcon from '@mui/icons-material/IosShare';
 import Cardcomp from './components/Cardcomp'
+import { useDispatch } from 'react-redux'
+import { getAdminDashboardStats } from '../../../../store/actions/adminActions'
+import PeopleIcon from '@mui/icons-material/People';
+import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
+import CommentIcon from '@mui/icons-material/Comment';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import ForumIcon from '@mui/icons-material/Forum';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import PhotoSizeSelectActualIcon from '@mui/icons-material/PhotoSizeSelectActual';
 const DashboardAdmin = () => {
+  const [stats, setStats] = React.useState([])
+  const dispatch =  useDispatch()
   const [userData, setUserData] = React.useState({
     labels:data.map((data)=>data.year),
     datasets:[
@@ -34,6 +47,28 @@ const DashboardAdmin = () => {
     }
     ]
   })
+
+  const getAdminStats = () => {
+    dispatch(getAdminDashboardStats()).then((result) => {
+      setStats(result.data.payload)
+    }).catch((err) => {
+      console.log(err)
+    });
+  }
+  React.useEffect(()=> {
+      getAdminStats()
+  }, [])
+  const cardData = [
+    { main: 'rgb(248, 220, 224)', av: "#FB5581", total: stats.total_users, title: "Total Users", Avatar: <PeopleIcon /> },
+    { main: '#FFF4DE', av: "#F1A28C", total: stats.total_Posts, title: "Total Posts", Avatar: <DynamicFeedIcon /> },
+    { main: '#F5E7FE', av: "#C082FE", total: stats.total_Comments, title: "Total Comments", Avatar: <CommentIcon /> },
+    { main: '#DEFBE9', av: "#45C95A", total: stats.total_Online_Users, title: "Users Online", Avatar: <CheckCircleOutlineIcon /> },
+    { main: '#FFF4DE', av: "#F1A28C", total: stats.total_Messages, title: "Total Messages", Avatar: <ForumIcon /> },
+    { main: 'rgb(248, 220, 224)', av: "#FB5581", total: stats.total_Videos, title: "Total Videos", Avatar: <OndemandVideoIcon /> },
+    { main: '#DEFBE9', av: "#45C95A", total: stats.total_Projects, title: "Total Projects", Avatar: <AccountTreeIcon /> },
+    { main: '#FFF4DE', av: "#F1A28C", total: stats.total_Pictures, title: "Total Photos", Avatar: <PhotoSizeSelectActualIcon /> },
+    { main: '#F5E7FE', av: "#C082FE", total: stats.total_Post_Likes, title: "Total Posts Likes", Avatar: <ThumbUpIcon /> }
+]
   return (
     <Page
     title="Dashboard"
@@ -61,18 +96,14 @@ const DashboardAdmin = () => {
                 </Box>
                 <Divider />
                 <Grid container spacing={2}>
-                  <Grid item xs={12} md={6} lg={3}>
-                    <Cardcomp main ='rgb(248, 220, 224)' av="#FB5581" total="$1k" title="Total sales" />
+                  {cardData.map((val)=> {
+                    return(
+                      <Grid item xs={12} md={6} lg={3}>
+                    <Cardcomp main={val.main} av={val.av} total={val.total} title={val.title} Avatar={val.Avatar}  />
                   </Grid>
-                  <Grid item xs={12} md={6} lg={3}>
-                    <Cardcomp main ='#FFF4DE' av="#F1A28C" total="300" title="Total Order" />
-                  </Grid>
-                  <Grid item xs={12} md={6} lg={3}>
-                    <Cardcomp main ='#DEFBE9' av="#45C95A" total="5" title="Product Sold" />
-                  </Grid>
-                  <Grid item xs={12} md={6} lg={3}>
-                    <Cardcomp main ='#F5E7FE' av="#C082FE" total="8" title="New Customer" />
-                  </Grid>
+                    )
+                  })}
+                 
                 </Grid>
               </StyledBox>
             </Grid>

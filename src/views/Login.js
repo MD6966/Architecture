@@ -1,3 +1,4 @@
+import React from "react";
 import { Alert, Button, Checkbox, FormControlLabel, Snackbar, useTheme } from "@mui/material";
 import { RiGoogleFill } from 'react-icons/ri';
 import { LiaFacebookF } from 'react-icons/lia';
@@ -7,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { UserLogin } from "../store/actions/adminActions";
+import { RotatingLines } from "react-loader-spinner";
 const initialValue = {
     email:'',
     password:'',
@@ -21,13 +23,11 @@ const Login = () => {
   
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    
-    const handleLoginSuccess = () => {
-       navigate('/user/dashboard')
-      };
+    const [loading, setLoading] = React.useState(false)
     const dispatch = useDispatch()
     const handleSubmit = (e)=>{
         e.preventDefault()
+        setLoading(true)
         setEmailError('')
         setPasswordError('')
         if (!/^\S+@\S+\.\S+$/.test(formValues.email)) {
@@ -39,14 +39,15 @@ const Login = () => {
             return;
           }
         dispatch(UserLogin(formValues)).then((res)=>{
-            if(res.status === 200){
-                console.log(res)
-                if(res.status === 200){
-                    handleLoginSuccess()
-console.log('you are login')
-                }
-            }
+            setLoading(false)
+           if(res.data.payload.user.is_admin==1){
+            navigate('/admin/dashboard')
+           }
+           else if(res.data.payload.user.is_admin==0) {
+            navigate('/user/dashboard')
+           }
         }).catch((err)=>{
+            setLoading(false)
             console.log(err)
         })
     }
@@ -79,7 +80,18 @@ console.log('you are login')
                             },
                         }} />} label="Remember me?" />
                     </div>
+                    {
+                        loading ? 
+                        <Button variant="contained" className="bg-pink-600" >
+                            <RotatingLines
+                                strokeColor="white"
+                                strokeWidth="5"
+                                animationDuration="0.75"
+                                width="30"
+                                visible={loading}/>
+                        </Button> :
                     <Button type="submit" variant="contained" className="bg-pink-600" >Submit</Button>
+                    }
                     <div className="flex justify-end text-gray-500">
                         <h4>Forget Password</h4>
                     </div>
@@ -125,19 +137,6 @@ console.log('you are login')
 
 
             </div >
-{/* <Snackbar
-  anchorOrigin={{
-    vertical: 'bottom',
-    horizontal: 'right',
-  }}
-  open={snackbarOpen}
-  autoHideDuration={6000}
-  onClose={handleSnackbarClose}
->
-  <Alert onClose={handleSnackbarClose} severity="success">
-    {snackbarMessage}
-  </Alert>
-</Snackbar> */}
         </>
     );
 };

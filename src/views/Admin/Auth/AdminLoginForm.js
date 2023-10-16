@@ -4,6 +4,7 @@ import { RotatingLines } from 'react-loader-spinner'
 import { useNavigate } from 'react-router'
 import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux'
+import { UserLogin } from '../../../store/actions/adminActions';
 const StyledButton = styled(Button)(({theme})=> ({
     margin:'10px 0',
     background:theme.palette.primary.main,
@@ -26,12 +27,18 @@ const AdminLoginForm = () => {
     const [loading, setLoading] = React.useState(null)
     const dispatch = useDispatch()
     const handleSubmit = (e) => {
-      navigate('/admin/dashboard')
+        e.preventDefault()
+        dispatch(UserLogin(formValues)).then((result) => {
+          if(result.status == 200) {
+            navigate('/admin/dashboard')
+          }
+        }).catch((err) => {
+          console.log(err)
+        });
         // enqueueSnackbar('OK!', {
         //     variant: 'success'
         //   });
         // setLoading(true)
-        e.preventDefault()
         // console.log(formValues)
         // dispatch(adminLogin(formValues)).then((res)=> {
         //     console.log(res)

@@ -12,7 +12,7 @@ import LeaderBoard from './views/Admin/AdminDashboard/LeaderBoard';
 import Order from './views/Admin/AdminDashboard/Order';
 import UserDashboard from "./layouts/Dashboard/UserDashboard";
 import Event from "./views/User/UserDashboard/Event & Competition/Event";
-import Edit from "./views/User/UserDashboard/Edit Profile/Edit";
+import AddPost from "./views/User/UserDashboard/AddPost/AddPost";
 import Trophy from "./views/User/UserDashboard/Trophy";
 import WikiPage from './views/WikiPage'
 import DashboardUser from './views/User/UserDashboard/Dashboard'
@@ -22,10 +22,11 @@ import CompetetionPage from "./views/CompetetionPage/CompetetionPage";
 import Sponsers from './views/Sponsers'
 import ContactUs from './views/ContactUs'
 import EventsPage from "./views/EventsPage";
-import AddPost from "./views/AddPost";
+// import AddPost from "./views/AddPost";
 import SinglePost from "./views/SinglePost";
-import ProfilePage from "./layouts/ProfilePage/ProfilePage";
 export default function Router() {
+    const isAuthenticatedAdmin = useSelector((state)=>state.admin.isAuthenticatedAdmin)
+    const isAuthenticatedUser = useSelector((state)=>state.admin.isAuthenticatedUser)
     let element = useRoutes([
         {
             path: '/',
@@ -39,26 +40,40 @@ export default function Router() {
         { path: '/events', element: <EventsPage /> },
 
 
-
         {
-            path: 'admin',
-            element: <AdminDashboard />,
-            children: [
-                { path: 'dashboard', element: <DashboardAdmin /> },
-                { path: 'leaderboard', element: <LeaderBoard /> },
-                { path: 'order', element: <Order /> },
-                
+            element: <ProtectedRoutes isLogged={isAuthenticatedAdmin}/>,
+            children:[
+
+                {
+                    path: 'admin',
+                    element: <AdminDashboard />,
+                    children: [
+                        { path: 'dashboard', element: <DashboardAdmin /> },
+                        { path: 'leaderboard', element: <LeaderBoard /> },
+                        { path: 'order', element: <Order /> },
+                        
+                    ]
+                },
             ]
         },
         {
-            path: 'user',
-            element: <UserDashboard />,
-            children: [
-                { path: 'dashboard', element: <DashboardUser /> },
-                { path: 'edit', element: <Edit /> },
-                { path: 'event', element: <Event /> },
-                { path: 'trophy', element: <Trophy /> },
-                { path: 'certificate', element: <Certificate /> },
+            element: <ProtectedRoutes isLogged={isAuthenticatedUser}/>,
+            children:[
+                
+                {
+                    path: 'user',
+                    element: <UserDashboard />,
+                    children: [
+                        { path: 'dashboard', element: <DashboardUser /> },
+                        { path: 'add-post', element: <AddPost /> },
+                        { path: 'all-posts', element: <AllPosts /> },
+                        { path: 'view-post', element: <ViewSinglePost /> },
+                        {path:  'profile', element: <ViewProfile />},
+                        { path: 'event', element: <Event /> },
+                        { path: 'trophy', element: <Trophy /> },
+                        { path: 'certificate', element: <Certificate /> },
+                    ]
+                },
             ]
         },
         {
@@ -68,10 +83,6 @@ export default function Router() {
         {
             path:'/add-post',
             element:<AddPost/>
-        },
-        {
-            path: '/admin-login',
-            element: <AdminLogin />
         },
         {
             path: '*',

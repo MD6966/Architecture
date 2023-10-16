@@ -8,6 +8,10 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import NotificationsPopover from '../../../../../components/NotificationsPopover';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { ExitToApp } from '@mui/icons-material';
+import { logOut } from '../../../../../store/actions/adminActions';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 const NAV_WIDTH = 280;
 
 const HEADER_MOBILE = 54;
@@ -57,6 +61,24 @@ const TopBar = () => {
       const handleNotificationsClose = () => {
         setOpenNotifications(false);
       };
+      const handleSignOut = () => {
+        confirmAlert({
+          title: 'Log Out?',
+          message: 'Are you sure to want to log out ?',
+          buttons:[
+            {
+              label: 'Yes',
+              onClick: ()=>{
+                dispatch(logOut())
+              }
+            },
+           {
+            label: 'No',
+           }
+      
+          ]
+        })
+      }
   return (
     <div>
       <StyledRoot >
@@ -120,7 +142,11 @@ const TopBar = () => {
               </IconButton>
             </Box>
           </Stack>
-
+            <Button variant='outlined' endIcon={<ExitToApp />}
+            onClick={handleSignOut}
+            >
+              Sign Out
+            </Button>
         </StyledToolbar>
     </StyledRoot>
     <NotificationsPopover

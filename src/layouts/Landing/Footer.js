@@ -42,11 +42,6 @@ const Footer = () => {
         <StyledTypo>
           Contact Us
         </StyledTypo>
-        <StyledTypo
-          component={Link}
-          to="/admin-login">
-          Admin
-        </StyledTypo>
         </Box>
         <Box sx={{mt:2, display:'flex'}}>
           <Box>

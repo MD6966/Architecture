@@ -9,7 +9,7 @@ export const StyledRoot = styled(Box)(({ theme }) => ({
 export const StyledBox = styled(Card)(({ theme }) => ({
     borderRadius: theme.spacing(1.5),
     padding: theme.spacing(2),
-    height: '40vh'
+    minHeight: '40vh'
 }));
 
 export const StyledCard = styled(Card)(({ theme }) => ({
