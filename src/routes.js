@@ -3,7 +3,7 @@ import AuthLayout from "./layouts/Auth/AuthLayout";
 import Home from "./layouts/Home";
 import Landing from "./layouts/Landing/Landing";
 import Login from "./views/Login";
-import SignUp from "./views/SignUp";
+import SignUp from "./SignUp";
 import AdminLogin from "./views/Admin/Auth/AdminLogin";
 import ErrorPage from "./components/ErrorBoundary/components/ErrorPage";
 import AdminDashboard from "./layouts/Dashboard/AdminDashboard";
@@ -24,6 +24,7 @@ import ContactUs from './views/ContactUs'
 import EventsPage from "./views/EventsPage";
 import AddPost from "./views/AddPost";
 import SinglePost from "./views/SinglePost";
+import ProfilePage from "./layouts/ProfilePage/ProfilePage";
 export default function Router() {
     let element = useRoutes([
         {
@@ -31,7 +32,7 @@ export default function Router() {
             element: <Landing />,
         },
         { path: '/login', element: <Login /> },
-        { path: '/signup', element: <SignUp /> },
+        { path: '/signup', element: <SignUp/> },
         { path: '/wiki', element: <WikiPage /> },
         { path: '/messages', element: <Messages /> },
         { path: '/competition', element: <CompetetionPage /> },
@@ -87,6 +88,10 @@ export default function Router() {
         {
             path: '/contactus',
             element: <ContactUs />
+        },
+        {
+            path: '/profile',
+            element: <ProfilePage/>
         }
     ]);
     return element;

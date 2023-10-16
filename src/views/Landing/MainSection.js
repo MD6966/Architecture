@@ -7,7 +7,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 const StyledRoot = styled(Box)(({theme})=> ({
     minHeight:'100vh',
-    padding:theme.spacing(2),
+    padding:theme.spacing(1),
     background:'#f2f2f2'
 }))
 
@@ -132,7 +132,7 @@ const MainSection = () => {
             Posts Section
           </Typography>
         <ImageList
-      sx={{ width: '100%', height: 800, }}
+      sx={{ width: '100%', height: '100%', }}
       variant="quilted"
       cols={4}
       rowHeight={121}
@@ -158,15 +158,15 @@ const MainSection = () => {
             <Grid item
             xs={12}
             md={6}
-            lg={4}
+            lg={8}
             >
-               <Box sx={{px:5}}
+               <Box sx={{px:2}}
                
                >
           <Box position="relative" 
           sx={{ overflow: 'hidden', mt:2, border: '1px solid black' }}
-           width={300} 
-          height={200}
+           width='100%' 
+          height={500}
           >
             <div
             style={{
@@ -219,20 +219,24 @@ const MainSection = () => {
       >
         Image {currentImage + 1} of {imgData.length}
       </Typography>
+
           </Box>
           </Box>
             </Grid>
+            <Grid item sx={4}>
+
+           
             <Grid item
             xs={12}
             md={6}
             lg={4}
             >
-               <Box sx={{px:5}}
+               <Box sx={{px:1}}
                >
           <Box position="relative" 
           sx={{ overflow: 'hidden', mt:2, border: '1px solid black' }}
-           width={300} 
-          height={200}>
+           width={420} 
+          height={240}>
             <div
             style={{
               display: 'flex',
@@ -290,11 +294,11 @@ const MainSection = () => {
             md={6}
             lg={4}
             >
-               <Box sx={{px:5}}>
+               <Box sx={{px:1}}>
           <Box position="relative" 
           sx={{ overflow: 'hidden', mt:2, border: '1px solid black' }}
-           width={300} 
-          height={200}>
+           width={420} 
+          height={240}>
             <div
             style={{
               display: 'flex',
@@ -347,9 +351,10 @@ const MainSection = () => {
           </Box>
           </Box>
             </Grid>
+            </Grid>
           </Grid>
          
-
+         
         </StyledRoot>
     </div>
   )

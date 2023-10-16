@@ -57,11 +57,12 @@ export const UserSignUp = ({ name, email, password, verificationCode }) => async
     };
     try {
       const res = await axios.post(`${process.env.REACT_APP_URL}api/auth/register`, body, {
+
         headers: {
           'Content-Type': 'application/json',
         },
       });
-  
+      console.log(res)
       
       if (res.status === 200) {
         dispatch({
@@ -78,9 +79,11 @@ export const UserSignUp = ({ name, email, password, verificationCode }) => async
     }
   };
 
-  export const verificationCode = ({verificationCode})=> async(dispatch)=>{
+  export const verificationOTPCode = (otp, user_id)=> async(dispatch)=>{
+    console.log(otp, user_id, "++++++++++++++")
     const body = {
-        verificationCode,
+        otp,
+        user_id
     };
     try{
     const res = await axios.post(`${process.env.REACT_APP_URL}api/auth/otp/verify`, body,{
