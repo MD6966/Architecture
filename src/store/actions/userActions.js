@@ -33,3 +33,15 @@ export const addPost = (body)=> async(dispatch)=>{
      throw error
      }
        }
+
+
+       export const getAllPosts = ()=> async(dispatch)=>{ 
+        try{
+         const res = await api.get(`${process.env.REACT_APP_URL}api/user/posts`,{
+         })
+         return res
+         }catch(error){
+         
+         throw error
+         }
+           }

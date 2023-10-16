@@ -26,6 +26,9 @@ import EventsPage from "./views/EventsPage";
 import SinglePost from "./views/SinglePost";
 import { useSelector } from "react-redux";
 import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
+import AllPosts from "./views/User/UserDashboard/AllPosts";
+import ViewSinglePost from "./views/Single-Post/ViewSinglePost";
+import ViewProfile from "./views/ViewProfile/ViewProfile";
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state)=>state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state)=>state.admin.isAuthenticatedUser)
@@ -68,6 +71,9 @@ export default function Router() {
                     children: [
                         { path: 'dashboard', element: <DashboardUser /> },
                         { path: 'add-post', element: <AddPost /> },
+                        { path: 'all-posts', element: <AllPosts /> },
+                        { path: 'view-post', element: <ViewSinglePost /> },
+                        {path:  'profile', element: <ViewProfile />},
                         { path: 'event', element: <Event /> },
                         { path: 'trophy', element: <Trophy /> },
                         { path: 'certificate', element: <Certificate /> },
