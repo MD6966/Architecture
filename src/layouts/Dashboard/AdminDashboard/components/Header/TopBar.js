@@ -10,6 +10,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { ExitToApp } from '@mui/icons-material';
 import { logOut } from '../../../../../store/actions/adminActions';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 const NAV_WIDTH = 280;
 
 const HEADER_MOBILE = 54;
@@ -60,8 +62,22 @@ const TopBar = () => {
         setOpenNotifications(false);
       };
       const handleSignOut = () => {
-        dispatch(logOut())
-        navigate('/')
+        confirmAlert({
+          title: 'Log Out?',
+          message: 'Are you sure to want to log out ?',
+          buttons:[
+            {
+              label: 'Yes',
+              onClick: ()=>{
+                dispatch(logOut())
+              }
+            },
+           {
+            label: 'No',
+           }
+      
+          ]
+        })
       }
   return (
     <div>

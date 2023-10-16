@@ -25,6 +25,7 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import clsx from 'clsx';
 import Scrollbar from '../../../../../components/scrollbar';
+import { AddOutlined } from '@mui/icons-material';
 
 const NAV_WIDTH = 280;
 const StyledAccount = styled('div')(({ theme }) => ({
@@ -55,9 +56,9 @@ export default function UserNav({ openNav, onCloseNav }) {
         },
         {
             id: 2,
-            title: "Edit",
-            icon: <EditIcon />,
-            to: "/user/edit",
+            title: "Add Post",
+            icon: <AddOutlined />,
+            to: "/user/add-post",
         },
         {
             id: 3,

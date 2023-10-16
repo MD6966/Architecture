@@ -12,7 +12,7 @@ import LeaderBoard from './views/Admin/AdminDashboard/LeaderBoard';
 import Order from './views/Admin/AdminDashboard/Order';
 import UserDashboard from "./layouts/Dashboard/UserDashboard";
 import Event from "./views/User/UserDashboard/Event & Competition/Event";
-import Edit from "./views/User/UserDashboard/Edit Profile/Edit";
+import AddPost from "./views/User/UserDashboard/AddPost/AddPost";
 import Trophy from "./views/User/UserDashboard/Trophy";
 import WikiPage from './views/WikiPage'
 import DashboardUser from './views/User/UserDashboard/Dashboard'
@@ -22,7 +22,7 @@ import CompetetionPage from "./views/CompetetionPage/CompetetionPage";
 import Sponsers from './views/Sponsers'
 import ContactUs from './views/ContactUs'
 import EventsPage from "./views/EventsPage";
-import AddPost from "./views/AddPost";
+// import AddPost from "./views/AddPost";
 import SinglePost from "./views/SinglePost";
 import { useSelector } from "react-redux";
 import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
@@ -67,7 +67,7 @@ export default function Router() {
                     element: <UserDashboard />,
                     children: [
                         { path: 'dashboard', element: <DashboardUser /> },
-                        { path: 'edit', element: <Edit /> },
+                        { path: 'add-post', element: <AddPost /> },
                         { path: 'event', element: <Event /> },
                         { path: 'trophy', element: <Trophy /> },
                         { path: 'certificate', element: <Certificate /> },
@@ -82,10 +82,6 @@ export default function Router() {
         {
             path:'/add-post',
             element:<AddPost/>
-        },
-        {
-            path: '/admin-login',
-            element: <AdminLogin />
         },
         {
             path: '*',
