@@ -47,21 +47,44 @@ const ViewProfile = () => {
     }
   };
 
-  const handleAvatarChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+  // const handleAvatarChange = (e) => {
+  //   setSelectedFile(e.target.files[0]);
 
-    if (selectedFile) {
-      setSelectedFileName(selectedFile.name);
-      setIsButtonDisabled(false); 
-      setAvatarSrc(URL.createObjectURL(selectedFile))
-    //   console.log('Selected file:', selectedFile);
+  //   if (selectedFile) {
+  //     setSelectedFileName(selectedFile.name);
+  //     setIsButtonDisabled(false); 
+  //     setAvatarSrc(URL.createObjectURL(selectedFile))
+  //   //   console.log('Selected file:', selectedFile);
+  //   } else {
+  //     setSelectedFileName('No file chosen');
+  //     setIsButtonDisabled(true);
+  //     setAvatarSrc('');
+      
+  //   }
+  // };
+
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+  
+    if (file) {
+      setSelectedFile(file);
+      setSelectedFileName(file.name);
+      setIsButtonDisabled(false);
+  
+      // Use FileReader to create a base64 representation of the image
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setAvatarSrc(event.target.result);
+      };
+      reader.readAsDataURL(file);
     } else {
+      setSelectedFile('');
       setSelectedFileName('No file chosen');
       setIsButtonDisabled(true);
       setAvatarSrc('');
-      
     }
   };
+  
 
   const handleSubmit = (e) => {
     setLoading(true)
@@ -82,7 +105,7 @@ const ViewProfile = () => {
     });
   }, [user]);
   const handleUpdateAvatar = () => {
-    const formData = new formData()
+    const formData = new FormData()
     formData.append("profile_image", selectedFile)
     dispatch(updateAvatar(formData)).then((result) => {
       console.log(result)
@@ -137,7 +160,7 @@ const ViewProfile = () => {
                       disabled={isButtonDisabled}
                       onClick = {handleUpdateAvatar}
                     >
-                      Upload Image
+                      Upload avatar
                     </Button>
                   </Box>
                 </Box>

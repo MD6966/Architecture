@@ -64,3 +64,25 @@ export const addPost = (body)=> async(dispatch)=>{
          throw error
          }
            }
+
+           export const deletePost = (id)=> async(dispatch)=>{ 
+            try{
+             const res = await api.delete(`${process.env.REACT_APP_URL}api/user/posts/${id}`,{
+             })
+             return res
+             }catch(error){
+             
+             throw error
+             }
+               }
+    
+               export const updatePost = (body ,id)=> async(dispatch)=>{ 
+                try{
+                 const res = await api.put(`${process.env.REACT_APP_URL}api/user/posts/${id}`, body ,{
+                 })
+                 return res
+                 }catch(error){
+                 
+                 throw error
+                 }
+                   }
