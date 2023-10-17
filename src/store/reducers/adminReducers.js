@@ -1,7 +1,9 @@
+
 const initialState = {
     isAuthenticatedAdmin: false,
     isAuthenticatedUser: false,
     token : localStorage.getItem('token'),
+    user: null
 }
 
 const adminReducer = (state=initialState, action) => {
@@ -14,16 +16,18 @@ const adminReducer = (state=initialState, action) => {
                 ...state,
                 ...action.payload.payload,
                 token: action.payload.payload.token,
+                user:action.payload.payload.user,
                 isAuthenticatedAdmin: true
             };
         };
         case 'LOGIN_SUCCESS_USER': {
             localStorage.setItem('token', action.payload.payload.token);
-            console.log("USER_LOGIN")
+            // console.log(action.payload.payload.user, "USERLOGIN")
             return {
                 ...state,
                 ...action.payload.payload,
                 token: action.payload.payload.token,
+                user:action.payload.payload.user,
                 isAuthenticatedUser: true
             };
         };
@@ -31,6 +35,7 @@ const adminReducer = (state=initialState, action) => {
             localStorage.removeItem('token')
             return {
                 token: null,
+                user:null,
                 isAuthenticatedAdmin: false,
                 isAuthenticatedAdmin:false
               };

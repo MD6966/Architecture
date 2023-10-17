@@ -24,6 +24,11 @@ import ContactUs from './views/ContactUs'
 import EventsPage from "./views/EventsPage";
 // import AddPost from "./views/AddPost";
 import SinglePost from "./views/SinglePost";
+import ViewSinglePost from "./views/Single-Post/ViewSinglePost";
+import { useSelector } from "react-redux";
+import ViewProfile from "./views/ViewProfile/ViewProfile";
+import Allposts from "./views/User/UserDashboard/AllPosts/Allposts";
+import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes'
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state)=>state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state)=>state.admin.isAuthenticatedUser)
@@ -66,7 +71,7 @@ export default function Router() {
                     children: [
                         { path: 'dashboard', element: <DashboardUser /> },
                         { path: 'add-post', element: <AddPost /> },
-                        { path: 'all-posts', element: <AllPosts /> },
+                        { path: 'all-posts', element: <Allposts /> },
                         { path: 'view-post', element: <ViewSinglePost /> },
                         {path:  'profile', element: <ViewProfile />},
                         { path: 'event', element: <Event /> },
@@ -100,10 +105,10 @@ export default function Router() {
             path: '/contactus',
             element: <ContactUs />
         },
-        {
-            path: '/profile',
-            element: <ProfilePage/>
-        }
+        // {
+        //     path: '/profile',
+        //     element: <ProfilePage/>
+        // }
     ]);
     return element;
 }

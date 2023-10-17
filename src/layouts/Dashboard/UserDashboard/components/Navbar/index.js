@@ -96,7 +96,7 @@ export default function UserNav({ openNav, onCloseNav }) {
     const isDesktop = useResponsive('up', 'lg');
     const classes = useStyles();
     const user = useSelector((state)=>state.admin.user)
-    // console.log(user.admin.user)
+    // console.log(user)
     React.useEffect(() => {
         const matchingItem = ListItems.find((item) => item.to === location.pathname);
         if (matchingItem) {
