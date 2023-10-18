@@ -72,11 +72,6 @@ export default function HorizontalLinearStepper() {
              Back
            </Link>
          )}
-        
-          <div className="flex justify-end text-gray-500">
-           <h4>Forget Password</h4>
-         </div>
-
          <div className="inline-flex items-center justify-center w-full">
            <hr className="w-60 h-px my-5 bg-gray-200 border-0 dark:bg-gray-400" />
            <span className="absolute px-3 font-medium text-black -translate-x-1/2 border-2 border-gray-400 bg-white left-1/2 dark:text-black rounded-md dark:bg-white">OR</span>

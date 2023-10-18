@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Button, Checkbox, FormControlLabel, Snackbar, useTheme } from "@mui/material";
+import { Alert, Box, Button, Checkbox, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControlLabel, Snackbar, TextField, useTheme } from "@mui/material";
 import { RiGoogleFill } from 'react-icons/ri';
 import { LiaFacebookF } from 'react-icons/lia';
 import { LoginSocialFacebook, LoginSocialGoogle } from 'reactjs-social-login';
@@ -8,105 +8,147 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { UserLogin } from "../store/actions/adminActions";
-import { RotatingLines } from "react-loader-spinner";
-// const initialValue = {
-//     email:'',
-//     password:'',
-// }
+import { useForm } from "react-hook-form"
+const isValid = true;
 const Login = () => {
-    const [formValues, setFromValues] = useState(initialValue)
-    const handleChange = (e) =>{
-        const {name, value} = e.target
-        setFromValues({...formValues, [name]:value})
+    const [open, setOpen] = useState(false)
+    const handleOpen = () => {
+setOpen(true)
+// alert('ay hy')
     }
+    const handleClose = () => {
+        setOpen(false)
+    }
+
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate()
-  
+
     const [emailError, setEmailError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
-    const [loading, setLoading] = React.useState(false)
     const dispatch = useDispatch()
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setEmailError('');
-        setPasswordError('');
-    
-        // if (!/^\S+@\S+\.\S+$/.test(formValues.email)) {
-        //     setLoading(false);
-        //     setEmailError('Please enter a valid email address');
-        //     return;
-        // }
-    
-        // if (formValues.password.length < 8) {
-        //     setLoading(false);
-        //     setPasswordError('Password must be greater than 8 characters');
-        //     return;
-        // }
-    
-        dispatch(UserLogin(formValues))
-            .then((res) => {
-                setLoading(false);
-                if (res.data.payload.user.is_admin === 1) {
-                    navigate('/admin/dashboard');
-                } else if (res.data.payload.user.is_admin === 0) {
-                    navigate('/user/dashboard');
-                }
-            })
-            .catch((err) => {
-                console.log(err.response.data.message)
-                setLoading(false);
-                if(err.response.data.message)
-                setEmailError(err.response.data.payload.email)
-                setPasswordError(err.response.data.payload.password)
+    const {
+        register,
+        formState: { errors },
+        handleSubmit
+    } = useForm()
 
-                setEmailError("Email and password doesn't match")
-            });
-    };
-    
+    const onSubmit = async ({ email, password }) => {
+        setIsSubmitting(true)
+        dispatch(UserLogin({ email, password })).then((res) => {
+            setIsSubmitting(false)
+            console.log(res.data)
+            if (res.data.payload.user.is_admin == 1) {
+                navigate('/admin/dashboard')
+            }
+            else if (res.data.payload.user.is_admin == 0) {
+                navigate('/user/dashboard')
+            }
+        }).catch((err) => {
+            if (err.response.data.message == "Email & Password does not match with our record.") {
 
+                setEmailError("Email & Password does not match.", {
+                    type: 'manual',
+                    message: 'Email already exists',
+                });
+            } else {
+                console.log(err);
+            }
+
+            setIsSubmitting(false);
+
+        })
+    }
     const theme = useTheme();
     return (
         <>
             <div className="min-h-screen flex flex-col items-center justify-center ">
                 {/* Form  */}
-                <form onSubmit={handleSubmit} className="flex flex-col gap-3 shadow-lg p-6 rounded-lg">
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3 shadow-lg p-6 rounded-lg">
                     <h4 className="mb-4 text-xl">Login</h4>
                     <div className="w-72 flex flex-col gap-2">
                         <label htmlFor="email">Email</label>
-                        <input type="email" id="email" value={formValues.email} onChange={handleChange} name="email" className="border rounded-md w-full h-8" />
-                        {emailError && <span className="text-red-500">{emailError}</span>}
-                    </div>
-                    <div className="w-72 flex flex-col gap-2">
-                        <label htmlFor="email">Password</label>
-                        <input type="password" value={formValues.password} onChange={handleChange} name="password" className="border rounded-md w-full h-8" />
-                        {passwordError && <span className="text-red-500">{passwordError}</span>}
+                        <input
+                            type='email'
+                            className={`border rounded-md w-full h-8 pl-2 focus:outline-none ${errors.email ? 'border-red-500' : ''}`}
+                            {...register("email", {
+                                required: 'Email is required',
+                                pattern: {
+                                    value: /\S+@\S+\.\S+/,
+                                    message: 'Invalid email address',
+                                }
+                            })}
+                            aria-invalid={errors.email ? "true" : "false"}
+                        />
+                        {errors.email?.message && (
+                            <p role="alert" className='text-red-600'>{errors.email.message}</p>
+
+                        )}
+                        {emailError && (
+                            <p role="alert" className="text-red-600">
+                                {emailError}
+                            </p>
+                        )}
                     </div>
 
-                    <div className="flex items-center">
-                        <FormControlLabel control={<Checkbox defaultChecked sx={{
-                            height: 'auto',
-                            width: 'auto',
-                            color: theme.palette.primary.main,
-                            '&.Mui-checked': {
-                                color: theme.palette.primary.main,
-                            },
-                        }} />} label="Remember me?" />
+                    <div className="w-72 flex flex-col gap-2">
+                        <label htmlFor="password">Password</label>
+                        <input
+                            type='password'
+                            className={`border rounded-md w-full h-8 pl-2 focus:outline-none ${errors.password ? 'border-red-500' : ''}`}
+                            {...register("password", {
+                                required: 'Password is required',
+                                minLength: { value: 8, message: 'Password should must be 8 digit!' }
+
+                            })}
+                            aria-invalid={errors.password ? "true" : "false"}
+                        />
+                        {errors.password?.message && (
+                            <p role="alert" className='text-red-600'>{errors.password.message}</p>
+                        )}
                     </div>
-                    {
-                        loading ? 
-                        <Button variant="contained" className="bg-pink-600" >
-                            <RotatingLines
-                                strokeColor="white"
-                                strokeWidth="5"
-                                animationDuration="0.75"
-                                width="30"
-                                visible={loading}/>
-                        </Button> :
-                    <Button type="submit" variant="contained" className="bg-pink-600" >Submit</Button>
-                    }
+                    <Box sx={{ display: 'flex', flexDirection: 'column', pt: 2 }}>
+                        <Box sx={{ flex: '1 1 auto' }} />
+                        <Button
+                            variant="contained"
+                            className="bg-pink-600"
+                            type="submit"
+                            disabled={isSubmitting || !isValid}
+                        >
+                            {isSubmitting ? (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{ color: 'black' }}
+                                />
+                            ) : (
+                                'Submit'
+                            )}
+                        </Button>
+                    </Box>
                     <div className="flex justify-end text-gray-500">
-                        <h4>Forget Password</h4>
+                        <Button sx={{ color: "gray" }} onClick={handleOpen}>Forget Password</Button>
+                        <Dialog open={open} onClose={handleClose}>
+        <DialogTitle fontWeight='bold'>Forget Password</DialogTitle>
+        <Divider/>
+        <DialogContent>
+          <DialogContentText color='black'>
+           Enter the email adress associated with your account and we will send you a link to reset your password
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Email Address *"
+            type="email"
+            fullWidth
+            variant="outlined"
+          />
+        </DialogContent>
+        <Divider/> 
+        <DialogActions>
+          <Button variant="outlined" style={{ borderColor: 'black', color: 'black' }} onClick={handleClose}>Cancel</Button>
+          <Button variant="filled" style={{ backgroundColor: 'black', color: 'white' }} onClick={handleClose}>Send</Button>
+        </DialogActions>
+      </Dialog>
                     </div>
 
                     <div className="inline-flex items-center justify-center w-full">
@@ -144,7 +186,7 @@ const Login = () => {
                         <TiSocialLinkedin className="h-8 w-8 border-2 border-blue-600 rounded-full p-1 text-blue-600 bg-white" />
                     </div>
                     <div className="flex justify-center items-center">Need an account? &nbsp;
-                    <Link color="customColors1" className="underline" to='/signup'>SIGN UP</Link>
+                        <Link color="customColors1" className="underline" to='/signup'>SIGN UP</Link>
                     </div>
                 </form >
 

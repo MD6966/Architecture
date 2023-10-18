@@ -40,9 +40,13 @@ const HandleNext = (props) => {
         props.createSuccess()
         setIsSubmitting(false);
       }).catch((err) => {
-        if (err.response && err.response.data && err.response.data.error === "Email already exists") {
-         setEmailError("email", { type: "manual", message: "Email already exists" });
-        } else {
+        if ( err.response.data.payload.email == 'The email has already been taken.') {
+          
+          setEmailError('Email Alreay Exist', {
+            type: 'manual',
+            message: 'Email already exists',
+          });
+        }  else {
           console.log(err);
         }
         setIsSubmitting(false);
@@ -82,7 +86,13 @@ const HandleNext = (props) => {
         />
         {errors.email?.message && (
           <p role="alert" className='text-red-600'>{errors.email.message}</p>
+          
         )}
+        {emailError && (
+            <p role="alert" className="text-red-600">
+              {emailError}
+            </p>
+          )}
       </div>
 
         <div className="w-72 flex flex-col gap-2">
