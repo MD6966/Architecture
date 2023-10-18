@@ -61,12 +61,11 @@ export const logOut = () => (dispatch) => {
     });
 }
 
-export const UserSignUp = ({ name, email, password, verificationCode }) => async (dispatch) => {
+export const UserSignUp = ({ name, email, password}) => async (dispatch) => {
     const body = {
       name,
       email,
-      password,
-      verificationCode,
+      password
     };
     try {
       const res = await axios.post(`${process.env.REACT_APP_URL}api/auth/register`, body, {
@@ -88,7 +87,7 @@ export const UserSignUp = ({ name, email, password, verificationCode }) => async
       return res;
   
     } catch (error) {
-      console.error('API Error:', error);
+      throw error
     }
   };
 

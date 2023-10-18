@@ -9,10 +9,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { UserLogin } from "../store/actions/adminActions";
 import { RotatingLines } from "react-loader-spinner";
-const initialValue = {
-    email:'',
-    password:'',
-}
+// const initialValue = {
+//     email:'',
+//     password:'',
+// }
 const Login = () => {
     const [formValues, setFromValues] = useState(initialValue)
     const handleChange = (e) =>{
@@ -25,32 +25,45 @@ const Login = () => {
     const [passwordError, setPasswordError] = useState('');
     const [loading, setLoading] = React.useState(false)
     const dispatch = useDispatch()
-    const handleSubmit = (e)=>{
-        e.preventDefault()
-        setLoading(true)
-        setEmailError('')
-        setPasswordError('')
-        if (!/^\S+@\S+\.\S+$/.test(formValues.email)) {
-            setEmailError('Please enter a valid email address');
-            return;
-          }
-          if(formValues.password.length < 8){
-            setPasswordError('password must be greater than the 8 characters')
-            return;
-          }
-        dispatch(UserLogin(formValues)).then((res)=>{
-            setLoading(false)
-           if(res.data.payload.user.is_admin==1){
-            navigate('/admin/dashboard')
-           }
-           else if(res.data.payload.user.is_admin==0) {
-            navigate('/user/dashboard')
-           }
-        }).catch((err)=>{
-            setLoading(false)
-            console.log(err)
-        })
-    }
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setEmailError('');
+        setPasswordError('');
+    
+        // if (!/^\S+@\S+\.\S+$/.test(formValues.email)) {
+        //     setLoading(false);
+        //     setEmailError('Please enter a valid email address');
+        //     return;
+        // }
+    
+        // if (formValues.password.length < 8) {
+        //     setLoading(false);
+        //     setPasswordError('Password must be greater than 8 characters');
+        //     return;
+        // }
+    
+        dispatch(UserLogin(formValues))
+            .then((res) => {
+                setLoading(false);
+                if (res.data.payload.user.is_admin === 1) {
+                    navigate('/admin/dashboard');
+                } else if (res.data.payload.user.is_admin === 0) {
+                    navigate('/user/dashboard');
+                }
+            })
+            .catch((err) => {
+                console.log(err.response.data.message)
+                setLoading(false);
+                if(err.response.data.message)
+                setEmailError(err.response.data.payload.email)
+                setPasswordError(err.response.data.payload.password)
+
+                setEmailError("Email and password doesn't match")
+            });
+    };
+    
 
     const theme = useTheme();
     return (
