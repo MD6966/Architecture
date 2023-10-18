@@ -1,102 +1,29 @@
-import { Box, Button, Grid, Typography, styled, IconButton, Avatar, MobileStepper } from '@mui/material'
+import { Box, Button, Grid, Typography, styled, IconButton, Avatar, MobileStepper, Pagination } from '@mui/material'
 import React from 'react'
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { Link, useNavigate } from 'react-router-dom';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { getAllPosts } from '../../store/actions/userActions';
+import { useDispatch } from 'react-redux';
+import moment from 'moment';
+import { ThreeDots } from 'react-loader-spinner';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
+import { red } from '@mui/material/colors';
+
 const StyledRoot = styled(Box)(({theme})=> ({
     minHeight:'100vh',
     padding:theme.spacing(1),
     background:'#f2f2f2'
 }))
-
-function srcset(image, size, rows = 1, cols = 1) {
-    return {
-      src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-      srcSet: `${image}?w=${size * cols}&h=${
-        size * rows
-      }&fit=crop&auto=format&dpr=2 2x`,
-    };
-  }
-  const itemData = [
-    {
-      img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-      title: 'Breakfast',
-      rows: 2,
-      cols: 2,
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-      title: 'Burger',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-      title: 'Camera',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-      title: 'Coffee',
-      cols: 2,
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-      title: 'Hats',
-      cols: 2,
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-      title: 'Honey',
-      author: '@arwinneil',
-      rows: 2,
-      cols: 2,
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-      title: 'Basketball',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-      title: 'Fern',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-      title: 'Mushrooms',
-      rows: 2,
-      cols: 2,
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-      title: 'Tomato basil',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-      title: 'Sea star',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-      title: 'Bike',
-      cols: 2,
-    },
-  ];
-  const imgData2 = [
-    {src:"/assets/images/img1.webp"},
-    {src:"/assets/images/img2.webp"},
-    {src:"/assets/images/img3.jpg"},
-    {src:"/assets/images/img4.jpg"},
-    {src:"/assets/images/img1.webp"},
-    {src:"/assets/images/img2.webp"},
-    {src:"/assets/images/img3.jpg"},
-    {src:"/assets/images/img4.jpg"},
-    {src:"/assets/images/img1.webp"},
-    {src:"/assets/images/img2.webp"},
-    {src:"/assets/images/img3.jpg"},
-    {src:"/assets/images/img4.jpg"},
-    {src:"/assets/images/img1.webp"},
-    {src:"/assets/images/img2.webp"},
-    {src:"/assets/images/img3.jpg"},
-    {src:"/assets/images/img4.jpg"},
-  ]
+ 
   const imgData = [
     "/assets/images/img1.webp",
     "/assets/images/img2.webp",
@@ -106,6 +33,24 @@ function srcset(image, size, rows = 1, cols = 1) {
   ]
 
 const MainSection = () => {
+  const [posts, setPosts] = React.useState([])
+  const [loading, setLoading] = React.useState(false)
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const postsPerPage = 6;
+  const dispatch = useDispatch()
+  const getPosts = () => {
+      setLoading(true)
+      dispatch(getAllPosts()).then((result) => {
+          setPosts(result.data.payload)
+          setLoading(false)
+      }).catch((err) => {
+          setLoading(false)
+          console.log(err)
+      });
+  }
+  React.useEffect(()=> {
+      getPosts()
+  },[])
     const navigate = useNavigate()
     const [currentImage, setCurrentImage] = React.useState(0);
 
@@ -118,39 +63,123 @@ const MainSection = () => {
         prevImage === 0 ? imgData.length - 1 : prevImage - 1
       );
     };
-    const handleClick = () => {
-      // navigate('/single-post')
-  }
     const handleClickBox = () => {
         navigate('/single-post')
     }
-    
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  
+    // Change page
+    const handlePageChange = (event, value) => {
+      setCurrentPage(value);
+      event.preventDefault();
+    };
   return (
     <div>
         <StyledRoot>
           <Typography variant='h4' sx={{mb:3, fontWeight:'bold', textAlign:'center', mt:2}}>
             Posts Section
           </Typography>
-        <ImageList
-      sx={{ width: '100%', height: '100%', }}
-      variant="quilted"
-      cols={4}
-      rowHeight={121}
-    >
-      {itemData.map((item) => (
-        <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1}>
-          <img
-            component ={Link}
-            to="/posts"
-            {...srcset(item.img, 121, item.rows, item.cols)}
-            alt={item.title}
-            loading="lazy"
-            style={{ cursor: 'pointer' }}
-            onClick={handleClick}
-          />
-        </ImageListItem>
-      ))}
-    </ImageList>
+    {
+            loading ? 
+            <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', height:'80vh'}}>
+            <ThreeDots 
+                    height="85" 
+                    width="80" 
+                    radius="9"
+                    color="#3e50ce" 
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle={{}}
+                    wrapperClassName=""
+                    visible={true}
+                    />
+                    </Box>
+                :
+        <Grid container spacing={2}>
+            {
+                currentPosts.map((val)=> {
+                    const formattedDate = moment(val.created_at).format("MMMM D, YYYY");
+                    return(
+            <Grid item
+            xs={12}
+            md={6}
+            lg={4}
+            >
+            <Card 
+            sx={{cursor:'pointer',
+            transition: 'transform 0.2s',
+            '&:hover': {
+              transform: 'scale(1.05)',
+              background:'#e2e2e2'
+            }
+        }}
+            >
+            <CardHeader
+                avatar={
+                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                    R
+                </Avatar>
+                }
+                title={val.title}
+                subheader={formattedDate}
+            />
+            <CardMedia
+    
+                component="img"
+                style={{ height: '400px', }}
+                maxHeight="194"
+                image={`${process.env.REACT_APP_URL}${val.image}`}
+                alt="Image"
+            />
+            <CardContent
+
+             style={{
+                height: '100px',
+                overflow: 'hidden',
+              }}
+            >
+                <Typography variant="body2" color="text.secondary"
+                 style={{
+                    display: '-webkit-box',
+                    WebkitLineClamp: 3,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                    {val.description}
+                </Typography>
+            </CardContent>
+            <CardActions disableSpacing>
+                <IconButton aria-label="add to favorites">
+                <FavoriteIcon />
+                </IconButton>
+                <IconButton aria-label="share">
+                <ShareIcon />
+                </IconButton>
+            </CardActions>
+            </Card>
+            </Grid>
+                    )
+                })
+            }
+            
+        </Grid>
+        }
+        <Pagination
+          count={Math.ceil(posts.length / postsPerPage)}
+          page={currentPage}
+          onChange={handlePageChange}
+          variant="outlined"
+          shape="rounded"
+          sx={{ mt: 3, display: 'flex', justifyContent: 'center',
+          '& .Mui-selected': {
+            backgroundColor: '#000000',
+            color:'#fff'
+          },
+        }}
+        />
     <Typography variant='h4' sx={{mb:3, fontWeight:'bold', textAlign:'center', mt:2}}>
             Project Section
           </Typography>
