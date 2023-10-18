@@ -116,23 +116,25 @@ const AddPost = () => {
                 Add your Description
               </Typography>
               <Divider  style={{ backgroundColor: 'gray', height:'1.5px', width:'85%', marginBottom:'50px' }} />
-              <TextField
-              required
-              name="description"
-              value={formValues.description}
-              onChange={handleChange}
-              id="input-with-icon-textfield"
-              style={{width: '85%', marginTop: '50px'}}
-      
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <AccountCircle />
-          </InputAdornment>
-        ),
-      }}
-      variant="standard"
-    />
+              <div style={{ width: '85%', marginTop: '50px', maxHeight: '4em', overflowY: 'auto' }}>
+                        <TextField
+                          required
+                          name="description"
+                          value={formValues.description}
+                          onChange={handleChange}
+                          id="input-with-icon-textfield"
+                          style={{ width: '100%', height: '100%', padding: '0', border: '0' }}
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <AccountCircle />
+                              </InputAdornment>
+                            ),
+                          }}
+                          variant="standard"
+                          multiline
+                        />
+                      </div>
     <br/>
               <Button
                 variant="contained"

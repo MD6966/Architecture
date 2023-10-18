@@ -29,6 +29,12 @@ import { useSelector } from "react-redux";
 import ViewProfile from "./views/ViewProfile/ViewProfile";
 import Allposts from "./views/User/UserDashboard/AllPosts/Allposts";
 import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes'
+import ViewSinglePost from "./views/Single-Post/ViewSinglePost";
+import { useSelector } from "react-redux";
+import ViewProfile from "./views/ViewProfile/ViewProfile";
+import Allposts from "./views/User/UserDashboard/AllPosts/Allposts";
+import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes'
+import EditPost from "./views/User/UserDashboard/EditPost";
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state)=>state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state)=>state.admin.isAuthenticatedUser)
@@ -73,6 +79,7 @@ export default function Router() {
                         { path: 'add-post', element: <AddPost /> },
                         { path: 'all-posts', element: <Allposts /> },
                         { path: 'view-post', element: <ViewSinglePost /> },
+                        {path:'edit-post', element:<EditPost />},
                         {path:  'profile', element: <ViewProfile />},
                         { path: 'event', element: <Event /> },
                         { path: 'trophy', element: <Trophy /> },

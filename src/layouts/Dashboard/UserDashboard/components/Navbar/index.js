@@ -96,7 +96,7 @@ export default function UserNav({ openNav, onCloseNav }) {
     const isDesktop = useResponsive('up', 'lg');
     const classes = useStyles();
     const user = useSelector((state)=>state.admin.user)
-    // console.log(user.admin.user)
+    // console.log(user)
     React.useEffect(() => {
         const matchingItem = ListItems.find((item) => item.to === location.pathname);
         if (matchingItem) {
@@ -137,7 +137,7 @@ export default function UserNav({ openNav, onCloseNav }) {
                 title="View Profile"
                 >
                 <Avatar alt="Remy Sharp" 
-                src="https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                src={user.profile_image}
                 sx={{height:'60px', width:'60px', mb:2, cursor:'pointer'}}
                 component={Link}
                 to="/user/profile"

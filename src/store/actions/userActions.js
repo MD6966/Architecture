@@ -22,7 +22,26 @@ api.interceptors.request.use(
   }
 );
 
-
+export const updateProfileInfo = (name, phone)=> async(dispatch)=>{
+    try{
+     const res = await api.put(`${process.env.REACT_APP_URL}api/user/profile?name=${name}&phone_number=${phone}`,{
+     })
+     return res
+     }catch(error){
+     
+     throw error
+     }
+       }
+       export const updateAvatar = (formData)=> async(dispatch)=>{
+        try{
+         const res = await api.put(`${process.env.REACT_APP_URL}api/user/profile`,formData,{
+         })
+         return res
+         }catch(error){
+         
+         throw error
+         }
+           }
 export const addPost = (body)=> async(dispatch)=>{ 
     try{
      const res = await api.post(`${process.env.REACT_APP_URL}api/user/posts`,body,{
@@ -45,3 +64,25 @@ export const addPost = (body)=> async(dispatch)=>{
          throw error
          }
            }
+
+           export const deletePost = (id)=> async(dispatch)=>{ 
+            try{
+             const res = await api.delete(`${process.env.REACT_APP_URL}api/user/posts/${id}`,{
+             })
+             return res
+             }catch(error){
+             
+             throw error
+             }
+               }
+    
+               export const updatePost = (body ,id)=> async(dispatch)=>{ 
+                try{
+                 const res = await api.put(`${process.env.REACT_APP_URL}api/user/posts/${id}`, body ,{
+                 })
+                 return res
+                 }catch(error){
+                 
+                 throw error
+                 }
+                   }
