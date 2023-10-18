@@ -51,6 +51,7 @@ const HandleVerification = ({ props }) => {
       }
     } catch (error) {
       console.log(error);
+
       setApiError('Invalid OTP. Please try again.');
     }
     
