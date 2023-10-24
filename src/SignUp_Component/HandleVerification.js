@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { verificationOTPCode } from '../store/actions/adminActions';
 import { useNavigate } from 'react-router';
-import { Snackbar, Alert } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
 

@@ -125,9 +125,9 @@ setOpen(true)
                         </Button>
                     </Box>
                     <div className="flex justify-end text-gray-500">
-                        <Button sx={{ color: "gray" }} onClick={handleOpen}>Forget Password</Button>
+                        <Button sx={{ color: "gray", textTransform: 'none' }} onClick={handleOpen}>Forget Password</Button>
                         <Dialog open={open} onClose={handleClose}>
-        <DialogTitle fontWeight='bold'>Forget Password</DialogTitle>
+        <DialogTitle fontWeight='bold' >Forget Password</DialogTitle>
         <Divider/>
         <DialogContent>
           <DialogContentText color='black'>

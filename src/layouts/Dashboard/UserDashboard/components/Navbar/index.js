@@ -58,34 +58,41 @@ export default function UserNav({ openNav, onCloseNav }) {
         },
         {
             id: 2,
+            title: "Create Post",
+            icon: <CardMembershipIcon />,
+            to: "/user/createpost",
+        },
+        {
+            id: 3,
             title: "Add Post",
             icon: <AddOutlined />,
             to: "/user/add-post",
         },
         {
-            id: 3,
+            id: 4,
             title: "All Posts",
             icon: <VerifiedIcon />,
             to: "/user/all-posts",
         },
         {
-            id: 4,
+            id: 5,
             title: "Event",
             icon: <EventAvailableIcon />,
             to: "/user/event",
         },
         {
-            id: 5,
+            id: 6,
             title: "Trophy",
             icon: <MilitaryTechIcon />,
             to: "/user/trophy",
         },
         {
-            id: 6,
+            id: 7,
             title: "Certificate",
             icon: <CardMembershipIcon />,
             to: "/user/certificate",
-        }
+        },
+       
 
 
     ];

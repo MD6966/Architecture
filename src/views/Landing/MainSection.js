@@ -10,13 +10,15 @@ import ImageListItem from '@mui/material/ImageListItem';
 import { Link, useNavigate } from 'react-router-dom';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { getAllPosts } from '../../store/actions/userActions';
+import { getAllPosts, getAllProjects} from '../../store/actions/userActions';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { ThreeDots } from 'react-loader-spinner';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import { red } from '@mui/material/colors';
+import { Carousel } from 'react-responsive-carousel';
+// import {getAllProjects} from '../../store/actions/userActions'
 
 const StyledRoot = styled(Box)(({theme})=> ({
     minHeight:'100vh',
@@ -34,10 +36,26 @@ const StyledRoot = styled(Box)(({theme})=> ({
 
 const MainSection = () => {
   const [posts, setPosts] = React.useState([])
+  const [projects, setProject] = React.useState([])
   const [loading, setLoading] = React.useState(false)
   const [currentPage, setCurrentPage] = React.useState(1);
   const postsPerPage = 6;
+  
   const dispatch = useDispatch()
+  const getAllProject = () => {
+    setLoading(true)
+    dispatch(getAllProjects()).then((res)=> {
+      setProject(res.data.payload)
+      setLoading(false)
+    }).catch((err)=>{
+      setLoading(false)
+      console.log(err)
+    })
+
+  }
+  React.useEffect(()=>{
+    getAllProject()
+  }, [])
   const getPosts = () => {
       setLoading(true)
       dispatch(getAllPosts()).then((result) => {
@@ -63,9 +81,9 @@ const MainSection = () => {
         prevImage === 0 ? imgData.length - 1 : prevImage - 1
       );
     };
-    const handleClickBox = () => {
-        navigate('/single-post')
-    }
+    const handleClickBox = (projectId) => {
+      navigate(`/single-post/${projectId}`);
+    };
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
@@ -180,82 +198,42 @@ const MainSection = () => {
           },
         }}
         />
+        
     <Typography variant='h4' sx={{mb:3, fontWeight:'bold', textAlign:'center', mt:2}}>
             Project Section
           </Typography>
           <Grid container>
-            <Grid item
-            xs={12}
-            md={6}
-            lg={8}
-            >
-               <Box sx={{px:2}}
-               
-               >
-          <Box position="relative" 
-          sx={{ overflow: 'hidden', mt:2, border: '1px solid black' }}
-           width='100%' 
-          height={500}
-          >
-            <div
-            style={{
-              display: 'flex',
-              width: `${imgData.length * 100}%`,
-              height:'100%',
-              transform: `translateX(-${currentImage * (100 / imgData.length)}%)`,
-              transition: 'transform 0.3s ease-in-out',
-            }}
-          >
-            {imgData.map((img, index) => (
-              <img
-                key={index}
-                src={img}
-                alt={`Image ${index}`}
-                style={{ objectFit: 'cover', width: `${100 / imgData.length}%`, height: '100%' }}
-                onClick={handleClickBox}
-
-              />
+        <Grid item xs={12} md={6} lg={8}>
+            {projects.map((project) => (
+              <div key={project.id}>
+                <img
+                  src={`${project.image[0]}`}
+                  alt="Project Image"
+                  onClick={() => handleClickBox(project.id)}
+                />
+                <p>{project.title}</p>
+                <p>{project.description}</p>                
+                {/* <p>{project.specs}</p> */}
+              </div>
             ))}
+          <div style={{ textAlign: 'center' }}>
+            <Button variant="contained" onClick={handlePrev} disabled={currentImage === 0}>
+              <Avatar sx={{ background: '#fff' }}>
+                <ArrowBackIosNewIcon sx={{ color: '#000' }} />
+              </Avatar>
+              Previous
+            </Button>
+            <Button variant="contained" onClick={handleNext} disabled={currentImage === projects.length - 1}>
+              Next
+              <Avatar sx={{ background: '#fff' }}>
+                <ArrowForwardIosIcon sx={{ color: '#000' }} />
+              </Avatar>
+            </Button>
           </div>
-      <IconButton
-      className="hover-button"
-        style={{ position: 'absolute', top: '50%', left: 0, transform: 'translateY(-50%)',
-      
-      }}
-        onClick={handlePrev}
-        >
-        <Avatar sx={{background:'#fff'}}>
-        <ArrowBackIosNewIcon sx={{color:'#000'}} />
-        </Avatar>
-      </IconButton>
-
-      <IconButton
-      className="hover-button"
-        style={{ position: 'absolute', top: '50%', right: 0, transform: 'translateY(-50%)',}}
-        onClick={handleNext}
-      >
-        <Avatar sx={{background:'#fff'}}>
-        <ArrowForwardIosIcon sx={{color:'#000'}} />
-        </Avatar>
-      </IconButton>
-      <Typography
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: '50%',
-          transform: 'translateX(-50%)',
-        }}
-      >
-        Image {currentImage + 1} of {imgData.length}
-      </Typography>
-
-          </Box>
-          </Box>
-            </Grid>
-            <Grid item sx={4}>
+        </Grid>         {/* <Grid item sx={4}> */}
 
            
-            <Grid item
+            {/* <Grid item
             xs={12}
             md={6}
             lg={4}
@@ -317,8 +295,8 @@ const MainSection = () => {
       </Typography>
           </Box>
           </Box>
-            </Grid>
-            <Grid item
+            </Grid> */}
+            {/* <Grid item
             xs={12}
             md={6}
             lg={4}
@@ -379,8 +357,8 @@ const MainSection = () => {
       </Typography>
           </Box>
           </Box>
-            </Grid>
-            </Grid>
+            </Grid> */}
+            {/* </Grid> */}
           </Grid>
          
          

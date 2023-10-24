@@ -4,6 +4,9 @@ export const StyledRoot = styled(Box)(({ theme }) => ({
     minHeight: "100vh",
     backgroundColor: '#f7f7f7',
     padding: theme.spacing(5),
+    paddingTop: theme.spacing(10)
+
+    
 
 
 }));

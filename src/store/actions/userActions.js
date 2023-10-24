@@ -86,3 +86,30 @@ export const addPost = (body)=> async(dispatch)=>{
                  throw error
                  }
                    }
+// CREATE THE PROJECT 
+export const CreateProject = (formData) => async (dispatch) =>{
+  try {
+    const res = await api.post(`${process.env.REACT_APP_URL}api/user/projects`, formData,{
+    })
+    console.log(res)
+    if(res.status === 200){
+      dispatch({
+        type: 'CREATE_PROJECT',
+        payload: res.data
+      });
+    }
+    return res;
+  }catch(err){
+console.log(err)
+  }
+}
+export const getAllProjects = () => async (dispatch)=>{
+  try{
+    const res = await api.get(`${process.env.REACT_APP_URL}api/user/projects`,{  
+    })
+    return res
+  }catch(error){
+    throw error
+  }
+
+} 

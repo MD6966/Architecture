@@ -30,6 +30,8 @@ import ViewProfile from "./views/ViewProfile/ViewProfile";
 import Allposts from "./views/User/UserDashboard/AllPosts/Allposts";
 import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes'
 import EditPost from "./views/User/UserDashboard/EditPost";
+import CreatePost from "./views/User/UserDashboard/CreatePost";
+import ProfilePage from "./layouts/ProfilePage/ProfilePage";
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state)=>state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state)=>state.admin.isAuthenticatedUser)
@@ -71,6 +73,7 @@ export default function Router() {
                     element: <UserDashboard />,
                     children: [
                         { path: 'dashboard', element: <DashboardUser /> },
+                        {path: 'createpost', element: <CreatePost/>},
                         { path: 'add-post', element: <AddPost /> },
                         { path: 'all-posts', element: <Allposts /> },
                         { path: 'view-post', element: <ViewSinglePost /> },
@@ -79,6 +82,7 @@ export default function Router() {
                         { path: 'event', element: <Event /> },
                         { path: 'trophy', element: <Trophy /> },
                         { path: 'certificate', element: <Certificate /> },
+                        
                     ]
                 },
             ]
@@ -107,10 +111,10 @@ export default function Router() {
             path: '/contactus',
             element: <ContactUs />
         },
-        // {
-        //     path: '/profile',
-        //     element: <ProfilePage/>
-        // }
+        {
+            path: '/profile',
+            element: <ProfilePage/>
+        }
     ]);
     return element;
 }

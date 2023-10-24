@@ -19,23 +19,18 @@ import { useDispatch } from 'react-redux';
 import { getAllPosts } from '../../../../store/actions/userActions';
 import moment from 'moment';
 import {useNavigate } from 'react-router-dom';
-import { ThreeDots } from 'react-loader-spinner';
 const StyledRoot = styled(Box)(({theme})=> ({
     padding:theme.spacing(5),
     marginTop:theme.spacing(4)
   }))
 const Allposts = () => {
     const [posts, setPosts] = React.useState([])
-    const [loading, setLoading] = React.useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const getPosts = () => {
-        setLoading(true)
         dispatch(getAllPosts()).then((result) => {
             setPosts(result.data.payload)
-            setLoading(false)
         }).catch((err) => {
-            setLoading(false)
             console.log(err)
         });
     }
@@ -52,22 +47,6 @@ const Allposts = () => {
     title="All Posts"
     >
     <StyledRoot>
-    
-        {
-            loading ? 
-            <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', height:'80vh'}}>
-            <ThreeDots 
-                    height="85" 
-                    width="80" 
-                    radius="9"
-                    color="#3e50ce" 
-                    ariaLabel="three-dots-loading"
-                    wrapperStyle={{}}
-                    wrapperClassName=""
-                    visible={true}
-                    />
-                    </Box>
-                :
         <Grid container spacing={2}>
             {
                 posts.map((val)=> {
@@ -92,6 +71,11 @@ const Allposts = () => {
                 <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
                     R
                 </Avatar>
+                }
+                action={
+                <IconButton aria-label="settings">
+                    <MoreVertIcon />
+                </IconButton>
                 }
                 title={val.title}
                 subheader={formattedDate}
@@ -137,7 +121,6 @@ const Allposts = () => {
                 })
             }
         </Grid>
-        }
     </StyledRoot>
     </Page>
   )

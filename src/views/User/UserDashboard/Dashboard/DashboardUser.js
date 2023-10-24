@@ -47,11 +47,11 @@ const DashboardUser = () => {
                         xs={12}
                         md={8}
                         lg={12}>
-                        <StyledBox elevation={false} sx={{ height: '30vh', display: 'flex', alignItems: 'center', justifyContent: 'center', px: '45px' }}>
+                        <StyledBox elevation={false} sx={{ height: '35vh', display: 'flex', alignItems: 'center', justifyContent: 'center', px: '45px' }}>
                             <Grid container spacing={6}>
                                 <Grid item lg={3}>
-                                    <StyledBox sx={{ height: '25vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                                        <MessageIcon sx={{ fontSize: 48, backgroundColor: '#ee05fa', color: 'white', padding: '8px', borderRadius: '7px', top: 43, position: 'absolute' }} />
+                                    <StyledBox sx={{ height: '30vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                                        <MessageIcon sx={{ fontSize: 48, backgroundColor: '#ee05fa', color: 'white', padding: '8px', borderRadius: '7px',  }} />
                                         <Typography sx={{ mt: '30px', fontWeight: 'bold', color: 'gray' }}>Total Comments</Typography>
                                         <Typography sx={{ fontSize: '2rem', fontWeight: 'bold' }}>155</Typography>
                                         <Typography sx={{ color: '#ee05fa', fontWeight: 'bold' }}>Growth rate: 20%</Typography>
@@ -60,8 +60,8 @@ const DashboardUser = () => {
                                 </Grid>
                                 <Grid item lg={3}>
 
-                                    <StyledBox sx={{ height: '25vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                                        <VisibilityIcon sx={{ fontSize: 48, backgroundColor: '#05fa22', color: 'white', padding: '8px', borderRadius: '7px', top: 43, position: 'absolute' }} />
+                                    <StyledBox sx={{ height: '30vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                                        <VisibilityIcon sx={{ fontSize: 48, backgroundColor: '#05fa22', color: 'white', padding: '8px', borderRadius: '7px' }} />
                                         <Typography sx={{ mt: '30px', fontWeight: 'bold', color: 'gray' }}>Total Video's View</Typography>
                                         <Typography sx={{ fontSize: '2rem', fontWeight: 'bold' }}>660</Typography>
                                         <Typography sx={{ color: '#05fa22', fontWeight: 'bold' }}>Growth rate: 30%</Typography>
@@ -70,8 +70,8 @@ const DashboardUser = () => {
                                 </Grid>
                                 <Grid item lg={3}>
 
-                                    <StyledBox sx={{ height: '25vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                                        <FavoriteIcon sx={{ fontSize: 48, backgroundColor: '#fcb900', color: 'red', padding: '8px', borderRadius: '7px', top: 43, position: 'absolute' }} />
+                                    <StyledBox sx={{ height: '30vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                                        <FavoriteIcon sx={{ fontSize: 48, backgroundColor: '#fcb900', color: 'red', padding: '8px', borderRadius: '7px'}} />
                                         <Typography sx={{ mt: '30px', fontWeight: 'bold', color: 'gray' }}>Total likes</Typography>
                                         <Typography sx={{ fontSize: '2rem', fontWeight: 'bold' }}>100</Typography>
                                         <Typography sx={{ color: '#fcb900', fontWeight: 'bold' }}>Growth rate: 40%</Typography>
@@ -80,10 +80,10 @@ const DashboardUser = () => {
                                 </Grid>
                                 <Grid item lg={3}>
 
-                                    <StyledBox sx={{ height: '25vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                                    <StyledBox sx={{ height: '30vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                                         <VisibilityIcon sx={{
                                             fontSize: 48, backgroundColor: '#474acc',
-                                            color: 'white', padding: '8px', borderRadius: '7px', top: 43, position: 'absolute'
+                                            color: 'white', padding: '8px', borderRadius: '7px'
                                         }} />
                                         <Typography sx={{ mt: '30px', fontWeight: 'bold', color: 'gray' }}>Total Project Views</Typography>
                                         <Typography sx={{ fontSize: '2rem', fontWeight: 'bold' }}>305</Typography>

@@ -9,7 +9,7 @@ const Messages = () => {
         <StyledRoot>
             <StyledContainer>
             <SideBar />
-            <Chat />
+            {/* <Chat /> */}
             </StyledContainer>
         </StyledRoot>
     </Page>

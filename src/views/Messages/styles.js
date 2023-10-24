@@ -11,7 +11,7 @@ export const StyledRoot = styled(Box)(({theme})=>({
 export const StyledContainer = styled(Box)(({theme})=>({
     border:'1px solid black',
     borderRadius:'10px',
-    width:'65%',
+    width:'100%',
     height:'100% ',
     display:'flex',
     overflow:'hidden'
