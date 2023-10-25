@@ -37,6 +37,7 @@ import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes'
 import EditPost from "./views/User/UserDashboard/EditPost";
 import CreatePost from "./views/User/UserDashboard/CreatePost";
 import ProfilePage from "./layouts/ProfilePage/ProfilePage";
+import CompetetionHome from "./views/CompetetionPage/components/CompetitionHome/CompetetionHome";
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state)=>state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state)=>state.admin.isAuthenticatedUser)
@@ -50,6 +51,7 @@ export default function Router() {
         { path: '/wiki', element: <WikiPage /> },
         { path: '/messages', element: <Messages /> },
         { path: '/competition', element: <CompetetionPage /> },
+        { path: '/home-competition', element: <CompetetionHome /> },
         { path: '/events', element: <EventsPage /> },
 
 

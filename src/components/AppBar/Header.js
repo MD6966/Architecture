@@ -53,7 +53,7 @@ const Header = () => {
                           </Button>
                            <Button color='secondary' variant='contained' sx={{mr:3}}
                           component={Link}
-                          to="/competition"
+                          to="/home-competition"
                           >
                             Comp
                           </Button>
