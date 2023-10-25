@@ -113,3 +113,27 @@ export const getAllProjects = () => async (dispatch)=>{
   }
 
 } 
+
+// EVENTS ACTIONS
+
+export const createEvent = (formData) => async (dispatch)=>{
+  try{
+    const res = await api.post(`${process.env.REACT_APP_URL}api/admin/events`,formData,{  
+    })
+    return res
+  }catch(error){
+    throw error
+  }
+
+} 
+
+export const getAllEvents = () => async (dispatch)=>{
+  try{
+    const res = await api.get(`${process.env.REACT_APP_URL}api/admin/events`,{  
+    })
+    return res
+  }catch(error){
+    throw error
+  }
+
+} 

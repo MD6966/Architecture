@@ -5,3 +5,21 @@
     padding:0;
     margin:0
 }
+
+/* Webkit-based browsers (e.g., Chrome) */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #e2e2e2; /* Color of the thumb */
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #cecece; /* Color of the thumb on hover */
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color of the track */
+  }
+  

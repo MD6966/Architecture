@@ -14,6 +14,7 @@ import MessageIcon from '@mui/icons-material/Message';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { makeStyles } from '@mui/styles';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import clsx from 'clsx'
 
@@ -45,43 +46,49 @@ const StyledAccount = styled('div')(({ theme }) => ({
           to: "/admin/dashboard",
         },
         {
-          id: 2,
+          id:2,
+          title:'Manage Events',
+          icon: <EventAvailableIcon />,
+          to:'/admin/events'
+        },
+        {
+          id: 3,
           title: "LeaderBoard",
           icon: <LeaderboardIcon />,
           to: "/admin/leaderboard",
         },
         {
-          id: 3,
+          id: 4,
           title: "Order",
           icon: <ShoppingCartIcon />,
           to: "/admin/order",
         },
         {
-          id: 4,
+          id: 5,
           title: "Products",
           icon: <Inventory2Icon />,
           // to: "/admin/categories",
         },
         {
-          id: 5,
+          id: 6,
           title: "Sales Report",
           icon: <TimelineIcon />,
           // to: "/admin/vendors",
         },
         {
-          id: 6,
+          id: 7,
           title: "Messages",
           icon: <MessageIcon />,
           // to: "/admin/users",
         },
         {
-          id: 7,
+          id: 8,
           title: "Settings",
           icon: <SettingsIcon />,
           // to: "/admin/new-invoices",
         },
         {
-          id: 8,
+          id: 9,
           title: "Signout",
           icon: <ExitToAppIcon />,
           // to: "/admin/approved-by-admin",
@@ -110,12 +117,7 @@ const StyledAccount = styled('div')(({ theme }) => ({
     }, [location]);
   
     const renderContent = (
-      <Scrollbar
-        sx={{
-          height: 1,
-          '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' },
-        }}
-      >
+      <>
         <Box sx={{ px: 2.5, py: 3, display: 'inline-flex', }}>
         <Box sx={{display:'flex'}}>
                         <img src='/assets/images/log.png' alt="logo" width="55px" />
@@ -176,7 +178,7 @@ const StyledAccount = styled('div')(({ theme }) => ({
         <Box sx={{ flexGrow: 1 }} />
 
         
-      </Scrollbar>
+      </>
     );
   
     return (
@@ -196,6 +198,7 @@ const StyledAccount = styled('div')(({ theme }) => ({
                 width: NAV_WIDTH,
                 bgcolor: 'background.default',
                 borderRightStyle: 'dashed',
+                overflowY:'scroll'
               },
             }}
           >

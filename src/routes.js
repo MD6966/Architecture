@@ -38,6 +38,7 @@ import EditPost from "./views/User/UserDashboard/EditPost";
 import CreatePost from "./views/User/UserDashboard/CreatePost";
 import ProfilePage from "./layouts/ProfilePage/ProfilePage";
 import CompetetionHome from "./views/CompetetionPage/components/CompetitionHome/CompetetionHome";
+import AdminEvents from "./views/Admin/AdminEvents";
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state)=>state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state)=>state.admin.isAuthenticatedUser)
@@ -64,6 +65,7 @@ export default function Router() {
                     element: <AdminDashboard />,
                     children: [
                         { path: 'dashboard', element: <DashboardAdmin /> },
+                        {path:'events', element:<AdminEvents />},
                         { path: 'leaderboard', element: <LeaderBoard /> },
                         { path: 'order', element: <Order /> },
                         
