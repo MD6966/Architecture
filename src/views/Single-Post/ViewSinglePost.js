@@ -35,7 +35,7 @@ const ViewSinglePost = () => {
           label: 'Yes',
           onClick: ()=>{
             setLoading(true)
-            dispatch(deletePost(state.id)).then((result) => {
+          dispatch(deletePost(state.id)).then((result) => {
               setLoading(false)
               enqueueSnackbar(result.data.message, {
                 variant:'success'

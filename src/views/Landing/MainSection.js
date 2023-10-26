@@ -1,5 +1,5 @@
 import { Box, Button, Grid, Typography, styled, IconButton, Avatar, MobileStepper, Pagination } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -7,10 +7,10 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { getAllPosts, getAllProjects} from '../../store/actions/userActions';
+import { DeleteProject, getAllPosts, getAllProjects} from '../../store/actions/userActions';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { ThreeDots } from 'react-loader-spinner';
@@ -19,6 +19,9 @@ import ShareIcon from '@mui/icons-material/Share';
 import { red } from '@mui/material/colors';
 import { Carousel } from 'react-responsive-carousel';
 // import {getAllProjects} from '../../store/actions/userActions'
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+
 
 const StyledRoot = styled(Box)(({theme})=> ({
     minHeight:'100vh',
@@ -26,40 +29,66 @@ const StyledRoot = styled(Box)(({theme})=> ({
     background:'#f2f2f2'
 }))
  
-  const imgData = [
-    "/assets/images/img1.webp",
-    "/assets/images/img2.webp",
-    "/assets/images/img3.jpg",
-    "/assets/images/img4.jpg"
-
-  ]
+  const imgData = []
 
 const MainSection = () => {
+  const {state} = useLocation()
+  // const [isFirstProject, setIsFirstProject] = useState(true);
+  const [Gproject, setGproject] = useState([]) 
+  const [gridColumns, setGridColumns] = useState(4);
   const [posts, setPosts] = React.useState([])
   const [projects, setProject] = React.useState([])
   const [loading, setLoading] = React.useState(false)
   const [currentPage, setCurrentPage] = React.useState(1);
+  const [currentProjectPage, setCurrentProjectPage] = useState(1);
   const postsPerPage = 6;
+  const projectsPerPage = 6;
   
   const dispatch = useDispatch()
   const getAllProject = () => {
     setLoading(true)
     dispatch(getAllProjects()).then((res)=> {
+      console.log(res.data.payload)
+
       setProject(res.data.payload)
       setLoading(false)
-    }).catch((err)=>{
+      console.log(res.data.payload)
+      setGproject(res.data.payload[0]);
+      console.log(res.data.payload[0]);
+      if (res.data.payload[0] ) {
+        setGridColumns(8);
+      } 
+        }).catch((err)=>{
       setLoading(false)
       console.log(err)
     })
 
   }
+  React.useEffect(() => {
+    if (projects.length > 0) {
+      const newImgData = projects.map((project) => project.image);
+      imgData.push(...newImgData);
+    }
+  }, [projects]);
+  // console.log(imgData, 'thissssssssss')
   React.useEffect(()=>{
     getAllProject()
   }, [])
+  // React.useEffect(() => {
+  //   if (projects.length === 1) {
+  //     setIsFirstProject(true);
+  //   }
+  //   if (isFirstProject) {
+  //     setGridColumns(8);
+  //   } else {
+  //     setGridColumns(4);
+  //   }
+  // }, [isFirstProject]);
   const getPosts = () => {
       setLoading(true)
       dispatch(getAllPosts()).then((result) => {
           setPosts(result.data.payload)
+        
           setLoading(false)
       }).catch((err) => {
           setLoading(false)
@@ -78,7 +107,7 @@ const MainSection = () => {
   
     const handlePrev = () => {
       setCurrentImage((prevImage) =>
-        prevImage === 0 ? imgData.length - 1 : prevImage - 1
+        prevImage === 0 ? imgData?.length - 1 : prevImage - 1
       );
     };
     const handleClickBox = (projectId) => {
@@ -87,12 +116,30 @@ const MainSection = () => {
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-  
+  //project pagination
+  const indexOfLastProject = currentPage * postsPerPage;
+  const indexOfFirstProject = indexOfLastProject - postsPerPage;
+  const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
     // Change page
     const handlePageChange = (event, value) => {
       setCurrentPage(value);
       event.preventDefault();
     };
+    // console.log(state)
+    const handleDelete = (id) => {
+      dispatch(DeleteProject(id)).then((res) => {
+        if(res.status == 200){
+          console.log('blaaa blaaa blaaa')
+          
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+    const handleProjectPageChange = (event, value) => {
+      setCurrentProjectPage(value);
+    };
+
   return (
     <div>
         <StyledRoot>
@@ -150,6 +197,7 @@ const MainSection = () => {
                 image={`${process.env.REACT_APP_URL}${val.image}`}
                 alt="Image"
             />
+          
             <CardContent
 
              style={{
@@ -202,166 +250,42 @@ const MainSection = () => {
     <Typography variant='h4' sx={{mb:3, fontWeight:'bold', textAlign:'center', mt:2}}>
             Project Section
           </Typography>
-          <Grid container>
-        <Grid item xs={12} md={6} lg={8}>
-            {projects.map((project) => (
-              <div key={project.id}>
-                <img
-                  src={`${project.image[0]}`}
-                  alt="Project Image"
-                  onClick={() => handleClickBox(project.id)}
-                />
-                <p>{project.title}</p>
-                <p>{project.description}</p>                
-                {/* <p>{project.specs}</p> */}
-              </div>
-            ))}
-          <div style={{ textAlign: 'center' }}>
-            <Button variant="contained" onClick={handlePrev} disabled={currentImage === 0}>
-              <Avatar sx={{ background: '#fff' }}>
-                <ArrowBackIosNewIcon sx={{ color: '#000' }} />
-              </Avatar>
-              Previous
-            </Button>
-            <Button variant="contained" onClick={handleNext} disabled={currentImage === projects.length - 1}>
-              Next
-              <Avatar sx={{ background: '#fff' }}>
-                <ArrowForwardIosIcon sx={{ color: '#000' }} />
-              </Avatar>
-            </Button>
-          </div>
-        </Grid>         {/* <Grid item sx={4}> */}
+          <Grid container spacing={2}>
+          {projects.map((project, index) => (
+            <Grid item key={index} xs={12} md={6} lg={index==0 ? 8 : 4}>
+              <Carousel showArrows={true} showThumbs={false}>
+                {project.image.map((val, imageIndex) => (
+                  <div key={imageIndex} className="image-slide">
+                    <img
+                      src={val.image}
+                      alt={`Project ${imageIndex + 1}`}
+                      style={{ height: "400px", objectFit: "cover", width: "100%" }}
+                    />
+                  </div>
+                ))}
+              </Carousel>
+              <p>{project.title}</p>
+              <p>{project.description}</p>
+            </Grid>
+          ))}
+        </Grid>
+        <Pagination
+          count={Math.ceil(projects.length / projectsPerPage)}
+          page={currentProjectPage}
+          onChange={handleProjectPageChange}
+          variant="outlined"
+          shape="rounded"
+          sx={{
+            mt: 3,
+            display: 'flex',
+            justifyContent: 'center',
+            '& .Mui-selected': {
+              backgroundColor: '#000000',
+              color: '#fff',
+            },
+          }}
+        />
 
-           
-            {/* <Grid item
-            xs={12}
-            md={6}
-            lg={4}
-            >
-               <Box sx={{px:1}}
-               >
-          <Box position="relative" 
-          sx={{ overflow: 'hidden', mt:2, border: '1px solid black' }}
-           width={420} 
-          height={240}>
-            <div
-            style={{
-              display: 'flex',
-              width: `${imgData.length * 100}%`,
-              height:'100%',
-              transform: `translateX(-${currentImage * (100 / imgData.length)}%)`,
-              transition: 'transform 0.3s ease-in-out',
-            }}
-          >
-            {imgData.map((img, index) => (
-              <img
-                key={index}
-                src={img}
-                alt={`Image ${index}`}
-                style={{ objectFit: 'cover', width: `${100 / imgData.length}%`, height: '100%' }}
-              />
-            ))}
-          </div>
-      <IconButton
-      className="hover-button"
-        style={{ position: 'absolute', top: '50%', left: 0, transform: 'translateY(-50%)',
-      
-      }}
-        onClick={handlePrev}
-        >
-        <Avatar sx={{background:'#fff'}}>
-        <ArrowBackIosNewIcon sx={{color:'#000'}} />
-        </Avatar>
-      </IconButton>
-
-      <IconButton
-      className="hover-button"
-        style={{ position: 'absolute', top: '50%', right: 0, transform: 'translateY(-50%)',}}
-        onClick={handleNext}
-      >
-        <Avatar sx={{background:'#fff'}}>
-        <ArrowForwardIosIcon sx={{color:'#000'}} />
-        </Avatar>
-      </IconButton>
-      <Typography
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: '50%',
-          transform: 'translateX(-50%)',
-        }}
-      >
-        Image {currentImage + 1} of {imgData.length}
-      </Typography>
-          </Box>
-          </Box>
-            </Grid> */}
-            {/* <Grid item
-            xs={12}
-            md={6}
-            lg={4}
-            >
-               <Box sx={{px:1}}>
-          <Box position="relative" 
-          sx={{ overflow: 'hidden', mt:2, border: '1px solid black' }}
-           width={420} 
-          height={240}>
-            <div
-            style={{
-              display: 'flex',
-              width: `${imgData.length * 100}%`,
-              height:'100%',
-              transform: `translateX(-${currentImage * (100 / imgData.length)}%)`,
-              transition: 'transform 0.3s ease-in-out',
-            }}
-          >
-            {imgData.map((img, index) => (
-              <img
-                key={index}
-                src={img}
-                alt={`Image ${index}`}
-                style={{ objectFit: 'cover', width: `${100 / imgData.length}%`, height: '100%' }}
-              />
-            ))}
-          </div>
-      <IconButton
-      className="hover-button"
-        style={{ position: 'absolute', top: '50%', left: 0, transform: 'translateY(-50%)',
-      
-      }}
-        onClick={handlePrev}
-        >
-        <Avatar sx={{background:'#fff'}}>
-        <ArrowBackIosNewIcon sx={{color:'#000'}} />
-        </Avatar>
-      </IconButton>
-
-      <IconButton
-      className="hover-button"
-        style={{ position: 'absolute', top: '50%', right: 0, transform: 'translateY(-50%)',}}
-        onClick={handleNext}
-      >
-        <Avatar sx={{background:'#fff'}}>
-        <ArrowForwardIosIcon sx={{color:'#000'}} />
-        </Avatar>
-      </IconButton>
-      <Typography
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: '50%',
-          transform: 'translateX(-50%)',
-        }}
-      >
-        Image {currentImage + 1} of {imgData.length}
-      </Typography>
-          </Box>
-          </Box>
-            </Grid> */}
-            {/* </Grid> */}
-          </Grid>
-         
-         
         </StyledRoot>
     </div>
   )

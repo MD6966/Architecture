@@ -89,30 +89,44 @@ const Chat = (props) => {
           </Box>
         </Toolbar>
       </AppBar>
-      <Box style={{ background: "white", height: "100vh" }}>
-        {userMessages.map((message, index) => (
-          <Texts key={index} val={message.text} />
-        ))}
+      <Box style={{ background: "white", height: "100vh", overflowY: 'auto' }}>
+  {userMessages.map((message, index) => (
+    <Texts key={index} val={message.text} />
+  ))}
+</Box>
         <Box
           sx={{
+            
+            width:'100%',
             position: 'fixed',
             top: 'auto',
             bottom: 0,
           }}
         >
-          <TextField
-            fullWidth
-            sx={{ mb: 1, ml: 1, width: '500px' }}
-            placeholder='Start Writing Here........'
-            value={newMessage + selectedEmoji}
-            onChange={(e) => setNewMessage(e.target.value)}
-          />
+         <TextField
+  fullWidth
+  sx={{
+    mb: 1,
+    ml: 1,
+    width: '500px',
+    // background: 'rgba(88, 88, 88, 0.8)',
+    background: 'white',
+    zIndex:222,
+   
+    
+  }}
+  placeholder='Start Writing Here........'
+  value={newMessage + selectedEmoji}
+  onChange={(e) => setNewMessage(e.target.value)}
+/>
           <Button
             variant='contained'
             className='bg-[#3E3A57]'
             sx={{ height: '55px' }}
             onClick={() => {
-              sendMessage(props.selectedUser.id, newMessage + selectedEmoji);
+              if (newMessage.trim() || selectedEmoji) {
+                sendMessage(props.selectedUser.id, newMessage + selectedEmoji);
+              }            
             }}
           >
             Send
@@ -129,10 +143,10 @@ const Chat = (props) => {
             😃
           </Button>
           {isEmojiPickerOpen && (
-          <EmojiPicker onEmojiClick={handleEmojiSelect} />
+          <EmojiPicker onEmojiClick={handleEmojiSelect}  />
           )}
         </Box>
-      </Box>
+      
     </StyledChat>
   );
 };

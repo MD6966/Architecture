@@ -56,7 +56,7 @@ export const addPost = (body)=> async(dispatch)=>{
 
        export const getAllPosts = ()=> async(dispatch)=>{ 
         try{
-         const res = await api.get(`${process.env.REACT_APP_URL}api/user/posts`,{
+         const res = await api.get(`${process.env.REACT_APP_URL}api/user/ShowPosts`,{
          })
          return res
          }catch(error){
@@ -105,7 +105,7 @@ console.log(err)
 }
 export const getAllProjects = () => async (dispatch)=>{
   try{
-    const res = await api.get(`${process.env.REACT_APP_URL}api/user/projects`,{  
+    const res = await api.get(`${process.env.REACT_APP_URL}api/user/ShowProjects`,{  
     })
     return res
   }catch(error){
@@ -113,3 +113,12 @@ export const getAllProjects = () => async (dispatch)=>{
   }
 
 } 
+export const DeleteProject = (id) => async(dispatch) => {
+  try{
+    const res = await api.delete(`${process.env.REACT_APP_URL}api/user/projects/${id}`,{
+    })
+    return res
+  }catch(err){
+    throw err
+  }
+}

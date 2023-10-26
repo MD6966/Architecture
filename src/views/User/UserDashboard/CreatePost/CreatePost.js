@@ -39,7 +39,7 @@ const CreatePost = () => {
       enqueueSnackbar(res.data.message, {
         variant: 'success'
       });
-      navigate('/')
+      // navigate('/')
     }
   })
   .catch((err) => {
