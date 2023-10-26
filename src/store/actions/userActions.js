@@ -113,3 +113,56 @@ export const getAllProjects = () => async (dispatch)=>{
   }
 
 } 
+export const createEvent = (formData) => async (dispatch)=>{
+  try{
+    const res = await api.post(`${process.env.REACT_APP_URL}api/admin/events`,formData,{  
+    })
+    return res
+  }catch(error){
+    throw error
+  }
+
+} 
+
+export const getAllEvents = () => async (dispatch)=>{
+  try{
+    const res = await api.get(`${process.env.REACT_APP_URL}api/admin/events`,{  
+    })
+    return res
+  }catch(error){
+    throw error
+  }
+
+} 
+
+export const deleteEvent = (id)=> async(dispatch)=>{ 
+  try{
+   const res = await api.delete(`${process.env.REACT_APP_URL}api/admin/events/${id}`,{
+   })
+   return res
+   }catch(error){
+   
+   throw error
+   }
+     }
+
+     export const editEvent = (body, id)=> async(dispatch)=>{ 
+      try{
+       const res = await api.put(`${process.env.REACT_APP_URL}api/admin/events/${id}`, body ,{
+       })
+       return res
+       }catch(error){
+       
+       throw error
+       }
+         }
+         export const DeleteProject = (id)=> async(dispatch)=>{ 
+          try{
+           const res = await api.delete(`${process.env.REACT_APP_URL}api/admin/${id}`,{
+           })
+           return res
+           }catch(error){
+           
+           throw error
+           }
+             }
