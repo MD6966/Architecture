@@ -105,7 +105,7 @@ console.log(err)
 }
 export const getAllProjects = () => async (dispatch)=>{
   try{
-    const res = await api.get(`${process.env.REACT_APP_URL}api/user/ShowProjects`,{  
+    const res = await api.get(`${process.env.REACT_APP_URL}api/user/projects`,{  
     })
     return res
   }catch(error){
@@ -113,12 +113,3 @@ export const getAllProjects = () => async (dispatch)=>{
   }
 
 } 
-export const DeleteProject = (id) => async(dispatch) => {
-  try{
-    const res = await api.delete(`${process.env.REACT_APP_URL}api/user/projects/${id}`,{
-    })
-    return res
-  }catch(err){
-    throw err
-  }
-}

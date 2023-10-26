@@ -29,9 +29,17 @@ import { useSelector } from "react-redux";
 import ViewProfile from "./views/ViewProfile/ViewProfile";
 import Allposts from "./views/User/UserDashboard/AllPosts/Allposts";
 import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes'
+// import ViewSinglePost from "./views/Single-Post/ViewSinglePost";
+// import { useSelector } from "react-redux";
+// import ViewProfile from "./views/ViewProfile/ViewProfile";
+// import Allposts from "./views/User/UserDashboard/AllPosts/Allposts";
+// import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes'
 import EditPost from "./views/User/UserDashboard/EditPost";
 import CreatePost from "./views/User/UserDashboard/CreatePost";
 import ProfilePage from "./layouts/ProfilePage/ProfilePage";
+import CompetetionHome from "./views/CompetetionPage/components/CompetitionHome/CompetetionHome";
+import AdminEvents from "./views/Admin/AdminEvents";
+import EditEvent from "./views/Admin/AdminEvents/components/EditEvent";
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state)=>state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state)=>state.admin.isAuthenticatedUser)
@@ -45,6 +53,7 @@ export default function Router() {
         { path: '/wiki', element: <WikiPage /> },
         { path: '/messages', element: <Messages /> },
         { path: '/competition', element: <CompetetionPage /> },
+        { path: '/home-competition', element: <CompetetionHome /> },
         { path: '/events', element: <EventsPage /> },
 
 
@@ -57,6 +66,8 @@ export default function Router() {
                     element: <AdminDashboard />,
                     children: [
                         { path: 'dashboard', element: <DashboardAdmin /> },
+                        {path:'events', element:<AdminEvents />},
+                        {path:'edit-event', element:<EditEvent />},
                         { path: 'leaderboard', element: <LeaderBoard /> },
                         { path: 'order', element: <Order /> },
                         
@@ -78,7 +89,8 @@ export default function Router() {
                         { path: 'all-posts', element: <Allposts /> },
                         { path: 'view-post', element: <ViewSinglePost /> },
                         {path:'edit-post', element:<EditPost />},
-                        {path:  'profile', element: <ViewProfile />},
+                        // {path:  'profile', element: <ViewProfile />},
+                        {path: 'profile',element: <ProfilePage/>},
                         { path: 'event', element: <Event /> },
                         { path: 'trophy', element: <Trophy /> },
                         { path: 'certificate', element: <Certificate /> },
@@ -111,10 +123,10 @@ export default function Router() {
             path: '/contactus',
             element: <ContactUs />
         },
-        {
-            path: '/profile',
-            element: <ProfilePage/>
-        }
+        // {
+        //     path: '/profile',
+        //     element: <ProfilePage/>
+        // }
     ]);
     return element;
 }

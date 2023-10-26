@@ -7,11 +7,12 @@ import LanguageIcon from '@mui/icons-material/Language';
 import { AiFillGoogleCircle } from 'react-icons/ai';
 import { FaFacebook } from 'react-icons/fa';
 import { AiFillTwitterCircle } from 'react-icons/ai';
-import NavBar from '../../views/Messages/components/NavBar';
+import Page from '../../components/page';
 import { Timeline, TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator } from 
 '@mui/lab';
 import ArrowCircleLeftRoundedIcon from '@mui/icons-material/ArrowCircleLeftRounded';
 import ArrowCircleRightRoundedIcon from '@mui/icons-material/ArrowCircleRightRounded';
+import ProfilePosts from './components/ProfilePosts';
 const itemData = [
   {
     img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
@@ -39,7 +40,7 @@ const itemData = [
   }
 ];
 const content = [
-    { label: "6 Likes", content: <ImageList sx={{ width: "100%", height: 450 }} cols={10} rowHeight={164}>...</ImageList> },
+    { label: "Posts", content: <ImageList sx={{ width: "100%", height: 450 }} cols={10} rowHeight={164}>...</ImageList> },
     { label: "4 Post", content: "Content for 4 Post" },
     { label: "2 Following", content: "Content for 2 Following" },
     { label: "3 Followers", content: "Content for 3 Followers" },
@@ -50,12 +51,12 @@ const ProfilePage = () => {
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
-  console.log(selectedTab)
-   const tabLabels = ["6 Likes","Project TimeLine", "4 Post", "2 Following", "3 Followers", "tags"];
+  // console.log(selectedTab)
+   const tabLabels = ["Posts","Project TimeLine", "4 Post", "2 Following", "3 Followers", "tags"];
 
  
   return (
-    <div>
+    <Page title="Profile">
       <CssBaseline />
 
       <>
@@ -67,22 +68,20 @@ const ProfilePage = () => {
             top: 0,
             left: 0,
             width: '100%',
-            height: '100vh', // Adjust the height as needed
+            minHeight: '100vh',
             // zIndex: 1,
             background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.9),rgba(255, 255, 255, 0.6)',
           }}
 
         >
-          <NavBar />
         </div>
 
         <Container maxWidth="lg" style={{ position: 'relative',  }}>
           <Box sx={{ marginTop: '150px', display: 'flex', color: 'white' }}>
             <Box>
-            <img src="assets/images/profilelogo.png" alt="Your Image" style={{ height: '200px', width: '200px' }} />
+            <img src="/assets/images/log.png" alt="Your Image" style={{ height: '200px', width: '200px' }} />
             <Button style={{marginLeft: '40px', backgroundColor:'Green', color:'white', marginTop:'10px '}}>Edit Profile</Button>
             </Box>
-
             <Box sx={{marginTop: '30px'}}>
               <Box
                 sx={{
@@ -115,6 +114,7 @@ const ProfilePage = () => {
         value={selectedTab}
         onChange={handleTabChange}
         centered
+        sx={{mb:4}}
       >
        {tabLabels.map((label, index)=>(
         <Tab key={index} label={label} sx={{
@@ -125,20 +125,9 @@ const ProfilePage = () => {
        ))}
       </Tabs>
 
-      {selectedTab === 0 && <div>
-        <ImageList sx={{ width: "100%" ,  paddingX: '22px'}} cols={10} rowHeight={164}>
-  {itemData.map((item) => (
-    <ImageListItem key={item.img} sx={{height:'220px', width: '220px',}}>
-      <img
-        srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-        src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-        alt={item.title}
-        loading="lazy"
-      />
-    </ImageListItem>
-  ))}
-</ImageList>
-         </div>}
+      {selectedTab === 0 && <Box>
+        <ProfilePosts />
+         </Box>}
       {selectedTab === 1 && <div>
         <Timeline position="alternate-reverse" sx={{color: "Green"}}>
       <TimelineItem>
@@ -216,7 +205,7 @@ const ProfilePage = () => {
 
        
       </>
-    </div>
+    </Page>
   );
 };
 
