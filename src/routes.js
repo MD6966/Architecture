@@ -89,7 +89,8 @@ export default function Router() {
                         { path: 'all-posts', element: <Allposts /> },
                         { path: 'view-post', element: <ViewSinglePost /> },
                         {path:'edit-post', element:<EditPost />},
-                        {path:  'profile', element: <ViewProfile />},
+                        // {path:  'profile', element: <ViewProfile />},
+                        {path: 'profile',element: <ProfilePage/>},
                         { path: 'event', element: <Event /> },
                         { path: 'trophy', element: <Trophy /> },
                         { path: 'certificate', element: <Certificate /> },
@@ -122,10 +123,10 @@ export default function Router() {
             path: '/contactus',
             element: <ContactUs />
         },
-        {
-            path: '/profile',
-            element: <ProfilePage/>
-        }
+        // {
+        //     path: '/profile',
+        //     element: <ProfilePage/>
+        // }
     ]);
     return element;
 }
