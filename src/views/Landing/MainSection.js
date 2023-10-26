@@ -136,9 +136,6 @@ const MainSection = () => {
         console.log(err)
       })
     }
-    const handleProjectPageChange = (event, value) => {
-      setCurrentProjectPage(value);
-    };
 
   return (
     <div>
@@ -271,8 +268,8 @@ const MainSection = () => {
         </Grid>
         <Pagination
           count={Math.ceil(projects.length / projectsPerPage)}
-          page={currentProjectPage}
-          onChange={handleProjectPageChange}
+          page={currentPage}
+          onChange={handlePageChange}
           variant="outlined"
           shape="rounded"
           sx={{
@@ -290,5 +287,4 @@ const MainSection = () => {
     </div>
   )
 }
-
-export default MainSection
+export default MainSection;
