@@ -1,4 +1,4 @@
-import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Dialog, DialogContent, Grid, IconButton, Stack, Typography, styled } from '@mui/material'
+import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Dialog, DialogContent, DialogTitle, Divider, Grid, IconButton, Stack, TextField, Toolbar, Typography, styled } from '@mui/material'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
@@ -6,15 +6,34 @@ import { getAllPosts } from '../../../store/actions/userActions'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import moment from 'moment';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import CommentIcon from '@mui/icons-material/Comment';
+import { CloseOutlined } from '@mui/icons-material'
+import SendIcon from '@mui/icons-material/Send';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ImageIcon from '@mui/icons-material/Image';
+import WorkIcon from '@mui/icons-material/Work';
+import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 const StyledRoot = styled(Box)(({theme})=> ({
     minHeight:'50vh',
     // background:'#e2e2e2',
     position:'relative'
 }))
+const commentsData = [
+    {name:'John Doe', comment:'This is the Good imagee adfhjaskdfh asdfklasdhflkasdhfkasdf hdsflksdhjasdlkfjasldf hdflkasdjhfasdhjflkasdhfkjlasd', time:'2h ago'},
+    {name:'Alice Doe', comment:'image', time:'2mo ago'},
+    {name:'Caprie', comment:'This is the Good', time:'2d ago'},
+    {name:'Catie', comment:'This is image', time:'2w ago'},
+    {name:'Steves', comment:'I like this image', time:'2min ago'},
+    {name:'John Abraham', comment:'This type', time:'23h ago'},
+
+]
 const ProfilePosts = () => {
     const [posts, setPosts] = React.useState([])
+    const [postData, setPostData] = React.useState([]) 
+    const [open, setOpen] = React.useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const getPosts = () => {
@@ -29,9 +48,17 @@ const ProfilePosts = () => {
     },[])
 
     const handlePostClick = (data) => {
-        // console.log(data)
         navigate("/user/view-post",{state:data})
     }
+    const handleopen = (val) => {
+        setPostData(val)
+        setOpen(true)
+    }
+    const handleClose = () => {
+        setOpen(false)
+        setPostData([])
+    }
+    console.log(postData)
   return (
     <StyledRoot sx={{px:15, mb:5}}>
      <Grid container spacing={2}>
@@ -98,7 +125,9 @@ const ProfilePosts = () => {
                 <IconButton aria-label="add to favorites">
                 <FavoriteIcon />
                 </IconButton>
-                <IconButton>
+                <IconButton
+                onClick={()=>handleopen(val)}
+                >
                     <CommentIcon />
                 </IconButton>
                 <IconButton aria-label="share">
@@ -117,10 +146,106 @@ const ProfilePosts = () => {
                 })
             }
         </Grid>
-        <Dialog open={true}  maxWidth="xl">
-            <DialogContent>
-                dassad
-            </DialogContent>
+        <Dialog open={open}
+        onClose={handleClose}
+        sx={{
+            "& .MuiDialog-container": {
+              "& .MuiPaper-root": {
+                width: "100%",
+                maxWidth: "1200px",
+              },
+            },
+          }}
+        >
+            {/* <DialogTitle>
+                <IconButton sx={{float:'right'}}>
+                    <CloseOutlined sx={{fontSize:'2rem'}} />
+                </IconButton>
+            </DialogTitle> */}
+         <DialogContent>
+    <Box sx={{ display: 'flex', position: 'relative', }}>
+      <Box sx={{
+        width: '35%',
+        height: '70vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        {postData && postData.image && (
+          <img
+            src={`${process.env.REACT_APP_URL}${postData.image}`}
+            alt="Post Image"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
+          />
+        )}
+       
+      </Box>
+      <Box sx={{ ml: 2, borderLeft: '1px dashed grey', width:'75%', position: 'relative' }}>
+      <Box 
+      sx=
+      {{display:'flex', 
+      background:'#fff', 
+      position: 'absolute', bottom: 0, right: 0, left: 0
+      }}>
+                <TextField
+                sx={{ml:1}}
+                  placeholder="Add comment"
+                  variant="outlined"
+                  size="small"
+                //   value={comment}
+                //   onChange={handleCommentChange}
+                  fullWidth
+                  />
+                <IconButton
+                //   disabled={!comment}
+                  //   onClick={handleSendComment}
+                  >
+                  <SendIcon />
+                </IconButton>
+        </Box>
+        <Toolbar>
+            <Typography variant='h4' fontWeight="bold" >
+                {postData.title}
+                </Typography> 
+                <Box sx={{ml:'auto'}}>
+          <IconButton onClick={handleClose}>
+            <CloseOutlined sx={{fontSize:'1.75rem'}} />
+          </IconButton>
+        </Box>
+        </Toolbar>
+        <Divider />
+        <Box sx={{
+            maxHeight:'50vh',
+            overflowY:'scroll'
+        }}>
+        {
+            commentsData.map((val)=> {
+                return(
+                <List sx={{ width: '100%',  bgcolor: 'background.paper' }}>
+                <ListItem>
+                  <ListItemAvatar>
+                    <Avatar />
+                  </ListItemAvatar>
+                  <ListItemText primary={
+                    <Typography >
+                        <Typography display="inline" fontWeight="bold"> {val.name} &nbsp;</Typography>
+                        {val.comment}
+                    </Typography>
+                  } secondary={val.time} />
+                </ListItem>
+              </List>
+
+)
+})
+}
+</Box>
+      </Box>
+    </Box>
+  </DialogContent>
         </Dialog>
     </StyledRoot>
   )
