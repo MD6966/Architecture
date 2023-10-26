@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardActionArea, CardContent, CardMedia, Divider, Grid, Typography, styled } from '@mui/material'
+import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Divider, Grid, IconButton, Typography, styled } from '@mui/material'
 import React from 'react'
 import Page from '../../../components/page'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -6,8 +6,13 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AddEvent from './components/AddEvent';
 import { useDispatch } from 'react-redux';
-import { getAllEvents } from '../../../store/actions/userActions';
+import { deleteEvent, getAllEvents } from '../../../store/actions/userActions';
 import { ThreeDots } from 'react-loader-spinner';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import { useSnackbar } from 'notistack';
+import { Link, useNavigate } from 'react-router-dom';
 const StyledRoot = styled(Box)(({theme})=>({
     minHeight:'100vh',
     padding:theme.spacing(4)
@@ -15,8 +20,11 @@ const StyledRoot = styled(Box)(({theme})=>({
 const AdminEvents = () => {
     const [open,setOpen]=React.useState(false)
     const [events, setEvents] = React.useState([])
-    const [loading, setLoading] = React.useState(true)
+    const [loading, setLoading] = React.useState(false)
+    const [delLoading, setDelLoading] = React.useState(false)
     const dispatch = useDispatch()
+    const {enqueueSnackbar} = useSnackbar()
+    const navigate = useNavigate()
     const getEvents = () => {
         setLoading(true)
         dispatch(getAllEvents()).then((result) => {
@@ -31,6 +39,37 @@ const AdminEvents = () => {
     React.useEffect(() => {
         getEvents()
     }, [])
+    const handleDelete = (id) => {
+        setDelLoading(true)
+        confirmAlert({
+          title: 'Delete?',
+          message: 'Are you sure to want to delete this event ?',
+          buttons:[
+            {
+              label: 'Yes',
+              onClick: ()=>{
+                dispatch(deleteEvent(id)).then((result) => {
+                    setDelLoading(false)
+                    enqueueSnackbar(result.data.message, {
+                        variant:'success'
+                    })
+                    getEvents()
+                }).catch((err) => {
+                    setDelLoading(false)
+                    console.log(err)
+                });
+              }
+            },
+           {
+            label: 'No',
+           }
+      
+          ]
+        })
+      }
+      const handleEdit = (data) => {
+        navigate('/admin/edit-event', {state:data})
+      }
   return (
     <Page title="Events Manager">
         <StyledRoot>
@@ -94,11 +133,35 @@ const AdminEvents = () => {
 <Typography  sx={{color: 'blue'}}>Show in Map</Typography>
          </Box>
           </Box>
-          <Button style={{backgroundColor: '#B2BEB5', color: 'white',borderRadius: '18px', marginTop: "12px" }} fullWidth>Join Now</Button>
-         
-        
+          <Button 
+          style={{
+            backgroundColor: '#B2BEB5', 
+            color: 'white',
+            borderRadius: '18px', 
+            marginTop: "12px" 
+            }} fullWidth>
+                Join Now
+                </Button>
+                
         </CardContent>
       </CardActionArea>
+      <CardActions>
+      <Box sx={{mt:2}}>
+                    <Button variant='outlined' sx={{mr:2}}
+                    onClick={()=>handleEdit(val)}
+                    >
+                        Edit 
+                    </Button>
+                    <Button color='error' variant={delLoading ? 'disabled' : 'outlined'}
+                    onClick={()=>handleDelete(val.id)}
+                    endIcon={
+                        <DeleteIcon color="error" />
+                    }
+                    >
+                        {delLoading ? 'Please Wait...' : 'Delete'}
+                    </Button>
+                </Box>
+      </CardActions>
     </Card>
                 
                 </Grid>
