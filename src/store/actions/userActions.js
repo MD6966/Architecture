@@ -57,6 +57,10 @@ export const addPost = (body)=> async(dispatch)=>{
         try{
          const res = await api.post(`${process.env.REACT_APP_URL}api/user/likes`,body,{
          })
+         dispatch({
+          type: 'LIKE_SUCCESS',
+          payload: res
+        });
          return res
          }catch(error){
          

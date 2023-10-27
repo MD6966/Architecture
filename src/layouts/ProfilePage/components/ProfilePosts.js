@@ -1,8 +1,8 @@
 import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Dialog, DialogContent, DialogTitle, Divider, Grid, IconButton, Stack, TextField, Toolbar, Typography, styled } from '@mui/material'
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
-import { getAllPosts } from '../../../store/actions/userActions'
+import { getAllPosts, likePost } from '../../../store/actions/userActions'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import moment from 'moment';
@@ -35,8 +35,24 @@ const ProfilePosts = () => {
     const [postData, setPostData] = React.useState([]) 
     const [open, setOpen] = React.useState(false)
     const [likes, setLikes] = React.useState({});
+    // const [liked, setLiked] = React.useState(false)
+    const [cValue , setCValue] = React.useState('')
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    // const user = useSelector((state)=>state.admin.user)
+    // const liked_id = useSelector((state)=>state.user.likes_id.user_id)
+    // console.log(liked_id)
+    const handleChange = (e) => {
+        setCValue(e.target.value)
+    }
+    const handleSubmitComment = (e) => {
+        e.preventDefault()
+        const body = {
+            object_id:postData.id,
+            comment:cValue
+        }
+        console.log(body)
+    }
     const getPosts = () => {
         dispatch(getAllPosts()).then((result) => {
             setPosts(result.data.payload)
@@ -47,7 +63,9 @@ const ProfilePosts = () => {
     React.useEffect(()=> {
         getPosts()
     },[])
-
+    // React.useEffect(()=> {
+    //     getPosts()
+    // },[posts])
     const handlePostClick = (data) => {
         navigate("/user/view-post",{state:data})
     }
@@ -66,14 +84,22 @@ const ProfilePosts = () => {
           ...prevLikes,
           [postId]: !prevLikes[postId],
         }));
-    
-        // You can also send an API request to update the like count on the server here.
+        const body = {
+            object_type:'Post',
+            object_id:postId,
+        }
+        dispatch(likePost(body)).then((result) => {
+            console.log(result)
+        }).catch((err) => {
+            console.log(err)
+        });
       };
   return (
     <StyledRoot sx={{px:15, mb:5}}>
      <Grid container spacing={2}>
             {
                 posts.map((val)=> {
+                    // console.log(val.likes)
                     const formattedDate = moment(val.created_at).format("MMMM D, YYYY");
                     return(
             <Grid item
@@ -149,7 +175,7 @@ const ProfilePosts = () => {
             </CardActions>
                 <CardActions>
                     <Stack>
-                <Typography sx={{color:'#878787', fontWeight:'bold'}}>0 likes</Typography>
+                <Typography sx={{color:'#878787', fontWeight:'bold'}}>{val.likes.length} likes</Typography>
                 <Typography sx={{color:'#878787', fontWeight:'bold'}}>0 comments</Typography>
                     </Stack>
                 </CardActions>
@@ -209,13 +235,13 @@ const ProfilePosts = () => {
                   placeholder="Add comment"
                   variant="outlined"
                   size="small"
-                //   value={comment}
-                //   onChange={handleCommentChange}
+                  value={cValue}
+                  onChange={handleChange}
                   fullWidth
                   />
                 <IconButton
-                //   disabled={!comment}
-                  //   onClick={handleSendComment}
+                  disabled={!cValue}
+                    onClick={handleSubmitComment}
                   >
                   <SendIcon />
                 </IconButton>
