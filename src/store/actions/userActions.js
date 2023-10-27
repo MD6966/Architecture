@@ -53,6 +53,16 @@ export const addPost = (body)=> async(dispatch)=>{
      }
        }
 
+       export const likePost = (body)=> async(dispatch)=>{ 
+        try{
+         const res = await api.post(`${process.env.REACT_APP_URL}api/user/likes`,body,{
+         })
+         return res
+         }catch(error){
+         
+         throw error
+         }
+           }
 
        export const getAllPosts = ()=> async(dispatch)=>{ 
         try{
@@ -105,7 +115,7 @@ console.log(err)
 }
 export const getAllProjects = () => async (dispatch)=>{
   try{
-    const res = await api.get(`${process.env.REACT_APP_URL}api/user/projects`,{  
+    const res = await api.get(`${process.env.REACT_APP_URL}api/user/ShowProjects`,{  
     })
     return res
   }catch(error){

@@ -34,6 +34,7 @@ const ProfilePosts = () => {
     const [posts, setPosts] = React.useState([])
     const [postData, setPostData] = React.useState([]) 
     const [open, setOpen] = React.useState(false)
+    const [likes, setLikes] = React.useState({});
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const getPosts = () => {
@@ -58,7 +59,16 @@ const ProfilePosts = () => {
         setOpen(false)
         setPostData([])
     }
-    console.log(postData)
+    // console.log(postData)
+    const handleLikeClick = (postId) => {
+        // Toggle the like state for the post
+        setLikes((prevLikes) => ({
+          ...prevLikes,
+          [postId]: !prevLikes[postId],
+        }));
+    
+        // You can also send an API request to update the like count on the server here.
+      };
   return (
     <StyledRoot sx={{px:15, mb:5}}>
      <Grid container spacing={2}>
@@ -122,9 +132,12 @@ const ProfilePosts = () => {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                <FavoriteIcon />
-                </IconButton>
+            <IconButton
+                    aria-label="add to favorites"
+                    onClick={() => handleLikeClick(val.id)}
+                  >
+                    <FavoriteIcon color={likes[val.id] ? 'error' : 'inherit'} />
+                  </IconButton>
                 <IconButton
                 onClick={()=>handleopen(val)}
                 >
