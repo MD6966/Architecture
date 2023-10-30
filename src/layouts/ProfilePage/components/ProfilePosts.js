@@ -16,6 +16,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ImageIcon from '@mui/icons-material/Image';
 import WorkIcon from '@mui/icons-material/Work';
 import BeachAccessIcon from '@mui/icons-material/BeachAccess';
+import { addComment, getPostComments } from '../../../store/actions/commentsActions'
 const StyledRoot = styled(Box)(({theme})=> ({
     minHeight:'50vh',
     // background:'#e2e2e2',
@@ -34,24 +35,40 @@ const ProfilePosts = () => {
     const [posts, setPosts] = React.useState([])
     const [postData, setPostData] = React.useState([]) 
     const [open, setOpen] = React.useState(false)
-    const [likes, setLikes] = React.useState({});
+    // const [likes, setLikes] = React.useState({});
     // const [liked, setLiked] = React.useState(false)
     const [cValue , setCValue] = React.useState('')
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    // const user = useSelector((state)=>state.admin.user)
+    const user = useSelector((state)=>state.admin.user)
     // const liked_id = useSelector((state)=>state.user.likes_id.user_id)
     // console.log(liked_id)
     const handleChange = (e) => {
         setCValue(e.target.value)
     }
+
+    const getComments = () => {
+        dispatch(getPostComments()).then((result) => {
+            console.log(result)
+        }).catch((err) => {
+            console.log(err)
+        });
+    }
+    React.useEffect(()=> {
+        getComments()
+    },[])
     const handleSubmitComment = (e) => {
         e.preventDefault()
         const body = {
+            object_type:'Post',
             object_id:postData.id,
             comment:cValue
         }
-        console.log(body)
+        dispatch(addComment(body)).then((result) => {
+            console.log(result)
+        }).catch((err) => {
+            console.log(err)
+        });
     }
     const getPosts = () => {
         dispatch(getAllPosts()).then((result) => {
@@ -64,8 +81,9 @@ const ProfilePosts = () => {
         getPosts()
     },[])
     // React.useEffect(()=> {
-    //     getPosts()
-    // },[posts])
+    // liked_id === user_id
+    // console.log(likeD)
+    // },[])
     const handlePostClick = (data) => {
         navigate("/user/view-post",{state:data})
     }
@@ -80,10 +98,10 @@ const ProfilePosts = () => {
     // console.log(postData)
     const handleLikeClick = (postId) => {
         // Toggle the like state for the post
-        setLikes((prevLikes) => ({
-          ...prevLikes,
-          [postId]: !prevLikes[postId],
-        }));
+        // setLikes((prevLikes) => ({
+        //   ...prevLikes,
+        //   [postId]: !prevLikes[postId],
+        // }));
         const body = {
             object_type:'Post',
             object_id:postId,
@@ -100,6 +118,8 @@ const ProfilePosts = () => {
             {
                 posts.map((val)=> {
                     // console.log(val.likes)
+                    const liked = val.likes.some((likedItem) => likedItem.user.id === user.id);
+                    // console.log(liked)
                     const formattedDate = moment(val.created_at).format("MMMM D, YYYY");
                     return(
             <Grid item
@@ -162,7 +182,7 @@ const ProfilePosts = () => {
                     aria-label="add to favorites"
                     onClick={() => handleLikeClick(val.id)}
                   >
-                    <FavoriteIcon color={likes[val.id] ? 'error' : 'inherit'} />
+                    <FavoriteIcon color={liked ? 'error' : 'inherit'} />
                   </IconButton>
                 <IconButton
                 onClick={()=>handleopen(val)}

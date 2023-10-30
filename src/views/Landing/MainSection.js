@@ -252,7 +252,8 @@ const MainSection = () => {
             <Grid item key={index} xs={12} md={6} lg={index==0 ? 8 : 4}>
               <Carousel showArrows={true} showThumbs={false}>
                 {project.image.map((val, imageIndex) => (
-                  <div key={imageIndex} className="image-slide">
+                  <div key={imageIndex} className="image-slide"
+                  >
                     <img
                       src={val.image}
                       alt={`Project ${imageIndex + 1}`}

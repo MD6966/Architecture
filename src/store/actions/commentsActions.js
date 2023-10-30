@@ -32,3 +32,14 @@ export const addComment = (body)=> async(dispatch)=>{
      throw error
      }
        }
+
+       export const getPostComments = ()=> async(dispatch)=>{ 
+        try{
+         const res = await api.get(`${process.env.REACT_APP_URL}api/user/postcomments`,{
+         })
+         return res
+         }catch(error){
+         
+         throw error
+         }
+           }
