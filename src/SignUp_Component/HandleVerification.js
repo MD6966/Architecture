@@ -5,9 +5,8 @@ import { verificationOTPCode } from '../store/actions/adminActions';
 import { useNavigate } from 'react-router';
 import { useSnackbar } from 'notistack';
 
-
 const HandleVerification = ({ props }) => {
-  const {enqueueSnackbar} = useSnackbar()
+  const { enqueueSnackbar } = useSnackbar();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const user_id = useSelector((state) => state.auth.user_id);
@@ -41,20 +40,22 @@ const HandleVerification = ({ props }) => {
     try {
       const res = await dispatch(verificationOTPCode(otp, user_id));
       console.log(res); // Log the response to check its structure
+
       if (res.status === 200) {
+        // Only proceed and navigate when the OTP is valid
         enqueueSnackbar(res.data.message, {
-          variant:'success'
+          variant: 'success',
         });
         navigate('/login');
         console.log(res, 'Signup was successful');
+      } else {
+        setApiError('Invalid OTP. Please try again.');
       }
     } catch (error) {
       console.log(error);
-
       setApiError('Invalid OTP. Please try again.');
     }
-    
-    
+
     setIsSubmitting(false);
   };
 
@@ -85,10 +86,7 @@ const HandleVerification = ({ props }) => {
             disabled={isSubmitting}
           >
             {isSubmitting ? (
-              <CircularProgress
-                size={24}
-                sx={{ color: 'black'}}
-              />
+              <CircularProgress size={24} sx={{ color: 'black' }} />
             ) : (
               'Next'
             )}
@@ -96,7 +94,6 @@ const HandleVerification = ({ props }) => {
         </Box>
       </form>
     </>
-    
   );
 };
 

@@ -40,16 +40,18 @@ import ProfilePage from "./layouts/ProfilePage/ProfilePage";
 import CompetetionHome from "./views/CompetetionPage/components/CompetitionHome/CompetetionHome";
 import AdminEvents from "./views/Admin/AdminEvents";
 import EditEvent from "./views/Admin/AdminEvents/components/EditEvent";
+import ViewProject from "./views/Landing/ViewProject";
 export default function Router() {
-    const isAuthenticatedAdmin = useSelector((state)=>state.admin.isAuthenticatedAdmin)
-    const isAuthenticatedUser = useSelector((state)=>state.admin.isAuthenticatedUser)
+    const isAuthenticatedAdmin = useSelector((state) => state.admin.isAuthenticatedAdmin)
+    const isAuthenticatedUser = useSelector((state) => state.admin.isAuthenticatedUser)
     let element = useRoutes([
         {
             path: '/',
-            element: <Landing />,
+            element: <Landing />
         },
         { path: '/login', element: <Login /> },
-        { path: '/signup', element: <SignUp/> },
+        { path: "/viewproject/:id", element: <ViewProject /> },
+        { path: '/signup', element: <SignUp /> },
         { path: '/wiki', element: <WikiPage /> },
         { path: '/messages', element: <Messages /> },
         { path: '/competition', element: <CompetetionPage /> },
@@ -58,43 +60,43 @@ export default function Router() {
 
 
         {
-            element: <ProtectedRoutes isLogged={isAuthenticatedAdmin}/>,
-            children:[
+            element: <ProtectedRoutes isLogged={isAuthenticatedAdmin} />,
+            children: [
 
                 {
                     path: 'admin',
                     element: <AdminDashboard />,
                     children: [
                         { path: 'dashboard', element: <DashboardAdmin /> },
-                        {path:'events', element:<AdminEvents />},
-                        {path:'edit-event', element:<EditEvent />},
+                        { path: 'events', element: <AdminEvents /> },
+                        { path: 'edit-event', element: <EditEvent /> },
                         { path: 'leaderboard', element: <LeaderBoard /> },
                         { path: 'order', element: <Order /> },
-                        
+
                     ]
                 },
             ]
         },
         {
-            element: <ProtectedRoutes isLogged={isAuthenticatedUser}/>,
-            children:[
-                
+            element: <ProtectedRoutes isLogged={isAuthenticatedUser} />,
+            children: [
+
                 {
                     path: 'user',
                     element: <UserDashboard />,
                     children: [
                         { path: 'dashboard', element: <DashboardUser /> },
-                        {path: 'createpost', element: <CreatePost/>},
+                        { path: 'createpost', element: <CreatePost /> },
                         { path: 'add-post', element: <AddPost /> },
                         { path: 'all-posts', element: <Allposts /> },
                         { path: 'view-post', element: <ViewSinglePost /> },
-                        {path:'edit-post', element:<EditPost />},
+                        { path: 'edit-post', element: <EditPost /> },
                         // {path:  'profile', element: <ViewProfile />},
-                        {path: 'profile',element: <ProfilePage/>},
+                        { path: 'profile', element: <ProfilePage /> },
                         { path: 'event', element: <Event /> },
                         { path: 'trophy', element: <Trophy /> },
                         { path: 'certificate', element: <Certificate /> },
-                        
+
                     ]
                 },
             ]
@@ -104,8 +106,8 @@ export default function Router() {
             element: <Home />,
         },
         {
-            path:'/add-post',
-            element:<AddPost/>
+            path: '/add-post',
+            element: <AddPost />
         },
         {
             path: '*',
@@ -116,7 +118,7 @@ export default function Router() {
             element: <Sponsers />
         },
         {
-            path:'/single-post',
+            path: '/single-post',
             element: <SinglePost />
         },
         {

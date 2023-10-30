@@ -38,6 +38,8 @@
     "react-router": "^6.4.1",
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
+    "react-spring": "^9.7.3",
+    "react-spring-carousel": "^2.0.19",
     "react-swipeable-views": "^0.14.0",
     "reactjs-social-login": "^2.6.3",
     "redux-persist": "^6.0.0",

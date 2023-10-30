@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Container, CssBaseline, Toolbar, Typography, Paper, Grid, Box, Link, ImageList, ImageListItem, Button,} from '@mui/material';
+import { AppBar, Container, CssBaseline, Toolbar, Typography, Paper, Grid, Box, Link, ImageList, ImageListItem, Button, Pagination, } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import VerifiedIcon from '@mui/icons-material/Verified';
@@ -8,11 +8,14 @@ import { AiFillGoogleCircle } from 'react-icons/ai';
 import { FaFacebook } from 'react-icons/fa';
 import { AiFillTwitterCircle } from 'react-icons/ai';
 import Page from '../../components/page';
-import { Timeline, TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator } from 
-'@mui/lab';
+import { Timeline, TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator } from
+  '@mui/lab';
 import ArrowCircleLeftRoundedIcon from '@mui/icons-material/ArrowCircleLeftRounded';
 import ArrowCircleRightRoundedIcon from '@mui/icons-material/ArrowCircleRightRounded';
 import ProfilePosts from './components/ProfilePosts';
+import { useDispatch } from 'react-redux';
+import { getAllProjects } from '../../store/actions/userActions';
+import { Carousel } from 'react-responsive-carousel';
 const itemData = [
   {
     img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
@@ -40,11 +43,11 @@ const itemData = [
   }
 ];
 const content = [
-    { label: "Posts", content: <ImageList sx={{ width: "100%", height: 450 }} cols={10} rowHeight={164}>...</ImageList> },
-    { label: "4 Post", content: "Content for 4 Post" },
-    { label: "2 Following", content: "Content for 2 Following" },
-    { label: "3 Followers", content: "Content for 3 Followers" },
-  ];
+  { label: "Posts", content: <ImageList sx={{ width: "100%", height: 450 }} cols={10} rowHeight={164}>...</ImageList> },
+  { label: "4 Post", content: "Content for 4 Post" },
+  { label: "2 Following", content: "Content for 2 Following" },
+  { label: "3 Followers", content: "Content for 3 Followers" },
+];
 const ProfilePage = () => {
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -52,17 +55,51 @@ const ProfilePage = () => {
     setSelectedTab(newValue);
   };
   // console.log(selectedTab)
-   const tabLabels = ["Posts","Project TimeLine", "4 Post", "2 Following", "3 Followers", "tags"];
+  const tabLabels = ["Posts", "Project TimeLine", "4 Post", "2 Following", "3 Followers", "tags"];
+  const dispatch = useDispatch()
+  const [projects, setProject] = React.useState([])
+  const [Gproject, setGproject] = useState([])
+  const [gridColumns, setGridColumns] = useState(4);
+  const getAllProject = () => {
+    // setLoading(true)
+    dispatch(getAllProjects()).then((res) => {
+      console.log(res.data.payload)
 
- 
+      setProject(res.data.payload)
+      // setLoading(false)
+      // console.log(res.data.payload)
+      setGproject(res.data.payload[0]);
+      console.log(res.data.payload[0]);
+      if (res.data.payload[0]) {
+        setGridColumns(8);
+      }
+    }).catch((err) => {
+      // setLoading(false)
+      console.log(err)
+    })
+
+  }
+  React.useEffect(() => {
+    getAllProject()
+  }, [])
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const projectsPerPage = 5;
+  const indexOfLastProject = currentPage * projectsPerPage;
+  const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+  const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
+  // Change page
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+    event.preventDefault();
+  };
   return (
     <Page title="Profile">
       <CssBaseline />
 
       <>
-         {/* Black overlay at the top */}
-         
-         <div
+        {/* Black overlay at the top */}
+
+        <div
           style={{
             position: 'absolute',
             top: 0,
@@ -76,13 +113,13 @@ const ProfilePage = () => {
         >
         </div>
 
-        <Container maxWidth="lg" style={{ position: 'relative',  }}>
+        <Container maxWidth="lg" style={{ position: 'relative', }}>
           <Box sx={{ marginTop: '150px', display: 'flex', color: 'white' }}>
             <Box>
-            <img src="/assets/images/log.png" alt="Your Image" style={{ height: '200px', width: '200px' }} />
-            <Button style={{marginLeft: '40px', backgroundColor:'Green', color:'white', marginTop:'10px '}}>Edit Profile</Button>
+              <img src="/assets/images/log.png" alt="Your Image" style={{ height: '200px', width: '200px' }} />
+              <Button style={{ marginLeft: '40px', backgroundColor: 'Green', color: 'white', marginTop: '10px ' }}>Edit Profile</Button>
             </Box>
-            <Box sx={{marginTop: '30px'}}>
+            <Box sx={{ marginTop: '30px' }}>
               <Box
                 sx={{
                   display: 'flex',
@@ -97,7 +134,7 @@ const ProfilePage = () => {
                 <Typography variant="h3">Bader</Typography>
                 <VerifiedIcon sx={{ color: 'blue', fontSize: '30px' }} />
               </Box>
-              <Typography sx={{ marginLeft: '25px', marginTop:'6px' }}>bader m alsuliamani , archyit , makkah</Typography>
+              <Typography sx={{ marginLeft: '25px', marginTop: '6px' }}>bader m alsuliamani , archyit , makkah</Typography>
               <Box sx={{ marginLeft: '25px', marginTop: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
                 <Link href="#" underline="none" sx={{ backgroundColor: 'white', color: 'black', padding: '3px 15px', borderRadius: '5px' }}>
                   <LanguageIcon /> "'http//wwmoazcom'"
@@ -110,100 +147,138 @@ const ProfilePage = () => {
           </Box>
         </Container>
         <Box sx={{ width: '100%' }}>
-      <Tabs
-        value={selectedTab}
-        onChange={handleTabChange}
-        centered
-        sx={{mb:4}}
-      >
-       {tabLabels.map((label, index)=>(
-        <Tab key={index} label={label} sx={{
-          color: selectedTab === index ? 'blue' : 'white',
-          fontSize: '17px',
-          fontWeight: 'bold'
-        }}/>
-       ))}
-      </Tabs>
+          <Tabs
+            value={selectedTab}
+            onChange={handleTabChange}
+            centered
+            sx={{ mb: 4 }}
+          >
+            {tabLabels.map((label, index) => (
+              <Tab key={index} label={label} sx={{
+                color: selectedTab === index ? 'blue' : 'white',
+                fontSize: '17px',
+                fontWeight: 'bold'
+              }} />
+            ))}
+          </Tabs>
 
-      {selectedTab === 0 && <Box>
-        <ProfilePosts />
-         </Box>}
-      {selectedTab === 1 && <div>
-        <Timeline position="alternate-reverse" sx={{color: "Green"}}>
-      <TimelineItem>
-        <TimelineSeparator>
-          <ArrowCircleLeftRoundedIcon />
-          <TimelineConnector sx={{backgroundColor: 'black'}}/>
-        </TimelineSeparator>
-        <TimelineContent sx={{fontSize:'20px'}}>2022 | Title</TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator>
-          <ArrowCircleRightRoundedIcon />
-          <TimelineConnector sx={{backgroundColor: 'black'}}/>
-        </TimelineSeparator>
-        <TimelineContent sx={{fontSize:'20px'}}>2023 | Title</TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator>
-          <ArrowCircleLeftRoundedIcon />
-          <TimelineConnector sx={{backgroundColor: 'black'}}/>
-        </TimelineSeparator>
-        <TimelineContent sx={{fontSize:'20px'}}>2021 | Title</TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator >
-          <ArrowCircleRightRoundedIcon />
-        </TimelineSeparator>
-        <TimelineContent sx={{fontSize:'20px'}}>2020 | Title</TimelineContent>
-      </TimelineItem>
-    </Timeline>
-        </div>}
-      {selectedTab === 2 && <div>
-        <ImageList sx={{ width: "100%", paddingX: '25px' }} cols={10} rowHeight={164}>
-  {itemData.map((item) => (
-    <ImageListItem key={item.img} sx={{height:'220px', width: '220px'}}>
-      <img
-        srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-        src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-        alt={item.title}
-        loading="lazy"
-      />
-    </ImageListItem>
-  ))}
-</ImageList></div>}
-      {selectedTab === 3 && <div>
-        <ImageList sx={{ width: "100%" }} cols={10} rowHeight={164}>
-  {itemData.map((item) => (
-    <ImageListItem key={item.img} sx={{height:'220px', width: '220px'}}>
-      <img
-        srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-        src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-        alt={item.title}
-        loading="lazy"
-      />
-    </ImageListItem>
-  ))}
-</ImageList></div>}
-{selectedTab === 4 && <div>
-        <ImageList sx={{ width: "100%", paddingX: '22px' }} cols={10} rowHeight={164}>
-  {itemData.map((item) => (
-    <ImageListItem key={item.img} sx={{height:'220px', width: '220px'}}>
-      <img
-        srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-        src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-        alt={item.title}
-        loading="lazy"
-      />
-    </ImageListItem>
-  ))}
-</ImageList></div>}
-{selectedTab === 5 && <div>
-  This is Tag section
-  </div>}
-    </Box>
+          {selectedTab === 0 && <Box>
+            <ProfilePosts />
+          </Box>}
+          {selectedTab === 1 && <div>
+            {/* <Timeline position="alternate-reverse" sx={{ color: "Green" }}>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <ArrowCircleLeftRoundedIcon />
+                  <TimelineConnector sx={{ backgroundColor: 'black' }} />
+                </TimelineSeparator>
+                <TimelineContent sx={{ fontSize: '20px' }}>2022 | Title</TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <ArrowCircleRightRoundedIcon />
+                  <TimelineConnector sx={{ backgroundColor: 'black' }} />
+                </TimelineSeparator>
+                <TimelineContent sx={{ fontSize: '20px' }}>2023 | Title</TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <ArrowCircleLeftRoundedIcon />
+                  <TimelineConnector sx={{ backgroundColor: 'black' }} />
+                </TimelineSeparator>
+                <TimelineContent sx={{ fontSize: '20px' }}>2021 | Title</TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator >
+                  <ArrowCircleRightRoundedIcon />
+                </TimelineSeparator>
+                <TimelineContent sx={{ fontSize: '20px' }}>2020 | Title</TimelineContent>
+              </TimelineItem>
+            </Timeline> */}
+            <Grid container spacing={2}>
+              {currentProjects.map((project, index) => (
+                <Grid item key={index} xs={12} md={6} lg={index == 0 ? 8 : 4}>
+                  <Carousel showArrows={true} showThumbs={false} >
+                    {project.image.map((val, imageIndex) => (
+                      <div key={imageIndex} className="image-slide">
 
-       
+                        <img
+
+                          src={val.image}
+                          alt={`Project ${imageIndex + 1}`}
+
+                          style={{ height: "400px", objectFit: "cover", width: "100%", userSelect: 'none' }}
+                        />
+                      </div>
+                    ))}
+                  </Carousel>
+                  <p className='text-1xl, font-semibold' >{project.title}</p>
+                  <p className='text-1xl, font-semibold'>{project.description}</p>
+                </Grid>
+              ))}
+            </Grid>
+            <Pagination
+              count={Math.ceil(projects.length / projectsPerPage)}
+              page={currentPage}
+              onChange={handlePageChange}
+              variant="outlined"
+              shape="rounded"
+              sx={{
+                mt: 3,
+                display: 'flex',
+                justifyContent: 'center',
+                '& .Mui-selected': {
+                  backgroundColor: '#000000',
+                  color: '#fff',
+                },
+              }}
+            />
+          </div>}
+          {selectedTab === 2 && <div>
+            <ImageList sx={{ width: "100%", paddingX: '25px' }} cols={10} rowHeight={164}>
+              {itemData.map((item) => (
+                <ImageListItem key={item.img} sx={{ height: '220px', width: '220px' }}>
+                  <img
+                    srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                    src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                    alt={item.title}
+                    loading="lazy"
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList></div>}
+          {selectedTab === 3 && <div>
+            <ImageList sx={{ width: "100%" }} cols={10} rowHeight={164}>
+              {itemData.map((item) => (
+                <ImageListItem key={item.img} sx={{ height: '220px', width: '220px' }}>
+                  <img
+                    srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                    src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                    alt={item.title}
+                    loading="lazy"
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList></div>}
+          {selectedTab === 4 && <div>
+            <ImageList sx={{ width: "100%", paddingX: '22px' }} cols={10} rowHeight={164}>
+              {itemData.map((item) => (
+                <ImageListItem key={item.img} sx={{ height: '220px', width: '220px' }}>
+                  <img
+                    srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                    src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                    alt={item.title}
+                    loading="lazy"
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList></div>}
+          {selectedTab === 5 && <div>
+            This is Tag section
+          </div>}
+        </Box>
+
+
       </>
     </Page>
   );

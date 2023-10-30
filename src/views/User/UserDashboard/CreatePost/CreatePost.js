@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router';
 
 const CreatePost = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const {
@@ -33,21 +33,21 @@ const CreatePost = () => {
     }
 
     dispatch(CreateProject(formData))
-  .then((res) => {
-    if (res.status === 200) {
-      console.log(res);
-      enqueueSnackbar(res.data.message, {
-        variant: 'success'
-      });
-      // navigate('/')
-    }
-  })
-  .catch((err) => {
-    console.log(err);
-  })
-  .finally(() => {
-    setIsSubmitting(false);
-  })
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(res);
+          enqueueSnackbar(res.data.message, {
+            variant: 'success'
+          });
+          // navigate('/')
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      })
   }
 
   return (
@@ -78,82 +78,83 @@ const CreatePost = () => {
                 })}
                 accept="image/*"
                 multiple
+                
               />
               {errors.image && <p className='text-red-600'>{errors.image.message}</p>}
             </div>
           </Grid>
           <Grid item lg={6}>
             <Grid container spacing={2}>
-            <Grid item lg={6}>
-                        <Grid container spacing={2}>
-                            <Grid item lg={6}>
+              <Grid item lg={6}>
+                <Grid container spacing={2}>
+                  <Grid item lg={6}>
 
-                                <InputLabel>Category_id</InputLabel>
-                                <FormControl variant="standard">
-                                    <Select
-                                        id="category_id"
-                                        {...register("category_id", {
-                                            required: "category_id is required",
-                                        })}
-                                    >
-                                        {errors.category_id && <p className='text-red-600'>{errors.category_id.message}</p>}
+                    <InputLabel>Category_id</InputLabel>
+                    <FormControl variant="standard">
+                      <Select
+                        id="category_id"
+                        {...register("category_id", {
+                          required: "category_id is required",
+                        })}
+                      >
+                        {errors.category_id && <p className='text-red-600'>{errors.category_id.message}</p>}
 
 
-                                        {[1, 2, 3, 4, 5].map((number) => (
-                                            <MenuItem key={number} value={number}>
-                                                {number}
+                        {[1, 2, 3, 4, 5].map((number) => (
+                          <MenuItem key={number} value={number}>
+                            {number}
 
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item lg={6}>
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item lg={6}>
 
-                                <InputLabel>Specification</InputLabel>
-                                <FormControl variant="standard">
-                                    <Select
-                                        id="specs"
-                                        {...register("specs", {
-                                            required: "specs is required",
-                                        })}
-                                    >
-                                        {errors.specs && <p className='text-red-600'>{errors.specs.message}</p>}
-                                        {["Text", "Number"].map((type) => (
-                                            <MenuItem key={type} value={type}>
-                                                {type}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
+                    <InputLabel>Specification</InputLabel>
+                    <FormControl variant="standard">
+                      <Select
+                        id="specs"
+                        {...register("specs", {
+                          required: "specs is required",
+                        })}
+                      >
+                        {errors.specs && <p className='text-red-600'>{errors.specs.message}</p>}
+                        {["Text", "Number"].map((type) => (
+                          <MenuItem key={type} value={type}>
+                            {type}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
 
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                    <Grid item lg={12}>
-                        <InputLabel>Title</InputLabel>
-                        <TextField
-                            id="title"
-                            variant="standard"
-                            {...register("title", {
-                                required: "Title is required",
-                            })}
-                            sx={{ width: '100%' }}
-                        />
-                        {errors.title && <p className='text-red-600'>{errors.title.message}</p>}
-                    </Grid>
-                    <Grid item lg={12}>
-                        <InputLabel>Description</InputLabel>
-                        <TextField
-                            id="description"
-                            variant="standard"
-                            {...register("description", {
-                                required: "Description is required",
-                            })}
-                            sx={{ width: '100%' }}
-                        />
-                        {errors.description && <p className='text-red-600'>{errors.description.message}</p>}
-                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item lg={12}>
+                <InputLabel>Title</InputLabel>
+                <TextField
+                  id="title"
+                  variant="standard"
+                  {...register("title", {
+                    required: "Title is required",
+                  })}
+                  sx={{ width: '100%' }}
+                />
+                {errors.title && <p className='text-red-600'>{errors.title.message}</p>}
+              </Grid>
+              <Grid item lg={12}>
+                <InputLabel>Description</InputLabel>
+                <TextField
+                  id="description"
+                  variant="standard"
+                  {...register("description", {
+                    required: "Description is required",
+                  })}
+                  sx={{ width: '100%' }}
+                />
+                {errors.description && <p className='text-red-600'>{errors.description.message}</p>}
+              </Grid>
             </Grid>
           </Grid>
           <Grid item lg={12}>
@@ -174,7 +175,7 @@ const CreatePost = () => {
           </Grid>
         </Grid>
       </form>
-    </Box>
+    </Box >
   );
 }
 
