@@ -11,14 +11,14 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
 import { useDispatch } from 'react-redux';
 import { getAllPosts } from '../../../../store/actions/userActions';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
 import moment from 'moment';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 const StyledRoot = styled(Box)(({theme})=> ({
     padding:theme.spacing(5),
     marginTop:theme.spacing(4)

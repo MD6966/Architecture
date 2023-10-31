@@ -33,9 +33,9 @@ export const addComment = (body)=> async(dispatch)=>{
      }
        }
 
-       export const getPostComments = ()=> async(dispatch)=>{ 
+       export const getPostComments = (id)=> async(dispatch)=>{ 
         try{
-         const res = await api.get(`${process.env.REACT_APP_URL}api/user/postcomments`,{
+         const res = await api.get(`${process.env.REACT_APP_URL}api/user/postComments/${id}`,{
          })
          return res
          }catch(error){

@@ -180,3 +180,4 @@ export const deleteEvent = (id)=> async(dispatch)=>{
            throw error
            }
              }
+  

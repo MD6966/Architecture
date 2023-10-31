@@ -1,5 +1,5 @@
 import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Dialog, DialogContent, DialogTitle, Divider, Grid, IconButton, Stack, TextField, Toolbar, Typography, styled } from '@mui/material'
-import React from 'react'
+import React, {useRef} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { getAllPosts, likePost } from '../../../store/actions/userActions'
@@ -17,29 +17,28 @@ import ImageIcon from '@mui/icons-material/Image';
 import WorkIcon from '@mui/icons-material/Work';
 import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 import { addComment, getPostComments } from '../../../store/actions/commentsActions'
+import { useSnackbar } from 'notistack'
+import { RotatingLines } from 'react-loader-spinner'
+import {FaCommentSlash} from 'react-icons/fa'
 const StyledRoot = styled(Box)(({theme})=> ({
     minHeight:'50vh',
     // background:'#e2e2e2',
     position:'relative'
 }))
-const commentsData = [
-    {name:'John Doe', comment:'This is the Good imagee adfhjaskdfh asdfklasdhflkasdhfkasdf hdsflksdhjasdlkfjasldf hdflkasdjhfasdhjflkasdhfkjlasd', time:'2h ago'},
-    {name:'Alice Doe', comment:'image', time:'2mo ago'},
-    {name:'Caprie', comment:'This is the Good', time:'2d ago'},
-    {name:'Catie', comment:'This is image', time:'2w ago'},
-    {name:'Steves', comment:'I like this image', time:'2min ago'},
-    {name:'John Abraham', comment:'This type', time:'23h ago'},
-
-]
 const ProfilePosts = () => {
     const [posts, setPosts] = React.useState([])
     const [postData, setPostData] = React.useState([]) 
     const [open, setOpen] = React.useState(false)
+    const [loading ,setLoading] = React.useState(false)
+    const [comments, setComments] = React.useState([])
+    const commentsContainerRef = useRef(null);
+    const [commentsLoading, setCommentsLoading] = React.useState(false)
     // const [likes, setLikes] = React.useState({});
     // const [liked, setLiked] = React.useState(false)
     const [cValue , setCValue] = React.useState('')
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const {enqueueSnackbar} = useSnackbar()
     const user = useSelector((state)=>state.admin.user)
     // const liked_id = useSelector((state)=>state.user.likes_id.user_id)
     // console.log(liked_id)
@@ -47,17 +46,21 @@ const ProfilePosts = () => {
         setCValue(e.target.value)
     }
 
-    const getComments = () => {
-        dispatch(getPostComments()).then((result) => {
-            console.log(result)
+    const getComments = (val) => {
+      setCommentsLoading(true)
+      // console.log(val)
+        dispatch(getPostComments(val.id)).then((result) => {
+            setComments(result.data.payload)
+            setCommentsLoading(false)
         }).catch((err) => {
             console.log(err)
         });
     }
-    React.useEffect(()=> {
-        getComments()
-    },[])
+    // React.useEffect(()=> {
+    //     getComments()
+    // },[])
     const handleSubmitComment = (e) => {
+      setLoading(true)
         e.preventDefault()
         const body = {
             object_type:'Post',
@@ -65,7 +68,12 @@ const ProfilePosts = () => {
             comment:cValue
         }
         dispatch(addComment(body)).then((result) => {
-            console.log(result)
+          setLoading(false)  
+          enqueueSnackbar(result.data.message, {
+            variant:'success'
+          })
+          setCValue('')
+          getComments(postData);
         }).catch((err) => {
             console.log(err)
         });
@@ -80,6 +88,11 @@ const ProfilePosts = () => {
     React.useEffect(()=> {
         getPosts()
     },[])
+    React.useEffect(() => {
+      if (commentsContainerRef.current) {
+        commentsContainerRef.current.scrollTop = commentsContainerRef.current.scrollHeight;
+      }
+    }, [comments]);
     // React.useEffect(()=> {
     // liked_id === user_id
     // console.log(likeD)
@@ -90,6 +103,7 @@ const ProfilePosts = () => {
     const handleopen = (val) => {
         setPostData(val)
         setOpen(true)
+        getComments(val)
     }
     const handleClose = () => {
         setOpen(false)
@@ -196,7 +210,7 @@ const ProfilePosts = () => {
                 <CardActions>
                     <Stack>
                 <Typography sx={{color:'#878787', fontWeight:'bold'}}>{val.likes.length} likes</Typography>
-                <Typography sx={{color:'#878787', fontWeight:'bold'}}>0 comments</Typography>
+                <Typography sx={{color:'#878787', fontWeight:'bold'}}> comments</Typography>
                     </Stack>
                 </CardActions>
             </Card>
@@ -260,10 +274,21 @@ const ProfilePosts = () => {
                   fullWidth
                   />
                 <IconButton
-                  disabled={!cValue}
+                  disabled={!cValue || loading}
                     onClick={handleSubmitComment}
                   >
-                  <SendIcon />
+                    {
+                      loading ? 
+                      <RotatingLines 
+                      strokeColor="grey"
+                      strokeWidth="5"
+                      animationDuration="0.75"
+                      width="30"
+                      visible={loading}
+                      /> :
+                      <SendIcon />
+
+                    }
                 </IconButton>
         </Box>
         <Toolbar>
@@ -277,12 +302,46 @@ const ProfilePosts = () => {
         </Box>
         </Toolbar>
         <Divider />
+        {
+          commentsLoading ?
+          <Box sx={{display:'flex', justifyContent:'center', mt:5}}> 
+          <RotatingLines 
+          strokeColor="grey"
+          strokeWidth="5"
+          animationDuration="0.75"
+          width="50"
+          visible={commentsLoading}
+          /> 
+          </Box>
+          :
         <Box sx={{
             maxHeight:'50vh',
             overflowY:'scroll'
-        }}>
+        }}
+        ref={commentsContainerRef}
+        >
         {
-            commentsData.map((val)=> {
+            comments.map((val)=> {
+              // console.log(val)
+              const timestamp = val.created_at
+              const date = new Date(timestamp);
+              const currentDate = new Date();
+              const timeDifference = currentDate - date;
+              const seconds = Math.floor(timeDifference / 1000);
+              const minutes = Math.floor(seconds / 60);
+              const hours = Math.floor(minutes / 60);
+              const days = Math.floor(hours / 24);
+              let formattedTime;
+
+              if (days > 0) {
+                formattedTime = `${days} days ago`;
+              } else if (hours > 0) {
+                formattedTime = `${hours} hours ago`;
+              } else if (minutes > 0) {
+                formattedTime = `${minutes} minutes ago`;
+              } else {
+                formattedTime = `${seconds} seconds ago`;
+              }
                 return(
                 <List sx={{ width: '100%',  bgcolor: 'background.paper' }}>
                 <ListItem>
@@ -294,14 +353,31 @@ const ProfilePosts = () => {
                         <Typography display="inline" fontWeight="bold"> {val.name} &nbsp;</Typography>
                         {val.comment}
                     </Typography>
-                  } secondary={val.time} />
+                  } secondary={formattedTime} />
                 </ListItem>
               </List>
 
 )
 })
 }
+{
+  comments.length <= 0 && 
+  <Box sx={{
+    height:'100%',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    mt:10
+  }}> 
+    <Box>
+        <FaCommentSlash size={120} style={{color:'#878787'}}/>
+      </Box>
+      <Typography variant='h4' fontWeight="bold" color='#878787'>No Comments Found</Typography>
+  
+  </Box>
+}
 </Box>
+        }
       </Box>
     </Box>
   </DialogContent>
