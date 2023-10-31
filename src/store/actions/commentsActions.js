@@ -43,3 +43,24 @@ export const addComment = (body)=> async(dispatch)=>{
          throw error
          }
            }
+  
+           export const updateComments = (comment, id)=> async(dispatch)=>{ 
+            try{
+             const res = await api.put(`${process.env.REACT_APP_URL}api/user/comments/${id}?comment=${comment}`,{
+             })
+             return res
+             }catch(error){
+             
+             throw error
+             }
+               }
+                export const deleteComment = (id)=> async(dispatch)=>{ 
+                  try{
+                  const res = await api.delete(`${process.env.REACT_APP_URL}api/user/comments/${id}`,{
+                  })
+                  return res
+                  }catch(error){
+                  
+                  throw error
+                  }
+                    }

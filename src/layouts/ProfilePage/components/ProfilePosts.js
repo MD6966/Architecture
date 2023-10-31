@@ -1,4 +1,4 @@
-import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Dialog, DialogContent, DialogTitle, Divider, Grid, IconButton, Stack, TextField, Toolbar, Typography, styled } from '@mui/material'
+import {Box, Card, CardActions, CardContent, CardMedia, Dialog, DialogContent, DialogTitle, Divider, Grid, IconButton, Stack, TextField, Toolbar, Typography, styled } from '@mui/material'
 import React, {useRef} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
@@ -9,17 +9,11 @@ import moment from 'moment';
 import CommentIcon from '@mui/icons-material/Comment';
 import { CloseOutlined } from '@mui/icons-material'
 import SendIcon from '@mui/icons-material/Send';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ImageIcon from '@mui/icons-material/Image';
-import WorkIcon from '@mui/icons-material/Work';
-import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 import { addComment, getPostComments } from '../../../store/actions/commentsActions'
 import { useSnackbar } from 'notistack'
 import { RotatingLines } from 'react-loader-spinner'
 import {FaCommentSlash} from 'react-icons/fa'
+import CommentsComp from './CommentsComp'
 const StyledRoot = styled(Box)(({theme})=> ({
     minHeight:'50vh',
     // background:'#e2e2e2',
@@ -131,7 +125,7 @@ const ProfilePosts = () => {
      <Grid container spacing={2}>
             {
                 posts.map((val)=> {
-                    // console.log(val.likes)
+                    // console.log(val)
                     const liked = val.likes.some((likedItem) => likedItem.user.id === user.id);
                     // console.log(liked)
                     const formattedDate = moment(val.created_at).format("MMMM D, YYYY");
@@ -210,7 +204,7 @@ const ProfilePosts = () => {
                 <CardActions>
                     <Stack>
                 <Typography sx={{color:'#878787', fontWeight:'bold'}}>{val.likes.length} likes</Typography>
-                <Typography sx={{color:'#878787', fontWeight:'bold'}}> comments</Typography>
+                <Typography sx={{color:'#878787', fontWeight:'bold'}}>{val.comments.length} comments</Typography>
                     </Stack>
                 </CardActions>
             </Card>
@@ -323,40 +317,10 @@ const ProfilePosts = () => {
         {
             comments.map((val)=> {
               // console.log(val)
-              const timestamp = val.created_at
-              const date = new Date(timestamp);
-              const currentDate = new Date();
-              const timeDifference = currentDate - date;
-              const seconds = Math.floor(timeDifference / 1000);
-              const minutes = Math.floor(seconds / 60);
-              const hours = Math.floor(minutes / 60);
-              const days = Math.floor(hours / 24);
-              let formattedTime;
-
-              if (days > 0) {
-                formattedTime = `${days} days ago`;
-              } else if (hours > 0) {
-                formattedTime = `${hours} hours ago`;
-              } else if (minutes > 0) {
-                formattedTime = `${minutes} minutes ago`;
-              } else {
-                formattedTime = `${seconds} seconds ago`;
-              }
+             
                 return(
-                <List sx={{ width: '100%',  bgcolor: 'background.paper' }}>
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar />
-                  </ListItemAvatar>
-                  <ListItemText primary={
-                    <Typography >
-                        <Typography display="inline" fontWeight="bold"> {val.name} &nbsp;</Typography>
-                        {val.comment}
-                    </Typography>
-                  } secondary={formattedTime} />
-                </ListItem>
-              </List>
-
+                
+                  <CommentsComp val={val} postData={postData} getComments={getComments} />
 )
 })
 }
