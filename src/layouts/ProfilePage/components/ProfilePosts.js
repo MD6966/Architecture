@@ -220,6 +220,7 @@ const ProfilePosts = () => {
               "& .MuiPaper-root": {
                 width: "100%",
                 maxWidth: "1200px",
+                zIndex:500
               },
             },
           }}
@@ -320,7 +321,9 @@ const ProfilePosts = () => {
              
                 return(
                 
-                  <CommentsComp val={val} postData={postData} getComments={getComments} />
+                  <CommentsComp val={val} postData={postData} getComments={getComments}
+                  close = {()=>setOpen(false)}
+                  />
 )
 })
 }

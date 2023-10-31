@@ -7,7 +7,8 @@ import { Avatar, Button, Dialog, DialogActions, DialogContent, DialogTitle, Text
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteComment, updateComments } from '../../../store/actions/commentsActions';
 import { useSnackbar } from 'notistack';
-import Swal from 'sweetalert2/src/sweetalert2.js'
+import './styles.css'
+import { RotatingLines } from 'react-loader-spinner';
 const CommentsComp = (props) => {
   const user = useSelector((state)=>state.admin.user)
   const [editDialog, setEditDialog] = useState(false)
@@ -15,6 +16,9 @@ const CommentsComp = (props) => {
   const [id, setId] = useState('')
   const [loading , setLoading] = useState(false)
   const dispatch = useDispatch()
+  const [delDialog, setDelDialog] = useState(false)
+  const [value, setValue] = useState('')
+  const [delLoading, setDelLoading] = useState(false)
   const {enqueueSnackbar} = useSnackbar()
   // console.log(user)
     const {val} = props
@@ -62,30 +66,25 @@ const CommentsComp = (props) => {
         console.log(err)
       });
     }
-    const handleDelete = (val) => {
-      
-      // console.log(val.id)
-      // confirmAlert({
-      //   title: 'Delete?',
-      //   message: 'Are you sure to want to delete this comment ?',
-      //   buttons:[
-      //     {
-      //       label: 'Yes',
-      //       onClick: ()=>{
-      //         dispatch(deleteComment(val.id))
-      //       }
-      //     },
-      //    {
-      //     label: 'No',
-      //    }
-    
-      //   ],
-      //   containerProps : {
-      //     style:{
-      //       zIndex :9999999999
-      //     }
-      //   }
-      // })
+    const handleOpen = (val) => {
+      setDelDialog(true)
+      setValue(val)
+
+    }
+    // console.log(value)
+    const handleConfirm = () => {
+      setDelLoading(true)
+      dispatch(deleteComment(value.id)).then((result) => {
+        enqueueSnackbar(result.data.message, {
+          variant:'success'
+        })
+        setDelLoading(false)
+        setDelDialog(false)
+        props.getComments(props.postData)
+      }).catch((err) => {
+        setDelLoading(false)
+        console.log(err)
+      });
     }
   return (
     <>
@@ -113,7 +112,7 @@ const CommentsComp = (props) => {
           </Typography>
           <Typography sx={{display:'inline', fontSize:'13px', 
           ml:2, color:'#000', fontWeight:'bold', cursor:'pointer'}}
-          onClick={()=> handleDelete(val)}
+          onClick={()=>handleOpen(val)}
           >
             Delete
           </Typography>
@@ -134,6 +133,30 @@ const CommentsComp = (props) => {
         <Button variant={loading ? 'disabled' : 'outlined'} onClick={handleSubmit}>
           {loading ? 'Please wait...' : 'Update'}
         </Button>
+      </DialogActions>
+  </Dialog>
+  <Dialog open={delDialog}>
+      <DialogTitle>
+        Delete Comment?
+      </DialogTitle>
+      <DialogContent>
+        <Typography>
+          Are you sure want to delete this comment?
+        </Typography>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => setDelDialog(false)}>Cancel</Button>
+        {
+          delLoading ? 
+          <RotatingLines 
+          strokeColor="grey"
+          strokeWidth="5"
+          animationDuration="0.75"
+          width="30"
+          visible={delLoading}
+          /> :
+          <Button onClick={handleConfirm}>Yes</Button>
+        }
       </DialogActions>
   </Dialog>
           </>
