@@ -140,7 +140,7 @@ export const createEvent = (formData) => async (dispatch)=>{
 
 export const getAllEvents = () => async (dispatch)=>{
   try{
-    const res = await api.get(`${process.env.REACT_APP_URL}api/admin/events`,{  
+    const res = await axios.get(`${process.env.REACT_APP_URL}api/user/showEvents`,{  
     })
     return res
   }catch(error){

@@ -71,7 +71,7 @@ const CommentsComp = (props) => {
       setValue(val)
 
     }
-    // console.log(value)
+
     const handleConfirm = () => {
       setDelLoading(true)
       dispatch(deleteComment(value.id)).then((result) => {
