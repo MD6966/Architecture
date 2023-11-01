@@ -15,7 +15,7 @@ import ArrowCircleRightRoundedIcon from '@mui/icons-material/ArrowCircleRightRou
 import ProfilePosts from './components/ProfilePosts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProjects } from '../../store/actions/userActions';
-import { Carousel } from 'react-responsive-carousel';
+import ProfileProjects from './components/ProfileProjects';
 const itemData = [
   {
     img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
@@ -58,41 +58,11 @@ const ProfilePage = () => {
   // console.log(selectedTab)
   const tabLabels = ["Posts", "Project TimeLine", "4 Post", "2 Following", "3 Followers", "tags"];
   const dispatch = useDispatch()
-  const [projects, setProject] = React.useState([])
   const [Gproject, setGproject] = useState([])
   const [gridColumns, setGridColumns] = useState(4);
-  const getAllProject = () => {
-    // setLoading(true)
-    dispatch(getAllProjects()).then((res) => {
-      console.log(res.data.payload)
-
-      setProject(res.data.payload)
-      // setLoading(false)
-      // console.log(res.data.payload)
-      setGproject(res.data.payload[0]);
-      // console.log(res.data.payload[0]);
-      if (res.data.payload[0]) {
-        setGridColumns(8);
-      }
-    }).catch((err) => {
-      // setLoading(false)
-      console.log(err)
-    })
-
-  }
-  React.useEffect(() => {
-    getAllProject()
-  }, [])
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const projectsPerPage = 5;
-  const indexOfLastProject = currentPage * projectsPerPage;
-  const indexOfFirstProject = indexOfLastProject - projectsPerPage;
-  const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
+ 
   // Change page
-  const handlePageChange = (event, value) => {
-    setCurrentPage(value);
-    event.preventDefault();
-  };
+ 
   return (
     <Page title="Profile">
       <CssBaseline />
@@ -196,44 +166,7 @@ const ProfilePage = () => {
                 <TimelineContent sx={{ fontSize: '20px' }}>2020 | Title</TimelineContent>
               </TimelineItem>
             </Timeline> */}
-            <Grid container spacing={2}>
-              {currentProjects.map((project, index) => (
-                <Grid item key={index} xs={12} md={6} lg={index == 0 ? 8 : 4}>
-                  <Carousel showArrows={true} showThumbs={false} >
-                    {project.image.map((val, imageIndex) => (
-                      <div key={imageIndex} className="image-slide">
-
-                        <img
-
-                          src={val.image}
-                          alt={`Project ${imageIndex + 1}`}
-
-                          style={{ height: "400px", objectFit: "cover", width: "100%", userSelect: 'none' }}
-                        />
-                      </div>
-                    ))}
-                  </Carousel>
-                  <p className='text-1xl, font-semibold' >{project.title}</p>
-                  <p className='text-1xl, font-semibold'>{project.description}</p>
-                </Grid>
-              ))}
-            </Grid>
-            <Pagination
-              count={Math.ceil(projects.length / projectsPerPage)}
-              page={currentPage}
-              onChange={handlePageChange}
-              variant="outlined"
-              shape="rounded"
-              sx={{
-                mt: 3,
-                display: 'flex',
-                justifyContent: 'center',
-                '& .Mui-selected': {
-                  backgroundColor: '#000000',
-                  color: '#fff',
-                },
-              }}
-            />
+            <ProfileProjects />
           </div>}
           {selectedTab === 2 && <div>
             <ImageList sx={{ width: "100%", paddingX: '25px' }} cols={10} rowHeight={164}>

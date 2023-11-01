@@ -11,7 +11,7 @@ import { CloseOutlined } from '@mui/icons-material'
 import SendIcon from '@mui/icons-material/Send';
 import { addComment, getPostComments } from '../../../store/actions/commentsActions'
 import { useSnackbar } from 'notistack'
-import { RotatingLines } from 'react-loader-spinner'
+import { RotatingLines, ThreeDots } from 'react-loader-spinner'
 import {FaCommentSlash} from 'react-icons/fa'
 import CommentsComp from './CommentsComp'
 const StyledRoot = styled(Box)(({theme})=> ({
@@ -27,6 +27,7 @@ const ProfilePosts = () => {
     const [comments, setComments] = React.useState([])
     const commentsContainerRef = useRef(null);
     const [commentsLoading, setCommentsLoading] = React.useState(false)
+    const [postLoading , setPostLoading] = React.useState(false)
     // const [likes, setLikes] = React.useState({});
     // const [liked, setLiked] = React.useState(false)
     const [cValue , setCValue] = React.useState('')
@@ -73,8 +74,10 @@ const ProfilePosts = () => {
         });
     }
     const getPosts = () => {
+      setPostLoading(true)
         dispatch(getAllPosts()).then((result) => {
             setPosts(result.data.payload)
+            setPostLoading(false)
         }).catch((err) => {
             console.log(err)
         });
@@ -124,6 +127,17 @@ const ProfilePosts = () => {
     <StyledRoot sx={{px:15, mb:5}}>
      <Grid container spacing={2}>
             {
+              postLoading ? 
+              <ThreeDots 
+              height="100" 
+              width="100" 
+              radius="9"
+              color="#3e50ce" 
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+              /> :
                 posts.map((val)=> {
                     // console.log(val)
                     const liked = val.likes.some((likedItem) => likedItem.user.id === user.id);

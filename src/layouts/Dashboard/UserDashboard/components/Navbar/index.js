@@ -56,7 +56,7 @@ export default function UserNav({ openNav, onCloseNav }) {
         },
         {
             id: 3,
-            title: "Create Post",
+            title: "Create Project",
             icon: <CardMembershipIcon />,
             to: "/user/createpost",
         },
@@ -120,12 +120,7 @@ export default function UserNav({ openNav, onCloseNav }) {
     }, [location]);
 
     const renderContent = (
-        <Scrollbar
-            sx={{
-                height: 1,
-                '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' },
-            }}
-        >
+        <>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', p: '20px', alignItems: 'center' }}>
                 <Typography sx={{ fontWeight: 600, fontSize: '18px' }}>Overlaw</Typography>
                 <Box sx={{ display: 'flex', gap: '12px' }}>
@@ -205,7 +200,7 @@ export default function UserNav({ openNav, onCloseNav }) {
             <Box sx={{ flexGrow: 1 }} />
 
 
-        </Scrollbar>
+        </>
     );
 
     return (

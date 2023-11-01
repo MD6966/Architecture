@@ -25,12 +25,16 @@ const StyledRoot = styled(Box)(({theme})=> ({
   }))
 const Allposts = () => {
     const [posts, setPosts] = React.useState([])
+    const [loading, setLoading] = React.useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const getPosts = () => {
+        setLoading(true)
         dispatch(getAllPosts()).then((result) => {
+            setLoading(false)
             setPosts(result.data.payload)
         }).catch((err) => {
+            setLoading(false)
             console.log(err)
         });
     }
@@ -49,6 +53,17 @@ const Allposts = () => {
     <StyledRoot>
         <Grid container spacing={2}>
             {
+                loading ? 
+                <ThreeDots 
+              height="100" 
+              width="100" 
+              radius="9"
+              color="#3e50ce" 
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+              /> :
                 posts.map((val)=> {
                     const formattedDate = moment(val.created_at).format("MMMM D, YYYY");
                     return(
