@@ -244,27 +244,50 @@ const MainSection = () => {
         </Typography>
         <Grid container spacing={2}>
           {currentProjects.map((project, index) => (
+//             <Grid item key={index} xs={12} md={6} lg={index == 0 ? 8 : 4}>
+//               <Carousel showArrows={true} showThumbs={false} >
+//                 {project.image.map((val, imageIndex) => (
+// <<<<<<< Updated upstream
+//                   <div key={imageIndex} className="image-slide"
+//                   >
+// =======
+//                   <div key={imageIndex} className="image-slide" onClick={() => handleImageClick(project.id)}>
+
+// >>>>>>> Stashed changes
+//                     <img
+//                       src={val.image}
+//                       alt={`Project ${imageIndex + 1}`}
+//                       style={{ height: "400px", objectFit: "cover", width: "100%" }}
+//                     />
+//                   </div>
+//                 ))}
+//               </Carousel>
+//               <p>{project.title}</p>
+//               <p>{project.description}</p>
+//             </Grid>
+<Grid container spacing={2}>
+          {currentProjects.map((project, index) => (
             <Grid item key={index} xs={12} md={6} lg={index == 0 ? 8 : 4}>
-              <Carousel showArrows={true} showThumbs={false} >
+              <Carousel showArrows={true} showThumbs={false}>
                 {project.image.map((val, imageIndex) => (
-<<<<<<< Updated upstream
-                  <div key={imageIndex} className="image-slide"
-                  >
-=======
                   <div key={imageIndex} className="image-slide" onClick={() => handleImageClick(project.id)}>
 
->>>>>>> Stashed changes
                     <img
+
                       src={val.image}
                       alt={`Project ${imageIndex + 1}`}
-                      style={{ height: "400px", objectFit: "cover", width: "100%" }}
+
+                      style={{ height: "400px", objectFit: "cover", width: "100%", userSelect: 'none' }}
                     />
                   </div>
                 ))}
               </Carousel>
-              <p>{project.title}</p>
-              <p>{project.description}</p>
+              <p className='text-1xl, font-semibold' >{project.title}</p>
+              <p className='text-1xl, font-semibold'>{project.description}</p>
             </Grid>
+          ))}
+        </Grid>
+
           ))}
         </Grid>
         <Pagination
