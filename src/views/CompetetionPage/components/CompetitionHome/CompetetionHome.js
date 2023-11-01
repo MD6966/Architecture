@@ -21,7 +21,6 @@ const CompetetionHome = () => {
         {id:1, src:"/assets/images/comp1.jpg",title:`BEYOND ISOLATION: SENIOR HOUSING`, sub:'Reimagine senior living spaces' , date:2},
         {id:2, src:"/assets/images/comp2.jpeg",title:`THE LEGENDARY HIGHWAY 14 TOWER`, sub:'Design an iconic tower for De Smet, South Dakota, USA' , date:3},
         {id:3, src:"/assets/images/comp3.webp",title:`ICELAND BEER SPA`, sub:'Design a beer spa in icelands captivating landscape' , date:1},
-
     ]
   return (
     <Page title="Competetion Homepage">

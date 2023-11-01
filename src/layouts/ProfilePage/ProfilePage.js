@@ -13,7 +13,7 @@ import { Timeline, TimelineConnector, TimelineContent, TimelineDot, TimelineItem
 import ArrowCircleLeftRoundedIcon from '@mui/icons-material/ArrowCircleLeftRounded';
 import ArrowCircleRightRoundedIcon from '@mui/icons-material/ArrowCircleRightRounded';
 import ProfilePosts from './components/ProfilePosts';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getAllProjects } from '../../store/actions/userActions';
 import { Carousel } from 'react-responsive-carousel';
 const itemData = [
@@ -50,7 +50,8 @@ const content = [
 ];
 const ProfilePage = () => {
   const [selectedTab, setSelectedTab] = useState(0);
-
+  const user = useSelector((state)=>state.admin.user)
+  console.log(user)
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
@@ -69,7 +70,7 @@ const ProfilePage = () => {
       // setLoading(false)
       // console.log(res.data.payload)
       setGproject(res.data.payload[0]);
-      console.log(res.data.payload[0]);
+      // console.log(res.data.payload[0]);
       if (res.data.payload[0]) {
         setGridColumns(8);
       }
@@ -131,13 +132,13 @@ const ProfilePage = () => {
                   textAlign: 'center',
                 }}
               >
-                <Typography variant="h3">Bader</Typography>
+                <Typography variant="h3">{user.name}</Typography>
                 <VerifiedIcon sx={{ color: 'blue', fontSize: '30px' }} />
               </Box>
               <Typography sx={{ marginLeft: '25px', marginTop: '6px' }}>bader m alsuliamani , archyit , makkah</Typography>
               <Box sx={{ marginLeft: '25px', marginTop: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
                 <Link href="#" underline="none" sx={{ backgroundColor: 'white', color: 'black', padding: '3px 15px', borderRadius: '5px' }}>
-                  <LanguageIcon /> "'http//wwmoazcom'"
+                  <LanguageIcon /> {user.email}
                 </Link>
                 <AiFillGoogleCircle style={{ fontSize: '30px', color: 'red' }} />
                 <FaFacebook style={{ fontSize: '30px', color: 'blue' }} />

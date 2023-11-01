@@ -41,6 +41,7 @@ import CompetetionHome from "./views/CompetetionPage/components/CompetitionHome/
 import AdminEvents from "./views/Admin/AdminEvents";
 import EditEvent from "./views/Admin/AdminEvents/components/EditEvent";
 import ViewProject from "./views/Landing/ViewProject";
+import Feed from "./views/User/UserDashboard/Feed";
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state) => state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state) => state.admin.isAuthenticatedUser)
@@ -96,6 +97,8 @@ export default function Router() {
                         { path: 'event', element: <Event /> },
                         { path: 'trophy', element: <Trophy /> },
                         { path: 'certificate', element: <Certificate /> },
+                        { path: 'feed', element: <Feed /> },
+
 
                     ]
                 },

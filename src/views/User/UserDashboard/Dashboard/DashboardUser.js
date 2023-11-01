@@ -9,6 +9,7 @@ import RateReviewIcon from '@mui/icons-material/RateReview';
 import MessageIcon from '@mui/icons-material/Message';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import Page from '../../../../components/page'
 // import { useSelector } from 'react-redux';
 
 const DashboardUser = () => {
@@ -40,7 +41,7 @@ const DashboardUser = () => {
     });
 
     return (
-        <>
+        <Page  title="Dashboard">
             <StyledRoot>
                 <Grid container spacing={2}>
                     <Grid item
@@ -163,7 +164,7 @@ const DashboardUser = () => {
 
 
             </StyledRoot >
-        </>
+        </Page>
 
     );
 };

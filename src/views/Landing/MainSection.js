@@ -47,13 +47,13 @@ const MainSection = () => {
   const getAllProject = () => {
     setLoading(true)
     dispatch(getAllProjects()).then((res) => {
-      console.log(res.data.payload)
+      // console.log(res.data.payload)
 
       setProject(res.data.payload)
       setLoading(false)
-      console.log(res.data.payload)
+      // console.log(res.data.payload)
       setGproject(res.data.payload[0]);
-      console.log(res.data.payload[0]);
+      // console.log(res.data.payload[0]);
       if (res.data.payload[0]) {
         setGridColumns(8);
       }
@@ -80,6 +80,7 @@ const MainSection = () => {
 
       setLoading(false)
     }).catch((err) => {
+
       setLoading(false)
       console.log(err)
     });
@@ -244,29 +245,6 @@ const MainSection = () => {
         </Typography>
         <Grid container spacing={2}>
           {currentProjects.map((project, index) => (
-//             <Grid item key={index} xs={12} md={6} lg={index == 0 ? 8 : 4}>
-//               <Carousel showArrows={true} showThumbs={false} >
-//                 {project.image.map((val, imageIndex) => (
-// <<<<<<< Updated upstream
-//                   <div key={imageIndex} className="image-slide"
-//                   >
-// =======
-//                   <div key={imageIndex} className="image-slide" onClick={() => handleImageClick(project.id)}>
-
-// >>>>>>> Stashed changes
-//                     <img
-//                       src={val.image}
-//                       alt={`Project ${imageIndex + 1}`}
-//                       style={{ height: "400px", objectFit: "cover", width: "100%" }}
-//                     />
-//                   </div>
-//                 ))}
-//               </Carousel>
-//               <p>{project.title}</p>
-//               <p>{project.description}</p>
-//             </Grid>
-<Grid container spacing={2}>
-          {currentProjects.map((project, index) => (
             <Grid item key={index} xs={12} md={6} lg={index == 0 ? 8 : 4}>
               <Carousel showArrows={true} showThumbs={false}>
                 {project.image.map((val, imageIndex) => (
@@ -285,9 +263,6 @@ const MainSection = () => {
               <p className='text-1xl, font-semibold' >{project.title}</p>
               <p className='text-1xl, font-semibold'>{project.description}</p>
             </Grid>
-          ))}
-        </Grid>
-
           ))}
         </Grid>
         <Pagination

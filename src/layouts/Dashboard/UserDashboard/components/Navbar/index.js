@@ -7,21 +7,13 @@ import {
 } from '@mui/material';
 
 import useResponsive from '../../../../../components/hooks/useResponsive';
-import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
-import EditIcon from '@mui/icons-material/Edit';
-import Inventory2Icon from '@mui/icons-material/Inventory2';
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import TimelineIcon from '@mui/icons-material/Timeline';
-import MessageIcon from '@mui/icons-material/Message';
-import SettingsIcon from '@mui/icons-material/Settings';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import LocalPostOfficeOutlinedIcon from '@mui/icons-material/LocalPostOfficeOutlined';
 import { makeStyles } from '@mui/styles';
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import HomeIcon from '@mui/icons-material/Home';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import clsx from 'clsx';
@@ -58,36 +50,42 @@ export default function UserNav({ openNav, onCloseNav }) {
         },
         {
             id: 2,
+            title: "Feed",
+            icon: <HomeIcon />,
+            to: "/user/feed",
+        },
+        {
+            id: 3,
             title: "Create Post",
             icon: <CardMembershipIcon />,
             to: "/user/createpost",
         },
         {
-            id: 3,
+            id: 4,
             title: "Add Post",
             icon: <AddOutlined />,
             to: "/user/add-post",
         },
         {
-            id: 4,
+            id: 5,
             title: "All Posts",
             icon: <VerifiedIcon />,
             to: "/user/all-posts",
         },
         {
-            id: 5,
+            id: 6,
             title: "Event",
             icon: <EventAvailableIcon />,
             to: "/user/event",
         },
         {
-            id: 6,
+            id: 7,
             title: "Trophy",
             icon: <MilitaryTechIcon />,
             to: "/user/trophy",
         },
         {
-            id: 7,
+            id: 8,
             title: "Certificate",
             icon: <CardMembershipIcon />,
             to: "/user/certificate",
