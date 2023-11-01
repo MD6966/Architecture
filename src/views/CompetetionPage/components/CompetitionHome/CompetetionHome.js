@@ -1,14 +1,28 @@
-import { AppBar, Box, Button, DialogContent, Divider, Drawer, Grid, IconButton, Stack, Toolbar, Typography, styled } from '@mui/material'
+import { AppBar, Box, Button, Container, Divider, Grid, IconButton, Toolbar, Typography, styled } from '@mui/material'
 import React from 'react'
 import Page from '../../../../components/page'
 import { Link } from 'react-router-dom'
 import { Close, Menu, Person, Search } from '@mui/icons-material'
 import './styles.css'
+import SideBar from './components/SideBar'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import EmailIcon from '@mui/icons-material/Email';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 const StyledRoot = styled(Box)(({theme})=>({
     padding:theme.spacing(3)
 }))
+const StyledBottom = styled(Container)(({theme})=> ({
+    padding:theme.spacing(7)
+}))
 const CompetetionHome = () => {
     const [open, setopen] = React.useState(false)
+    const data = [
+        {id:0, src:"/assets/images/comp.jpg",title:`THE ARCHITECT'S CHAIR`, sub:'Take a seat and make a statement' , date:1},
+        {id:1, src:"/assets/images/comp1.jpg",title:`BEYOND ISOLATION: SENIOR HOUSING`, sub:'Reimagine senior living spaces' , date:2},
+        {id:2, src:"/assets/images/comp2.jpeg",title:`THE LEGENDARY HIGHWAY 14 TOWER`, sub:'Design an iconic tower for De Smet, South Dakota, USA' , date:3},
+        {id:3, src:"/assets/images/comp3.webp",title:`ICELAND BEER SPA`, sub:'Design a beer spa in icelands captivating landscape' , date:1},
+
+    ]
   return (
     <Page title="Competetion Homepage">
         <AppBar
@@ -95,104 +109,109 @@ const CompetetionHome = () => {
                 </Box>
             </Box>
             </Box>
-        <Drawer
-        onClose={()=>setopen(false)} 
-        variant='temporary' 
-        open={open} 
-        anchor='top'
-        PaperProps={{
-            sx:{
-                height:'80vh',
-                background:'#000',
-                color:'#fff'
-            }
-        }}
-        >
-            <Toolbar>
-             <Typography sx={{color:'fff', fontWeight:'bold', 
-             fontSize:'3rem', fontFamily:'Bebas Neue', 
-             letterSpacing:2, mt:2}}>
-                                BUILDNER
-                            </Typography>
-            <Box sx={{display:'flex', mr:2, ml:'auto'}}>
-            <IconButton
-            onClick={()=>setopen(false)}
-            sx={{
-                '&:hover': {
-                    border:'1px solid white',
-                    borderRadius:0,
-                }
-            }}
-            >
-                <Close sx={{color:'#fff', fontSize:'1.5rem'}} />
-            </IconButton>
-            </Box>
-                </Toolbar>
-                <DialogContent>
-                    <Grid container sx={{p:4}}>
-                        <Grid item
-                        xs={12}
-                        md={8}
-                        lg={8}
-                        >
-
-                            <Stack direction="row" spacing={10}>
-                            <Stack spacing={1}>
-                                <Typography sx={{fontSize:'15px', color:'grey'}}> COMPETETION </Typography>
-                                <Typography> Open Competetions </Typography>
-                                <Typography> House of the Future </Typography>
-                                <Typography> Housing Crisis Competetions </Typography>
-                                <Typography> Competetion results </Typography>
-                                <Typography> Guest jury </Typography>
-
-                            </Stack>
-                            <Stack spacing={1}>
-                                <Typography sx={{fontSize:'15px', color:'grey'}}> RESOURCES </Typography>
-                                <Typography> News & blog </Typography>
-                                <Typography> Book store </Typography>
-                                <Typography> Univeristy rankings </Typography>
-                                <Typography> Presentation review </Typography>
-                                <Typography> Upload panel </Typography>
-                            </Stack>
-                            <Stack spacing={1}>
-                                <Typography sx={{fontSize:'15px', color:'grey'}}> ABOUT </Typography>
-                                <Typography> About us </Typography>
-                                <Typography> KYC And Competetion Integrity </Typography>
-                                <Typography> Privacy Policy </Typography>
-                                <Typography> Website Terms & Conditions </Typography>
-                                <Typography> Contact us </Typography>
-                            </Stack>
-                            <Box sx={{borderRight:'1px solid #e2e2e2', height:'45vh', }} />
-                            </Stack>
-                        </Grid>
-                        <Grid item
-                        xs={12}
-                        md={4}
-                        lg={4}
-                        >
-                            <Box sx={{display:'flex', justifyContent:'center'}}>
-                                <Stack>
-                                    <Button variant='contained'
-                                    className='bg-white'
-                                    sx={{color:'#000', borderRadius:0, height:'50px'}}
-                                    >
-                                        Login with Architecture.info
-                                    </Button>
-                                    <div class="divider">
-                                    <span>OR</span>
-                                    </div>
-                                    <Typography sx={{
-                                        textDecoration:'underline',
-                                        mt:4
-                                    }}>
-                                        Create an account at Architecture.info
-                                    </Typography>
-                                </Stack>
-                            </Box>
-                        </Grid>
+            <StyledBottom sx={{px:8}}>
+                <Typography variant='h2' fontWeight="bold">Open architecture competitions</Typography>
+                <Divider sx={{mt:3, mb:5}} />
+                {
+                    data.map((val)=> {
+                        return(
+                <Grid container sx={{height:'70vh', mb:5}} spacing={4}>
+                    <Grid item xs={12} md={4} lg={4}>
+                        <Box 
+                        sx={{
+                            border:'1px solid black',
+                            height:'100%'
+                        }}>
+                            <img src={val.src} alt="Competition Image"
+                            style={{
+                                height:'100%',
+                                // width:'100%',
+                                // objectFit:"cover",
+                            }}
+                            />
+                        </Box>
                     </Grid>
-                </DialogContent>
-        </Drawer>
+                    <Grid item xs={12} md={8} lg={8}>
+                        <Box sx={{px:5, PY:1}}>
+                            <Typography variant='h3' fontWeight="bold"
+                            sx={{
+                                '&:hover': {
+                                    textDecoration:'underline',
+                                    cursor:'pointer'
+                                }
+                            }}
+                            >{val.title}</Typography>
+                            <Typography>
+                               {val.sub}
+                            </Typography>
+                            <Box sx={{mt:1, mb:2}}>
+                            <mark 
+                            style={{ 
+                                color: '#fff', 
+                                background: '#000', 
+                                padding: '3px 5px', 
+                                fontSize:"10px"}}>EDITTION#1</mark>
+                                  <mark 
+                            style={{ 
+                                color: '#000', 
+                                background: '#e2e2e2', 
+                                padding: '3px 5px',
+                                marginLeft:'5px', 
+                                fontSize:"10px"}}>IDEAS COMPETETION</mark>
+                                </Box>
+                                <Typography sx={{fontSize:'15px', color:'#878787'}}>
+                                    Prize
+                                    <Typography sx={{display:'inline', ml:1, color:'#000', fontSize:'15px'}}>Monetary Award</Typography>
+                                </Typography>
+                                <Typography sx={{fontSize:'15px', color:'#878787'}}>
+                                    Eligibilty
+                                    <Typography sx={{display:'inline', ml:1, color:'#000', fontSize:'15px'}}>Open to all</Typography>
+                                </Typography>
+                                <Typography sx={{fontSize:'15px', color:'#878787', mt:3}}>
+                                    Final Registration Deadline
+                                    <Typography sx={{display:'inline', ml:1, color:'#000', fontSize:'15px'}}>{val.date} November 2023</Typography>
+                                </Typography>
+                                <Box sx={{mt:4, display:'flex', alignItems:'center'}}>
+                                    <Button
+                                    className='bg-black'
+                                    variant='contained'
+                                    endIcon={
+                                        <ArrowForwardIcon />
+                                    }
+                                    sx={{
+                                        borderRadius:'0px',
+                                        py:1.5,
+                                        textTransform:'none'
+                                    }}
+                                    >
+                                       Fint Out More 
+                                    </Button>
+                                    <Typography sx={{ml:2, cursor:'pointer',
+                                    '&:hover': {
+                                        textDecoration:'underline'
+                                    }
+                                }}>
+                                        Send reminders
+                                            <EmailIcon sx={{color:'#878787', fontSize:'18px', ml:0.5}} />
+                                    </Typography>
+
+                                    <Typography sx={{ml:2, cursor:'pointer',
+                                    '&:hover': {
+                                        textDecoration:'underline'
+                                    }
+                                }}>
+                                        Download brief
+                                            <CloudDownloadIcon sx={{color:'#878787', fontSize:'18px', ml:0.5}} />
+                                    </Typography>
+                                </Box>
+                        </Box>
+                    </Grid>
+                </Grid>
+                        )
+                    })
+                }
+                 </StyledBottom>
+                    <SideBar open={open} close={()=>setopen(false)}/>   
         <StyledRoot>
       </StyledRoot>
     </Page>
