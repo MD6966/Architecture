@@ -51,7 +51,7 @@ const MainSection = () => {
 
       setProject(res.data.payload)
       setLoading(false)
-      // console.log(res.data.payload)
+      console.log(res.data.payload)
       setGproject(res.data.payload[0]);
       console.log(res.data.payload[0]);
       if (res.data.payload[0]) {
@@ -63,8 +63,6 @@ const MainSection = () => {
     })
 
   }
-  // console.log(getAllProject, 'xyz')
-  console.log(projects, 'ssss')
   React.useEffect(() => {
     if (projects.length > 0) {
       const newImgData = projects.map((project) => project.image);
@@ -75,16 +73,6 @@ const MainSection = () => {
   React.useEffect(() => {
     getAllProject()
   }, [])
-  // React.useEffect(() => {
-  //   if (projects.length === 1) {
-  //     setIsFirstProject(true);
-  //   }
-  //   if (isFirstProject) {
-  //     setGridColumns(8);
-  //   } else {
-  //     setGridColumns(4);
-  //   }
-  // }, [isFirstProject]);
   const getPosts = () => {
     setLoading(true)
     dispatch(getAllPosts()).then((result) => {
@@ -255,11 +243,17 @@ const MainSection = () => {
           Project Section
         </Typography>
         <Grid container spacing={2}>
-          {projects.map((project, index) => (
-            <Grid item key={index} xs={12} md={6} lg={index==0 ? 8 : 4}>
-              <Carousel showArrows={true} showThumbs={false}>
+          {currentProjects.map((project, index) => (
+            <Grid item key={index} xs={12} md={6} lg={index == 0 ? 8 : 4}>
+              <Carousel showArrows={true} showThumbs={false} >
                 {project.image.map((val, imageIndex) => (
-                  <div key={imageIndex} className="image-slide">
+<<<<<<< Updated upstream
+                  <div key={imageIndex} className="image-slide"
+                  >
+=======
+                  <div key={imageIndex} className="image-slide" onClick={() => handleImageClick(project.id)}>
+
+>>>>>>> Stashed changes
                     <img
                       src={val.image}
                       alt={`Project ${imageIndex + 1}`}
@@ -294,4 +288,4 @@ const MainSection = () => {
     </div>
   )
 }
-export default MainSection;
+export default MainSection; 
