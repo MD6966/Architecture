@@ -15,6 +15,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { makeStyles } from '@mui/styles';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import clsx from 'clsx'
 
@@ -50,6 +51,12 @@ const StyledAccount = styled('div')(({ theme }) => ({
           title:'Manage Events',
           icon: <EventAvailableIcon />,
           to:'/admin/events'
+        },
+        {
+          id:33,
+          title:'Competetions',
+          icon: <EmojiEventsIcon />,
+          to:'/admin/competetions'
         },
         {
           id: 3,

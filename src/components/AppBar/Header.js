@@ -8,10 +8,24 @@ import React from 'react';
 import ChatIcon from '@mui/icons-material/Chat';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 // import MainSection from '../MainSection/MainSection';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import { logOut } from '../../store/actions/adminActions';
 const Header = () => {
+  const isAuthenticatedUser = useSelector((state)=>state.admin.user)
+  // console.log(isAuthenticatedUser == null)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const handleProfile = () => {
+    setAnchorEl(null)
+    navigate('/user/profile')
+
+
+  }
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -20,6 +34,25 @@ const Header = () => {
   };
 
   const theme = useTheme();
+  const handleLogOut = () => {
+    setAnchorEl(null)
+    confirmAlert({
+      title: 'Log Out?',
+      message: 'Are you sure to want to log out ?',
+      buttons:[
+        {
+          label: 'Yes',
+          onClick: ()=>{
+            dispatch(logOut())
+          }
+        },
+       {
+        label: 'No',
+       }
+  
+      ]
+    })
+  }
   return (
     <div>
   
@@ -63,11 +96,14 @@ const Header = () => {
                           >
                             Events
                           </Button>
+                            {
+                              !(isAuthenticatedUser == null) ?
+                              <>
                           <IconButton sx={{mr:1}}
                           component={Link}
                           to="/add-post"
                           >
-                            <Tooltip title="Add Post">
+                              <Tooltip title="Add Post">
                               <AddCircleIcon />
                             </Tooltip>
                           </IconButton>
@@ -89,6 +125,20 @@ const Header = () => {
                         onClick={handleClick}
                         /> 
                         <Button
+                        variant='contained'
+                        color='secondary'
+                        sx={{ml:2}}
+                        component={Link}
+                        to="/user/dashboard"
+                        >
+                          Go to Dashboard
+                        </Button>
+                        </>
+                        : null 
+                      }
+                        {
+                          isAuthenticatedUser == null ?
+                        <Button
                         color='secondary'
                         variant='contained'
                         component={Link}
@@ -97,6 +147,8 @@ const Header = () => {
                         >
                           Login
                         </Button>
+                          : null 
+                        }
                         </Box>
                     </Toolbar>
                 </AppBar>
@@ -109,9 +161,9 @@ const Header = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleProfile}>Profile</MenuItem>
+        {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
+        <MenuItem onClick={handleLogOut}>Logout</MenuItem>
       </Menu>
             </Box>
           {/* <MainSection /> */}

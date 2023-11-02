@@ -2,11 +2,12 @@ import { AppBar, Box, Button, Drawer, Toolbar, Typography, styled } from '@mui/m
 import React from 'react';
 import UserNav from './components/Navbar';
 import { Outlet } from 'react-router';
-import { ExitToApp } from '@mui/icons-material';
+import { ExitToApp, Home } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../../../store/actions/adminActions';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import { Link } from 'react-router-dom';
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 92;
 const StyledRoot = styled('div')({
@@ -53,6 +54,13 @@ const handleLogOut = () => {
             User Dashboard
             </Typography> 
             <Box sx={{ml:'auto'}}>
+              <Button variant='outlined' sx={{mr:2}}
+              component={Link}
+              to="/"
+              startIcon={
+                <Home />
+              }
+              >Home</Button>
               <Button variant='outlined' endIcon={<ExitToApp />} onClick={handleLogOut}> Sign out </Button>
             </Box>
         </Toolbar>
