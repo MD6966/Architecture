@@ -58,8 +58,7 @@ const ProfilePage = () => {
   // console.log(selectedTab)
   const tabLabels = ["Posts", "Project TimeLine", "4 Post", "2 Following", "3 Followers", "tags"];
   const dispatch = useDispatch()
-  const [Gproject, setGproject] = useState([])
-  const [gridColumns, setGridColumns] = useState(4);
+ 
  
   // Change page
  
