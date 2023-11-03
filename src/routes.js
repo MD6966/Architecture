@@ -44,6 +44,7 @@ import ViewProject from "./views/Landing/ViewProject";
 import Feed from "./views/User/UserDashboard/Feed";
 import AdminCompetetion from "./views/Admin/AdminCompetetion";
 import AddCompetetion from "./views/Admin/AdminCompetetion/components/AddCompetition/AddCompetetion";
+import SingleCompetetion from "./views/Admin/AdminCompetetion/components/SingleCompetition/SingleCompetetion";
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state) => state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state) => state.admin.isAuthenticatedUser)
@@ -77,6 +78,8 @@ export default function Router() {
                         { path: 'order', element: <Order /> },
                         { path: 'competetions', element: <AdminCompetetion /> },
                         { path: 'add-competetion', element: <AddCompetetion /> },
+                        { path: 'competetion', element: <SingleCompetetion /> },
+
 
 
 

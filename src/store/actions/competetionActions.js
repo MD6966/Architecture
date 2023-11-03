@@ -32,3 +32,24 @@ export const addCompetition = (body)=> async(dispatch)=>{
      throw error
      }
        }
+       
+       export const getAllCompetitions = ()=> async(dispatch)=>{ 
+        try{
+         const res = await api.get(`${process.env.REACT_APP_URL}api/admin/competitions`,{
+         })
+         return res
+         }catch(error){
+         
+         throw error
+         }
+           }
+           export const deleteCompetition = (id)=> async(dispatch)=>{ 
+            try{
+            const res = await api.delete(`${process.env.REACT_APP_URL}api/admin/competitions/${id}`,{
+            })
+            return res
+            }catch(error){
+            
+            throw error
+            }
+              }
