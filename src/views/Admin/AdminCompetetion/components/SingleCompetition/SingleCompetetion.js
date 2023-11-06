@@ -44,6 +44,9 @@ const SingleCompetetion = () => {
           })
         
     }
+    const handleEdit = () => {
+        navigate(`/admin/edit-competetion`, {state:state})
+    }
   return (
     <Page title="Competition">
         <StyledRoot>
@@ -93,19 +96,19 @@ const SingleCompetetion = () => {
             </Box>
             <Typography sx={{fontSize:'15px', color:'#878787'}}>
                 Prize
-                <Typography sx={{display:'inline', ml:1, color:'#000', fontSize:'15px'}}>{state.prize.total_prize}</Typography>
+                <Typography sx={{display:'inline', ml:1, color:'#000', fontSize:'15px'}}>{state.prize?.total_prize || ''}</Typography>
             </Typography>
             <Typography sx={{fontSize:'15px', color:'#878787'}}>
                 1st Prize
-                <Typography sx={{display:'inline', ml:1, color:'#000', fontSize:'15px'}}>{state.prize.first_prize}</Typography>
+                <Typography sx={{display:'inline', ml:1, color:'#000', fontSize:'15px'}}>{state.prize?.first_prize}</Typography>
             </Typography>
             <Typography sx={{fontSize:'15px', color:'#878787'}}>
                2nd Prize
-                <Typography sx={{display:'inline', ml:1, color:'#000', fontSize:'15px'}}>{state.prize.second_prize}</Typography>
+                <Typography sx={{display:'inline', ml:1, color:'#000', fontSize:'15px'}}>{state.prize?.second_prize}</Typography>
             </Typography>
             <Typography sx={{fontSize:'15px', color:'#878787'}}>
                 3rd Prize
-                <Typography sx={{display:'inline', ml:1, color:'#000', fontSize:'15px'}}>{state.prize.third_prize}</Typography>
+                <Typography sx={{display:'inline', ml:1, color:'#000', fontSize:'15px'}}>{state.prize?.third_prize}</Typography>
             </Typography>
             <Typography sx={{fontSize:'15px', color:'#878787'}}>
                 Eligibilty
@@ -133,6 +136,7 @@ const SingleCompetetion = () => {
                   Delete 
                 </Button>
                 <Button variant='outlined'
+                onClick={handleEdit}
                 endIcon={<Edit/>}
                 sx={{
                     ml:2,

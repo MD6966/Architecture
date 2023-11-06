@@ -45,6 +45,7 @@ import Feed from "./views/User/UserDashboard/Feed";
 import AdminCompetetion from "./views/Admin/AdminCompetetion";
 import AddCompetetion from "./views/Admin/AdminCompetetion/components/AddCompetition/AddCompetetion";
 import SingleCompetetion from "./views/Admin/AdminCompetetion/components/SingleCompetition/SingleCompetetion";
+import EditCompetetion from "./views/Admin/AdminCompetetion/components/EditCompetetion";
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state) => state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state) => state.admin.isAuthenticatedUser)
@@ -79,6 +80,8 @@ export default function Router() {
                         { path: 'competetions', element: <AdminCompetetion /> },
                         { path: 'add-competetion', element: <AddCompetetion /> },
                         { path: 'competetion', element: <SingleCompetetion /> },
+                        { path: 'edit-competetion', element: <EditCompetetion /> },
+
 
 
 
