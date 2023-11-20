@@ -39,8 +39,8 @@ const WikiPage = () => {
             </AppBar>
         <StyledRoot>
                 <StyledContent>
-                    {value == 0 && <ShopDrawing /> }
-                    {value == 1 && <Projects />}
+                    {value == 0 && <Data /> }
+                    {value == 1 && <Data />}
                     {value==2 && <Data />}
                 </StyledContent>
       </StyledRoot>

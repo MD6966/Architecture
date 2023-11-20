@@ -46,6 +46,7 @@ import AdminCompetetion from "./views/Admin/AdminCompetetion";
 import AddCompetetion from "./views/Admin/AdminCompetetion/components/AddCompetition/AddCompetetion";
 import SingleCompetetion from "./views/Admin/AdminCompetetion/components/SingleCompetition/SingleCompetetion";
 import EditCompetetion from "./views/Admin/AdminCompetetion/components/EditCompetetion";
+import WikiCategories from "./views/WikiPage/WikiCategories";
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state) => state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state) => state.admin.isAuthenticatedUser)
@@ -62,6 +63,8 @@ export default function Router() {
         { path: '/competition', element: <CompetetionPage /> },
         { path: '/home-competition', element: <CompetetionHome /> },
         { path: '/events', element: <EventsPage /> },
+        { path: '/categories', element: <WikiCategories /> },
+
 
 
         {

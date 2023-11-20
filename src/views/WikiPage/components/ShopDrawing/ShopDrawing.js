@@ -12,19 +12,7 @@ import Footer from '../../../../layouts/Landing/Footer'
 const ShopDrawing = () => {
   return (
     <div>
-        <StyledProjectRoot>
-        <StyledProjectCard>
-          <StyledProjectTop>
-            <Top />
-          </StyledProjectTop>
-          <Divider sx={{mt:3}} />
-              <StyledProjectBottom>
-              <Bottom />
-              </StyledProjectBottom>
-              <Divider sx={{mt:1}} />
-                <Footer />
-        </StyledProjectCard>
-      </StyledProjectRoot>
+        
     </div>
   );
 };

@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { CardData } from './components/CardData';
 import { Grid } from '@mui/material';
+import { Link } from 'react-router-dom';
 const CreatePinPage = () => {
 
 
@@ -38,7 +39,10 @@ const CreatePinPage = () => {
               </CardContent>
               <CardActions>
                 <Button size="small" variant='outlined'>Share</Button>
-                <Button size="small" variant='contained' className='bg-pink-600'>Learn More</Button>
+                <Button size="small" variant='contained' className='bg-pink-600'
+                component={Link}
+                to='/categories'
+                >Learn More</Button>
               </CardActions>
             </Card>
           </Grid>
