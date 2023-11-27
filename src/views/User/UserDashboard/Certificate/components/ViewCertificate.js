@@ -37,7 +37,7 @@ const ViewCertificate = () => {
       <Card sx={{mt:15}}>
       <CardMedia
         component="img"
-        alt="green iguana"
+        alt="Certificate Image"
         style={{maxHeight:'50vh', width:'100%'}}
         image={state.img}
       />

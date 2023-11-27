@@ -6,7 +6,10 @@ import Texts from './Texts';
 import EmojiPicker from 'emoji-picker-react';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import MenuIcon from '@mui/icons-material/Menu';
-
+import Pusher from 'pusher-js'
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { sendChat } from '../../../store/actions/chatActions';
 const ListData = ['Add a friend', 'Create Group', 'Block Contact', 'Unblock', 'Report', 'Unsend Message', 'Edit Message', 'Forward Messages', 'Sharing post'];
 
 const Chat = (props) => {
@@ -19,8 +22,10 @@ const Chat = (props) => {
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioChunks, setAudioChunks] = useState([]);
   const [recordingTime, setRecordingTime] = useState(0);
+  const [messages, setMessages] = useState([])
   const audioRef = useRef(null);
-
+  const dispatch = useDispatch()
+  const allMessages = []
   useEffect(() => {
     if (isRecording) {
       startRecording();
@@ -28,7 +33,20 @@ const Chat = (props) => {
       stopRecording();
     }
   }, [isRecording]);
+  useEffect(()=> {
+    Pusher.logToConsole = true;
 
+    const pusher = new Pusher("66a996d7c63fe6a9fac5", {
+      cluster: "ap2",
+    });
+
+    const channel = pusher.subscribe("message-16");
+    console.log(channel);
+    channel.bind("new", function (data) {
+      console.log(JSON.stringify(data), '++++++++++++++');
+    })
+  },[])
+  // console.log(messages, '+++++++++++++++')
   const startRecording = () => {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices
@@ -70,11 +88,7 @@ const Chat = (props) => {
     if (mediaRecorder) {
       mediaRecorder.stop();
       setIsRecording(false);
-
-      // Convert the audio chunks to a Blob
       const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-
-      // Send the audio recording to the chat section
       if (audioBlob) {
         sendMessage(props.selectedUser.id, audioBlob);
       }
@@ -111,6 +125,14 @@ const Chat = (props) => {
       ...prevUsers,
       [userId]: [...(prevUsers[userId] || []), { text: message }],
     }));
+    const formData = new FormData()
+    formData.append('userId', userId)
+    console.log(userId)
+    dispatch(sendChat(formData)).then((result) => {
+      console.log(result)
+    }).catch((err) => {
+      console.log(err)
+    });
     setNewMessage('');
   };
 
@@ -159,7 +181,7 @@ const Chat = (props) => {
       </AppBar>
       <Box style={{ background: "white", height: "100vh", overflowY: 'auto' }}>
         {userMessages.map((message, index) => (
-          <Texts key={index} val={message.text} />
+          <Texts key={index} val={message.text} isSent={true} />
         ))}
       </Box>
       <Box
@@ -170,7 +192,7 @@ const Chat = (props) => {
           bottom: 0,
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
+          // justifyContent: 'space-between',
 
         }}
       >
@@ -203,8 +225,7 @@ const Chat = (props) => {
           fullWidth
           sx={{
             mb: 1,
-            ml: 1,
-            width: '47rem',
+            width: '50%',
             background: 'white',
 
           }}
@@ -213,9 +234,10 @@ const Chat = (props) => {
           onChange={(e) => setNewMessage(e.target.value)}
         />
         <Button
+          disabled={newMessage.length < 1}
           variant='contained'
           className='bg-[#3E3A57]'
-          sx={{ height: '55px' }}
+          sx={{ height: '55px', mb:1 }}
           onClick={() => {
             if (newMessage.trim() || selectedEmoji) {
               sendMessage(props.selectedUser.id, newMessage + selectedEmoji);
@@ -225,9 +247,10 @@ const Chat = (props) => {
           Send
         </Button>
         <Button
+        
           variant='contained'
           className='bg-[#3E3A57]'
-          sx={{ height: '55px' }}
+          sx={{ height: '55px', mb:1 }}
           value={selectedEmoji}
           onClick={handleEmojiButtonClick}
         >
