@@ -41,11 +41,13 @@ const UserList = () => {
   const [selectedUser, setSelectedUser] = useState("");
   const [open, setopen] = useState(false)
   const [conversations, setConversations] = useState([])
+  const [listDisabled, setListDisabled] = useState(true)
   const dispatch = useDispatch()
   const {enqueueSnackbar} = useSnackbar()
   const getConversations = () => {
     dispatch(conversationIndex()).then((result) => {
-      console.log(result, "Getting Conversations")
+      setConversations(result.data.payload)
+      setSelectedUser(result.data.payload[0])
     }).catch((err) => {
       console.log(err)
     });
@@ -53,7 +55,6 @@ const UserList = () => {
   const getUsers = () => {
     dispatch(getAllChatUsers()).then((result) => {
       setUsers(result.data.payload)
-      setSelectedUser(result.data.payload[0])
     }).catch((err) => {
       console.log(err)
     });
@@ -86,6 +87,7 @@ const UserList = () => {
       enqueueSnackbar(result.data.message, {
         variant:'success'
       })
+      getConversations()
       setopen(false)
     }).catch((err) => {
       setLoading(false)
@@ -107,6 +109,20 @@ const UserList = () => {
     console.log(`Selected option: ${option}`);
     handleMenuClose();
   };
+  const handleUserClick = (user) => {
+    let existingConversation = conversations.some(conv=>
+      conv.participants.some(part=>part.messageable_id == user.id)
+      )
+      // console.log(existingConversation, '++++++++++++++++++')
+    if (existingConversation) {
+      setSelectedUser(user);
+      setopen(false)
+    } 
+    else {
+      // Create a new conversation
+      handleConvversation(user.id);
+    }
+  };
   return (
     <Grid container>
       <Grid item lg={4} md={4} sm={4} xs={4}>
@@ -125,7 +141,8 @@ const UserList = () => {
           </Button>
             </Box>
         <List sx={{ width: '100%', maxWidth: 500 }}>
-          {user.map((user) => (
+          {conversations.map((user) => (
+            
             <ListItem
               key={user.id}
               sx={{
@@ -134,10 +151,11 @@ const UserList = () => {
               }}
               onClick={() => setSelectedUser(user)}
             >
+              {/* {console.log(user.participants)} */}
               <ListItemAvatar>
                 <Avatar src="/assets/images/user.png" />
               </ListItemAvatar>
-              <ListItemText primary={user.name} secondary={user.lastActive} />
+              <ListItemText primary={user.participants[0].messageable.name} secondary={user.lastActive} />
               <IconButton
                onClick={(e) => {
                 e.stopPropagation();
@@ -157,9 +175,12 @@ const UserList = () => {
             <MenuItem onClick={() => handleMenuClick('Delete')}>Delete</MenuItem>
             <MenuItem onClick={() => handleMenuClick('Archive')}>Archive</MenuItem>
           </Menu>
+          {
+            conversations.length < 1 &&
         <Typography variant='h5' sx={{color:'#bcbcbc', textAlign:'center', mt:5}}>
           No Conversation Available. 
         </Typography>
+        }
        
       </Grid>
       <Dialog fullWidth open={open} onClose={()=>setopen(false)}>
@@ -186,8 +207,9 @@ const UserList = () => {
                 return(
                   <>
                   
-                  <ListItem alignItems="flex-start" sx={{cursor:'pointer', '&:hover': {background:'#e2e2e2'}}}
-                  onClick={()=>handleConvversation(val.id)}
+                  <ListItem 
+                  alignItems="flex-start" sx={{cursor:'pointer', '&:hover': {background:'#e2e2e2'}}}
+                  onClick={()=>handleUserClick(val)}
                   >
                 <ListItemAvatar>
                   <Avatar alt="Remy Sharp" src="/assets/images/user.png" />
