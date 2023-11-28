@@ -22,13 +22,33 @@ api.interceptors.request.use(
   }
 );
 
-export const sendChat = (userId)=> async(dispatch)=>{ 
+export const sendMessageAction = (formData)=> async(dispatch)=>{ 
     try{
-     const res = await api.post(`${process.env.REACT_APP_URL}api/chat/conversations`,userId,{
-     })
+     const res = await api.post(`${process.env.REACT_APP_URL}api/chat/messages`, formData)
      return res
      }catch(error){
      
      throw error
      }
        }
+  
+
+       export const getSingleChat = (userId)=> async(dispatch)=>{ 
+        try{
+         const res = await api.get(`${process.env.REACT_APP_URL}api/chat/conversations/${userId}`)
+         return res
+         }catch(error){
+         
+         throw error
+         }
+           }
+
+           export const getAllChatUsers = ()=> async(dispatch)=>{ 
+            try{
+             const res = await api.get(`${process.env.REACT_APP_URL}api/user/allUsers`)
+             return res
+             }catch(error){
+             
+             throw error
+             }
+               }

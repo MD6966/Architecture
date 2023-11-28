@@ -9,7 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Pusher from 'pusher-js'
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { sendChat } from '../../../store/actions/chatActions';
+import { getSingleChat, sendChat, sendMessageAction } from '../../../store/actions/chatActions';
 const ListData = ['Add a friend', 'Create Group', 'Block Contact', 'Unblock', 'Report', 'Unsend Message', 'Edit Message', 'Forward Messages', 'Sharing post'];
 
 const Chat = (props) => {
@@ -23,6 +23,17 @@ const Chat = (props) => {
   const [audioChunks, setAudioChunks] = useState([]);
   const [recordingTime, setRecordingTime] = useState(0);
   const [messages, setMessages] = useState([])
+  const [chat, setChat] = React.useState([])
+  const getChat = () => {
+    dispatch(getSingleChat(props.userId)).then((result) => {
+      console.log(result)
+    }).catch((err) => {
+      console.log(err)
+    });
+  }
+  React.useEffect(()=> {
+  getChat()
+  }, [])
   const audioRef = useRef(null);
   const dispatch = useDispatch()
   const allMessages = []
@@ -40,10 +51,11 @@ const Chat = (props) => {
       cluster: "ap2",
     });
 
-    const channel = pusher.subscribe("message-16");
+    const channel = pusher.subscribe("chat-3");
     console.log(channel);
-    channel.bind("new", function (data) {
-      console.log(JSON.stringify(data), '++++++++++++++');
+    channel.bind("new", (data) => {
+      // console.log(JSON.stringify(data), '++++++++++++++');
+      console.log(data, "This is Data binding here...........")
     })
   },[])
   // console.log(messages, '+++++++++++++++')
@@ -126,9 +138,9 @@ const Chat = (props) => {
       [userId]: [...(prevUsers[userId] || []), { text: message }],
     }));
     const formData = new FormData()
-    formData.append('userId', userId)
+    formData.append('message', message)
     console.log(userId)
-    dispatch(sendChat(formData)).then((result) => {
+    dispatch(sendMessageAction(formData)).then((result) => {
       console.log(result)
     }).catch((err) => {
       console.log(err)
