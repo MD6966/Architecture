@@ -6,7 +6,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Chat from './Chat';
 import { Box, Button, Dialog, DialogContent, DialogTitle, Divider, Grid, IconButton, Menu, MenuItem, Typography } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getAllChatUsers } from '../../../store/actions/chatActions';
 import { Add } from '@mui/icons-material';
 import { conversationIndex, storeConversation } from '../../../store/actions/conversationActions';
@@ -41,8 +41,9 @@ const UserList = () => {
   const [selectedUser, setSelectedUser] = useState("");
   const [open, setopen] = useState(false)
   const [conversations, setConversations] = useState([])
-  const [listDisabled, setListDisabled] = useState(true)
+  const [cId, setCid] = React.useState('')
   const dispatch = useDispatch()
+  const userId = useSelector((state)=>state.admin.user)
   const {enqueueSnackbar} = useSnackbar()
   const getConversations = () => {
     dispatch(conversationIndex()).then((result) => {
@@ -115,8 +116,10 @@ const UserList = () => {
       )
       // console.log(existingConversation, '++++++++++++++++++')
     if (existingConversation) {
-      setSelectedUser(user);
       setopen(false)
+      enqueueSnackbar(`Conversation With ${user.name} already exist`,{
+        variant:'info'
+      })
     } 
     else {
       // Create a new conversation
@@ -209,7 +212,14 @@ const UserList = () => {
                   
                   <ListItem 
                   alignItems="flex-start" sx={{cursor:'pointer', '&:hover': {background:'#e2e2e2'}}}
-                  onClick={()=>handleUserClick(val)}
+                  disabled={userId.id == val.id}
+                  onClick={userId.id === val.id
+                    ? (e) => {
+                        e.stopPropagation();
+                        setopen(false);
+                      }
+                    : () => handleUserClick(val)
+                  }
                   >
                 <ListItemAvatar>
                   <Avatar alt="Remy Sharp" src="/assets/images/user.png" />
@@ -227,7 +237,12 @@ const UserList = () => {
           </DialogContent>
       </Dialog>
       <Grid item lg={8} md={8} sm={8} xs={8}>
-        <Chat selectedUser={selectedUser} userMessages={userMessages[selectedUser.id] || []} addMessage={addMessage} />
+        <Chat 
+        selectedUser={selectedUser} 
+        // userMessages={userMessages[selectedUser.id] || []} 
+        addMessage={addMessage}
+        convId={selectedUser?.id}
+        />
       </Grid>
     </Grid>
   );

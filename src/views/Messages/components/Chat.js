@@ -8,11 +8,13 @@ import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import MenuIcon from '@mui/icons-material/Menu';
 import Pusher from 'pusher-js'
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getSingleChat, sendChat, sendMessageAction } from '../../../store/actions/chatActions';
+import { indexMessages, storeMessage } from '../../../store/actions/messageActions';
 const ListData = ['Add a friend', 'Create Group', 'Block Contact', 'Unblock', 'Report', 'Unsend Message', 'Edit Message', 'Forward Messages', 'Sharing post'];
 
 const Chat = (props) => {
+  // console.log(props.convId, "Convvv")
   const [users, setUsers] = useState({});
   const [selectedEmoji, setSelectedEmoji] = useState('');
   const [newMessage, setNewMessage] = useState('');
@@ -24,16 +26,40 @@ const Chat = (props) => {
   const [recordingTime, setRecordingTime] = useState(0);
   const [messages, setMessages] = useState([])
   const [chat, setChat] = React.useState([])
-  const getChat = () => {
-    dispatch(getSingleChat(props.userId)).then((result) => {
-      console.log(result)
+  const userId = useSelector((state)=>state.admin.user.id)
+  const messagesContainerRef = useRef(null);
+  useEffect(() => {
+    // Scroll to the bottom when messages change
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+  // console.log(userId)
+  const getIndexMessages = () => {
+    dispatch(indexMessages(props.convId)).then((result) => {
+      setMessages(result.data.payload.messages.data)
+      console.log(result.data.payload.messages.data, "Index Messages")
     }).catch((err) => {
       console.log(err)
     });
   }
-  React.useEffect(()=> {
-  getChat()
-  }, [])
+  useEffect(() => {
+    getIndexMessages()
+    const intervalId = setInterval(() => {
+      getIndexMessages();
+    }, 2000);
+    return () => clearInterval(intervalId);
+  }, [props.convId])
+  // const getChat = () => {
+  //   dispatch(getSingleChat(props.userId)).then((result) => {
+  //     console.log(result)
+  //   }).catch((err) => {
+  //     console.log(err)
+  //   });
+  // }
+  // React.useEffect(()=> {
+  // getChat()
+  // }, [])
   const audioRef = useRef(null);
   const dispatch = useDispatch()
   const allMessages = []
@@ -51,8 +77,8 @@ const Chat = (props) => {
       cluster: "ap2",
     });
 
-    const channel = pusher.subscribe("chat-3");
-    console.log(channel);
+    const channel = pusher.subscribe(`message-44`);
+    // console.log(channel);
     channel.bind("new", (data) => {
       // console.log(JSON.stringify(data), '++++++++++++++');
       console.log(data, "This is Data binding here...........")
@@ -138,10 +164,13 @@ const Chat = (props) => {
       [userId]: [...(prevUsers[userId] || []), { text: message }],
     }));
     const formData = new FormData()
-    formData.append('message', message)
-    console.log(userId)
-    dispatch(sendMessageAction(formData)).then((result) => {
-      console.log(result)
+    formData.append('text', message)
+    formData.append('coversation_id', props.convId)
+    formData.append('type', 'text')
+    // console.log(userId)
+    dispatch(storeMessage(formData)).then((result) => {
+      getIndexMessages()
+      // console.log(result, "Store Message")
     }).catch((err) => {
       console.log(err)
     });
@@ -150,7 +179,7 @@ const Chat = (props) => {
 
   const theme = useTheme();
 
-  const userMessages = users[props.selectedUser.id] || [];
+  // const userMessages = users[props.selectedUser.id] || [];
 
   return (
     <StyledChat>
@@ -158,7 +187,10 @@ const Chat = (props) => {
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography fontWeight="bold" variant='h6'>
-              {props.selectedUser.name}
+              {props.selectedUser ? 
+              props.selectedUser.participants[0].messageable.name :
+              'Loading..'  
+            }
             </Typography>
             <FiberManualRecordIcon sx={{ fontSize: '15px', ml: 1, color: '#88EF01' }} />
           </Box>
@@ -191,10 +223,15 @@ const Chat = (props) => {
           </Box>
         </Toolbar>
       </AppBar>
-      <Box style={{ background: "white", height: "100vh", overflowY: 'auto' }}>
-        {userMessages.map((message, index) => (
-          <Texts key={index} val={message.text} isSent={true} />
-        ))}
+      <Box  ref={messagesContainerRef} sx={{ background: "white", height: "100vh", overflowY: 'auto', pb:25 }}>
+        {
+          messages.map((msg, ind)=> {
+            // console.log(msg)
+            return(
+              <Texts key={ind} val={msg.body} isSent={msg.participation.messageable_id == userId ? true : false} />
+            )
+          })
+        }
       </Box>
       <Box
         sx={{

@@ -24,5 +24,6 @@ export const StyledSideBar = styled(Box)(({theme})=> ({
 
 export const StyledChat = styled(Box)(({theme})=> ({
     flex:2,
-    background:'#fff'
+    background:'#fff',
+    // marginBottom:10
 }))
