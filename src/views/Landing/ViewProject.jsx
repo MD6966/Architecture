@@ -32,7 +32,7 @@ const ViewProject = () => {
                     <Carousel
                         showArrows={true}
                         showThumbs={true}
-                        thumbWidth={200}
+                        thumbWidth={230}
                     // thumbHeight={200}
                     >
                         {selectedProject.image.map((val, imageIndex) => (

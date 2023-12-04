@@ -7,16 +7,16 @@ const NavBarLinks = () => {
   return (
     <div>
       <Button variant='contained'
-      component={Link}
-      to='/home'
+        component={Link}
+        to='/home'
       > Home</Button>
-       <Button variant='contained'
-      component={Link}
-      to='/auth/login'
+      <Button variant='contained'
+        component={Link}
+        to='/auth/login'
       > Login</Button>
-       <Button variant='contained'
-      component={Link}
-      to='auth/register'
+      <Button variant='contained'
+        component={Link}
+        to='auth/register'
       > SignUp</Button>
     </div>
   )
