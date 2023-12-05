@@ -13,6 +13,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { logOut } from '../../store/actions/adminActions';
+import LanguageIcon from '@mui/icons-material/Language';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+
 const Header = () => {
   const isAuthenticatedUser = useSelector((state)=>state.admin.user)
   // console.log(isAuthenticatedUser == null)
@@ -53,11 +56,19 @@ const Header = () => {
       ]
     })
   }
+  const [anchorEl2, setAnchorEl2] = React.useState(null);
+  const open2 = Boolean(anchorEl2);
+  const handleClick2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+  const handleClose2 = () => {
+    setAnchorEl2(null);
+  };
   return (
     <div>
   
   <Box sx={{ flexGrow: 1 }}>
-                <AppBar sx={{ background: theme.palette.primary.main }} position="static">
+                <AppBar sx={{ background: theme.palette.primary.main }} position="static" elevation={0}>
                     <Toolbar sx={{display:'flex', justifyContent:'space-between'}}>
                         <Box sx={{display:'flex'}}>
                         <img src='/assets/images/log.png' alt="logo" width="55px" />
@@ -96,46 +107,7 @@ const Header = () => {
                           >
                             Events
                           </Button>
-                            {
-                              !(isAuthenticatedUser == null) ?
-                              <>
-                          <IconButton sx={{mr:1}}
-                          component={Link}
-                          to="/add-post"
-                          >
-                              <Tooltip title="Add Post">
-                              <AddCircleIcon />
-                            </Tooltip>
-                          </IconButton>
-                          <IconButton sx={{mr:2}}
-                          component={Link}
-                          to="/messages"
-                          >
-                            <Badge badgeContent={13} color='custom' >
-                              <Tooltip title="Messages">
-                              < ChatIcon sx={{color:'#fff', fontSize:'30px'}} />
-                              </Tooltip>
-                            </Badge>
-                          </IconButton>
-                        <Avatar src="/assets/images/user.png" 
-                        sx={{cursor:'pointer'}} 
-                        aria-controls={open ? 'basic-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? 'true' : undefined}
-                        onClick={handleClick}
-                        /> 
-                        <Button
-                        variant='contained'
-                        color='secondary'
-                        sx={{ml:2}}
-                        component={Link}
-                        to="/user/dashboard"
-                        >
-                          Go to Dashboard
-                        </Button>
-                        </>
-                        : null 
-                      }
+                            
                         {
                           isAuthenticatedUser == null ?
                         <Button
@@ -152,6 +124,81 @@ const Header = () => {
                         </Box>
                     </Toolbar>
                 </AppBar>
+                {
+                  isAuthenticatedUser && (
+                <AppBar position='static' sx={{bgcolor:'#fff',}} elevation={5}>
+                  <Toolbar>
+                  {
+                              !(isAuthenticatedUser == null) ?
+                              <>
+                              <Box>
+                    <Typography fontSize={16} ml={2} display='inline' sx={{color:'#000', fontWeight:'bold',}}>Add Post</Typography>  
+                          <IconButton sx={{mr:1}}
+                          component={Link}
+                          to="/add-post"
+                          >
+                              <Tooltip title="Add Post">
+                              <AddCircleIcon />
+                            </Tooltip>
+                          </IconButton>
+                          <IconButton sx={{mr:2}}
+                          component={Link}
+                          to="/messages"
+                          >
+                            <Badge badgeContent={13} color='custom' >
+                              <Tooltip title="Messages">
+                              < ChatIcon sx={{color:'#fff', fontSize:'30px', color:'#000'}} />
+                              </Tooltip>
+                            </Badge>
+                          </IconButton>
+                            </Box>
+                            <Box sx={{ml:'auto', display:'flex', alignItems:'center'}}>
+                          <Typography sx={{color:'#000'}}>
+                            <LanguageIcon /> Language (ENG)
+                          </Typography>
+                           <IconButton
+                          aria-controls="language-menu"
+                          aria-haspopup="true"
+                          onClick={handleClick2}
+                        >
+                          <ArrowDropDownIcon />
+                        </IconButton>
+                        <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl2}
+                        open={open2}
+                        onClose={handleClose2}
+                        MenuListProps={{
+                          'aria-labelledby': 'basic-button',
+                        }}
+                      >
+                    <MenuItem onClick={handleClose2}>English</MenuItem>
+                    <MenuItem onClick={handleClose2}>العربی</MenuItem>
+      </Menu>
+                        <Avatar src="/assets/images/user.png" 
+                        sx={{cursor:'pointer'}} 
+                        aria-controls={open ? 'basic-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? 'true' : undefined}
+                        onClick={handleClick}
+                        /> 
+                        <Button
+                        variant='contained'
+                        color='secondary'
+                        sx={{ml:2}}
+                        component={Link}
+                        to="/user/dashboard"
+                        >
+                          Go to Dashboard
+                        </Button>
+                          </Box>
+                        </>
+                        : null 
+                      }
+                  </Toolbar>
+                </AppBar>
+                  )
+                }
                 <Menu
         id="basic-menu"
         anchorEl={anchorEl}
