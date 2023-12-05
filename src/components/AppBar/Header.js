@@ -1,4 +1,4 @@
-import { AppBar, Avatar, Box, IconButton, TextField, Toolbar, Typography, Button, Badge, Tooltip } from '@mui/material';
+import { AppBar, Avatar, Box, IconButton, TextField, Toolbar, Typography, Button, Badge, Tooltip, Tab, Tabs } from '@mui/material';
 import { useTheme } from '@emotion/react';
 import SearchIcon from '@mui/icons-material/Search';
 import { ExitToApp } from '@mui/icons-material';
@@ -7,7 +7,6 @@ import MenuItem from '@mui/material/MenuItem';
 import React from 'react';
 import ChatIcon from '@mui/icons-material/Chat';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-// import MainSection from '../MainSection/MainSection';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { confirmAlert } from 'react-confirm-alert';
@@ -15,9 +14,12 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import { logOut } from '../../store/actions/adminActions';
 import LanguageIcon from '@mui/icons-material/Language';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-
+import { useTranslation } from 'react-i18next';
+import { tabChangeAction } from '../../store/actions/tabChangeActions';
 const Header = () => {
   const isAuthenticatedUser = useSelector((state)=>state.admin.user)
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
   // console.log(isAuthenticatedUser == null)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -64,6 +66,18 @@ const Header = () => {
   const handleClose2 = () => {
     setAnchorEl2(null);
   };
+  const handleLanguageChange = (lng) => {
+    i18n.changeLanguage(lng);
+    setAnchorEl2(null);
+
+
+  }
+  const [selectedTab, setSelectedTab] = React.useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+    dispatch(tabChangeAction(newValue))
+  };
   return (
     <div>
   
@@ -73,11 +87,11 @@ const Header = () => {
                         <Box sx={{display:'flex'}}>
                         <img src='/assets/images/log.png' alt="logo" width="55px" />
                         <Typography variant="h6" component="div" sx={{mt:1.5, fontSize:'1.5rem', color:'#3E393C', fontWeight:'bold'}}>
-                            Architecture
+                        <p>{t('header')}</p>
                         </Typography>
                         </Box>
                         <Box >
-                        <TextField placeholder='Search Anything'
+                        <TextField placeholder={t('search')}
                         size='small'
                         sx={{
                             width:'350px',
@@ -89,23 +103,53 @@ const Header = () => {
                         </Button>
                         </Box>
                         <Box sx={{display:'flex', alignItems:'center'}}>
+                          <Box
+                          sx={{
+                            display:!isAuthenticatedUser ? 'flex' : 'none',
+                            alignItems:'center'
+                          }}
+                          >
+
+                        <Typography sx={{color:'#000'}}>
+                            <LanguageIcon /> {t('langH')} {t('lang')}
+                          </Typography>
+                           <IconButton
+                          aria-controls="language-menu"
+                          aria-haspopup="true"
+                          onClick={handleClick2}
+                          >
+                          <ArrowDropDownIcon />
+                        </IconButton>
+                        <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl2}
+                        open={open2}
+                        onClose={handleClose2}
+                        MenuListProps={{
+                          'aria-labelledby': 'basic-button',
+                        }}
+                      >
+                    <MenuItem onClick={()=>handleLanguageChange('en')}>English</MenuItem>
+                    <MenuItem onClick={()=>handleLanguageChange('ar')}>العربی</MenuItem>
+      </Menu>
+      </Box>
                           <Button color='secondary' variant='outlined' sx={{mr:3,}}
                           component={Link}
                           to="/wiki"
                           >
-                            Wiki
+                           {t('wiki')}
                           </Button>
                            <Button color='secondary' variant='contained' sx={{mr:3}}
                           component={Link}
                           to="/home-competition"
                           >
-                            Comp
+                            {t('comp')}
                           </Button>
                           <Button color='secondary' variant='contained' sx={{mr:2}}
                           component={Link}
                           to="/events"
                           >
-                            Events
+                            {t('events')}
                           </Button>
                             
                         {
@@ -117,7 +161,7 @@ const Header = () => {
                         to="/login"
                         sx={{ml:2}}
                         >
-                          Login
+                          {t('login')}
                         </Button>
                           : null 
                         }
@@ -132,12 +176,12 @@ const Header = () => {
                               !(isAuthenticatedUser == null) ?
                               <>
                               <Box>
-                    <Typography fontSize={16} ml={2} display='inline' sx={{color:'#000', fontWeight:'bold',}}>Add Post</Typography>  
+                    <Typography fontSize={16} ml={2} display='inline' sx={{color:'#000', fontWeight:'bold',}}>{t('addPost')}</Typography>  
                           <IconButton sx={{mr:1}}
                           component={Link}
                           to="/add-post"
                           >
-                              <Tooltip title="Add Post">
+                              <Tooltip title={t('addPost')}>
                               <AddCircleIcon />
                             </Tooltip>
                           </IconButton>
@@ -146,15 +190,27 @@ const Header = () => {
                           to="/messages"
                           >
                             <Badge badgeContent={13} color='custom' >
-                              <Tooltip title="Messages">
+                              <Tooltip title={t('msgs')}>
                               < ChatIcon sx={{color:'#fff', fontSize:'30px', color:'#000'}} />
                               </Tooltip>
                             </Badge>
                           </IconButton>
                             </Box>
+                            <Box color="#000" sx={{ml:'auto'}}>
+                            <Tabs
+                            value={selectedTab}
+                            textColor="primary"
+                            indicatorColor="primary"
+                            centered
+                            onChange={handleTabChange}
+                          >
+                   <Tab label={t('postSection')} selected={selectedTab === 0} />
+                  <Tab label={t('projectsection')} selected={selectedTab === 1} />
+                </Tabs>
+                            </Box>
                             <Box sx={{ml:'auto', display:'flex', alignItems:'center'}}>
                           <Typography sx={{color:'#000'}}>
-                            <LanguageIcon /> Language (ENG)
+                            <LanguageIcon /> {t('langH')} {t('lang')}
                           </Typography>
                            <IconButton
                           aria-controls="language-menu"
@@ -172,8 +228,8 @@ const Header = () => {
                           'aria-labelledby': 'basic-button',
                         }}
                       >
-                    <MenuItem onClick={handleClose2}>English</MenuItem>
-                    <MenuItem onClick={handleClose2}>العربی</MenuItem>
+                    <MenuItem onClick={()=>handleLanguageChange('en')}>English</MenuItem>
+                    <MenuItem onClick={()=>handleLanguageChange('ar')}>العربی</MenuItem>
       </Menu>
                         <Avatar src="/assets/images/user.png" 
                         sx={{cursor:'pointer'}} 
@@ -189,7 +245,7 @@ const Header = () => {
                         component={Link}
                         to="/user/dashboard"
                         >
-                          Go to Dashboard
+                         {t('dash')}
                         </Button>
                           </Box>
                         </>
@@ -208,9 +264,8 @@ const Header = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleProfile}>Profile</MenuItem>
-        {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
-        <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+        <MenuItem onClick={handleProfile}>{t('profile')}</MenuItem>
+        <MenuItem onClick={handleLogOut}>{t('logout')}</MenuItem>
       </Menu>
             </Box>
           {/* <MainSection /> */}

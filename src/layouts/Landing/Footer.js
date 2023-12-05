@@ -2,6 +2,7 @@ import { Facebook, Instagram, LinkedIn, Pinterest, Twitter, YouTube } from '@mui
 import { Box, Typography, styled } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next';
 
 const StyledFooter = styled(Box)(({theme})=> ({
     minHeight:'25vh',
@@ -19,28 +20,30 @@ const StyledTypo = styled(Typography)(({theme})=> ({
   color:'#1e1e1e'
 }))
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <StyledFooter>
       <StyledRoot>
         <Box>
         <Box sx={{display:'flex'}}>
         <StyledTypo>
-          Work
+        {t('work')}
         </StyledTypo>
         <StyledTypo>
-          Terms of Use
+        {t('tos')}
         </StyledTypo>
         <StyledTypo>
-          Privacy Policy
+        {t('pp')}
         </StyledTypo>
         <StyledTypo>
-          Cookie Policy
+        {t('cp')}
         </StyledTypo>
         <StyledTypo>
-          RSS
+        {t('rss')}
         </StyledTypo>
         <StyledTypo>
-          Contact Us
+        {t('contactus')}
         </StyledTypo>
         </Box>
         <Box sx={{mt:2, display:'flex'}}>
@@ -48,9 +51,9 @@ const Footer = () => {
           <img src="/assets/images/log.png" style={{height:'100px'}} /> 
           </Box>
           <Box sx={{mt:1.5, ml:-1}}>
-            <Typography sx={{color:'#1e1e1e'}}>&copy; All rights reserved. Architecture 2020-2023 </Typography>
+            <Typography sx={{color:'#1e1e1e'}}>&copy;{t('arr')} </Typography>
             <Typography sx={{color:'#1e1e1e'}}>ISSN 0719-8884 </Typography>
-            <Typography sx={{color:'#1e1e1e'}}>All images are &copy; each office/photographer mentioned </Typography>
+            <Typography sx={{color:'#1e1e1e'}}>{t('aia')}</Typography>
 
           </Box>
         </Box>
