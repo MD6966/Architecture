@@ -1,5 +1,5 @@
 const initialState ={
-    tabValue:'',
+    tabValue:0,
 }
 
 const tabChangeReducer = (state=initialState, action) => {

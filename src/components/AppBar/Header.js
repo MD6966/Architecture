@@ -168,10 +168,8 @@ const Header = () => {
                         </Box>
                     </Toolbar>
                 </AppBar>
-                {
-                  isAuthenticatedUser && (
                 <AppBar position='static' sx={{bgcolor:'#fff',}} elevation={5}>
-                  <Toolbar>
+                  <Toolbar sx={{display:'flex', justifyContent:'center'}}>
                   {
                               !(isAuthenticatedUser == null) ?
                               <>
@@ -251,10 +249,23 @@ const Header = () => {
                         </>
                         : null 
                       }
+                      {
+                        !isAuthenticatedUser && (
+                            <Tabs
+                            value={selectedTab}
+                            textColor="primary"
+                            indicatorColor="primary"
+                            centered
+                            onChange={handleTabChange}
+                          >
+                   <Tab label={t('postSection')} selected={selectedTab === 0} />
+                  <Tab label={t('projectsection')} selected={selectedTab === 1} />
+                </Tabs>
+                        )
+                      }
+                          
                   </Toolbar>
                 </AppBar>
-                  )
-                }
                 <Menu
         id="basic-menu"
         anchorEl={anchorEl}

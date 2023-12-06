@@ -48,6 +48,8 @@ import SingleCompetetion from "./views/Admin/AdminCompetetion/components/SingleC
 import EditCompetetion from "./views/Admin/AdminCompetetion/components/EditCompetetion";
 import WikiCategories from "./views/WikiPage/WikiCategories";
 import ViewCertificate from "./views/User/UserDashboard/Certificate/components/ViewCertificate";
+import WikiPageLayout from "./layouts/WikiPage/WikiPageLayout";
+import ShopDrawing from "./views/WikiPage/components/ShopDrawing";
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state) => state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state) => state.admin.isAuthenticatedUser)
@@ -66,6 +68,13 @@ export default function Router() {
         { path: '/events', element: <EventsPage /> },
         { path: '/categories', element: <WikiCategories /> },
 
+        {
+            path:'/wiki-page',
+            element:<WikiPageLayout />,
+            children:[
+                {path:'shop-drawing', element:<ShopDrawing />}
+            ] 
+        },
 
 
         {
