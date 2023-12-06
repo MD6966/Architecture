@@ -128,7 +128,7 @@ const WikiPageLayout = () => {
               <Button variant="outlined" sx={{m:3, ml:8}}>Apply filters</Button>
           </Menu>
         </Box>
-        <Box sx={{ border: '1px solid rgba(0,0,0,0.1)', height: '100vh', width: '70%' }}>
+        <Box sx={{ border: '1px solid rgba(0,0,0,0.1)', minHeight: '100vh', width: '70%' }}>
           <Outlet />
         </Box>
       </Box>

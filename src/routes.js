@@ -50,6 +50,10 @@ import WikiCategories from "./views/WikiPage/WikiCategories";
 import ViewCertificate from "./views/User/UserDashboard/Certificate/components/ViewCertificate";
 import WikiPageLayout from "./layouts/WikiPage/WikiPageLayout";
 import ShopDrawing from "./views/WikiPage/components/ShopDrawing";
+import ArcData from "./views/WikiPage/components/ArcData/ArcData";
+import Hospitals from "./views/WikiPage/components/ArcData/components/Hospitals";
+import Test from "./Test";
+import ProjectsWiki from "./views/WikiPage/components/ProjectsWiki";
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state) => state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state) => state.admin.isAuthenticatedUser)
@@ -72,7 +76,13 @@ export default function Router() {
             path:'/wiki-page',
             element:<WikiPageLayout />,
             children:[
-                {path:'shop-drawing', element:<ShopDrawing />}
+                {path:'shop-drawing', element:<ShopDrawing />},
+                {path:'arc-data', element:<ArcData />},
+                {path:'hospitals', element:<Hospitals />},
+                {path:'projects', element:<ProjectsWiki />},
+
+
+
             ] 
         },
 
@@ -154,6 +164,10 @@ export default function Router() {
             path: '/contactus',
             element: <ContactUs />
         },
+        {
+            path:'/test',
+            element:<Test />
+        }
         // {
         //     path: '/profile',
         //     element: <ProfilePage/>

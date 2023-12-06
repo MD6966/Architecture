@@ -74,7 +74,10 @@ const WikiPage = () => {
                                   src="/assets/images/img2.webp"
                                   />
                                 </StyledCard>
-                                <StyledCard>
+                                <StyledCard
+                                component={Link}
+                                to='/wiki-page/arc-data'
+                                >
                                 <Box sx={{p:2}}>
                                     <Typography variant='h5' fontWeight="bold">
                                       Arc Data
@@ -85,7 +88,10 @@ const WikiPage = () => {
                                   src="/assets/images/img1.webp"
                                   />
                                 </StyledCard>
-                                <StyledCard>
+                                <StyledCard
+                                component={Link}
+                                to='/wiki-page/projects'
+                                >
                                 <Box sx={{p:2}}>
                                     <Typography variant='h5' fontWeight="bold">
                                      Projects
