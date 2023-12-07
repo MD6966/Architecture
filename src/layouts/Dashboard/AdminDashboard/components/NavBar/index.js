@@ -17,6 +17,7 @@ import { makeStyles } from '@mui/styles';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import ArchitectureIcon from '@mui/icons-material/Architecture';
 import clsx from 'clsx'
 
 const NAV_WIDTH = 280;
@@ -69,6 +70,12 @@ const StyledAccount = styled('div')(({ theme }) => ({
           title: "Order",
           icon: <ShoppingCartIcon />,
           to: "/admin/order",
+        },
+        {
+          id: 44,
+          title: "Manage Wiki",
+          icon: <ArchitectureIcon />,
+          to: "/admin/manage-wiki",
         },
         {
           id: 5,
