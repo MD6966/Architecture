@@ -54,6 +54,7 @@ import ArcData from "./views/WikiPage/components/ArcData/ArcData";
 import Hospitals from "./views/WikiPage/components/ArcData/components/Hospitals";
 import Test from "./Test";
 import ProjectsWiki from "./views/WikiPage/components/ProjectsWiki";
+import BlockSection from "./views/BlockSection/BlockSection";
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state) => state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state) => state.admin.isAuthenticatedUser)
@@ -71,6 +72,7 @@ export default function Router() {
         { path: '/home-competition', element: <CompetetionHome /> },
         { path: '/events', element: <EventsPage /> },
         { path: '/categories', element: <WikiCategories /> },
+        {path:'/block-section', element:<BlockSection />},
 
         {
             path:'/wiki-page',
