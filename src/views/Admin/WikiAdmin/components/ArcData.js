@@ -6,6 +6,9 @@ import {
   Typography,
   TextField,
 } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { addArchData } from '../../../../store/actions/archDataActions';
+import { useSnackbar } from 'notistack';
 
 const StyledRoot = styled(Box)(({ theme }) => ({
   padding: theme.spacing(5, 2),
@@ -13,32 +16,81 @@ const StyledRoot = styled(Box)(({ theme }) => ({
 
 const ArcData = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [boxes, setBoxes] = useState([]);
+  const [specs_titles, setSpecsTitles] = useState([]);
+  const [specs_files, setSpecsFiles] = useState([]);
+  const dispatch = useDispatch()
+  const {enqueueSnackbar} = useSnackbar()
+  const [formData, setFormData] = useState({
+    arch_title: '',
+    arch_file: null,
+  });
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
+    setFormData({ ...formData, arch_file: file });
   };
 
   const handleAddSpecs = () => {
-    setBoxes([...boxes, {}]);
+    setSpecsTitles([...specs_titles, '']);
+    setSpecsFiles([...specs_files, null]);
   };
 
   const handleImageUpload = (index) => (event) => {
     const file = event.target.files[0];
-    setBoxes((prevBoxes) => {
-      const newBoxes = [...prevBoxes];
-      newBoxes[index].selectedImage = file;
-      return newBoxes;
+
+    setSpecsFiles((prevFiles) => {
+      const newFiles = [...prevFiles];
+      newFiles[index] = file;
+      return newFiles;
     });
   };
+
+  const handleSubmit = () => {
+    const specsData = specs_titles.map((title, index) => ({
+      title,
+      file: specs_files[index],
+    }));
+  
+    const sendData = new FormData();
+    sendData.append('arch_title', formData.arch_title);
+    sendData.append('arch_file', formData.arch_file);
+    sendData.append('specs-title', specs_titles);
+    sendData.append('specs-file', specs_files);
+  
+    dispatch(addArchData(sendData))
+      .then((result) => {
+        enqueueSnackbar(result.data.message, {
+            variant:'success'
+        });
+  
+        setSelectedFile(null);
+        setSpecsTitles([]);
+        setSpecsFiles([]);
+        setFormData({
+          arch_title:'',
+          arch_file: null,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  
 
   return (
     <StyledRoot>
       <Typography variant="h6" textAlign="center" fontWeight="bold">
         Add Arch Data
       </Typography>
-      <TextField label="Title" fullWidth margin="normal" />
+      <TextField
+        label="Title"
+        fullWidth
+        margin="normal"
+        name='arch_title'
+        value={formData.arch_title}
+        onChange={(e) => setFormData({ ...formData, arch_title: e.target.value })}
+      />
 
       <input
         type="file"
@@ -58,7 +110,6 @@ const ArcData = () => {
           style={{ width: '100%', height: '200px', marginTop: '10px' }}
         />
       )}
-
       <Button
         variant="contained"
         sx={{ mt: 3 }}
@@ -67,8 +118,7 @@ const ArcData = () => {
       >
         Add Specs
       </Button>
-
-      {boxes.map((box, index) => (
+      {specs_titles.map((title, index) => (
         <Box key={index} sx={{ border: '1px solid #000', mt: 2, p: 1 }}>
           <Box sx={{ display: 'flex' }}>
             <Box sx={{ width: '40%', pr: 1 }}>
@@ -83,21 +133,38 @@ const ArcData = () => {
                 style={{ display: 'none' }}
                 onChange={handleImageUpload(index)}
               />
-              {box.selectedImage && (
+              {specs_files[index] && (
                 <img
-                  src={URL.createObjectURL(box.selectedImage)}
+                  src={URL.createObjectURL(specs_files[index])}
                   alt={`Selected Image ${index + 1}`}
-                  style={{ width: '100%', marginTop: '10px', height:'300px', objectFit:'cover' }}
+                  style={{ width: '100%', marginTop: '10px', height: '300px', objectFit: 'cover' }}
                 />
               )}
             </Box>
             <Box sx={{ width: '60%' }}>
-              <TextField label="Title" fullWidth margin="normal" />
+              <TextField
+                label={`Title ${index}`}
+                fullWidth
+                margin="normal"
+                onChange={(e) => {
+                  setSpecsTitles((prevTitles) => {
+                    const newTitles = [...prevTitles];
+                    newTitles[index] = e.target.value;
+                    return newTitles;
+                  });
+                }}
+              />
             </Box>
           </Box>
         </Box>
       ))}
-      <Button fullWidth variant='contained' className='bg-[#414ecf]' sx={{mt:2}}>
+      <Button
+        fullWidth
+        variant="contained"
+        className="bg-[#414ecf]"
+        sx={{ mt: 2 }}
+        onClick={handleSubmit}
+      >
         Submit
       </Button>
     </StyledRoot>

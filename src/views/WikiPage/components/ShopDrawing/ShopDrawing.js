@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyledProjectCard,
   StyledProjectRoot,
@@ -10,6 +10,8 @@ import Top from "./components/Top";
 import Bottom from "./components/Bottom";
 import Footer from '../../../../layouts/Landing/Footer'
 import { Download, Visibility } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
+import { getShopDrawings } from "../../../../store/actions/shopDrawing";
 const StyledCard = styled(Card)(({theme})=>({
   height:'330px',
   width:'350px',
@@ -17,6 +19,18 @@ const StyledCard = styled(Card)(({theme})=>({
   cursor:'pointer'
 }))
 const ShopDrawing = () => {
+  const [data, setData] = useState([])
+  const dispatch = useDispatch()
+  const getAlldrawings = () => {
+    dispatch(getShopDrawings()).then((result) => {
+      console.log(result)
+    }).catch((err) => {
+      console.log(err)
+    });
+  }
+  useEffect(()=> {
+    getAlldrawings()
+  }, [])
   return (
     <Box sx={{p:3}}>
       <Typography variant="h4" fontWeight="bold" color="#4F4F51" >
