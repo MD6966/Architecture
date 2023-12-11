@@ -1,6 +1,8 @@
 import { Box, Grid, Typography, styled } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { getArchData } from '../../../../store/actions/archDataActions'
 const StyledRoot = styled(Box)(({theme})=>({
     padding:theme.spacing(8),
 }))
@@ -13,6 +15,18 @@ const cardData = [
     {id:6, img:'/assets/images/stadium.jpg', title:'Stadium'},
 ]
 const ArcData = () => {
+  const [data, setData] = useState([])
+  const dispatch = useDispatch()
+  const getData = () => {
+    dispatch(getArchData()).then((result) => {
+      console.log(result)
+    }).catch((err) => {
+      console.log(err)
+    });
+  }
+  useEffect(()=> {
+    getData()
+  }, [])
   return (
     <div>
         <StyledRoot>

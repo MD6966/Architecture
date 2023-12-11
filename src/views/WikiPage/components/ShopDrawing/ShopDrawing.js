@@ -23,7 +23,7 @@ const ShopDrawing = () => {
   const dispatch = useDispatch()
   const getAlldrawings = () => {
     dispatch(getShopDrawings()).then((result) => {
-      console.log(result)
+      setData(result.data.payload)
     }).catch((err) => {
       console.log(err)
     });
@@ -37,6 +37,9 @@ const ShopDrawing = () => {
         Shop Drawing
       </Typography>
       <Grid container>
+        {
+          data.map((val, ind)=> {
+            return(
         <Grid item xs={12} md={4} lg={6}>
       <StyledCard sx={{mt:3}}>
         <CardMedia 
@@ -45,7 +48,7 @@ const ShopDrawing = () => {
         />
         <CardContent>
           <Typography variant="h6" textAlign='center' fontWeight="bold" color="4f4f51">
-            Name of card
+            {val.title}
           </Typography>
           <Box sx={{display:'flex', justifyContent:'space-between'}}>
         <Button variant="outlined" startIcon={
@@ -58,48 +61,9 @@ const ShopDrawing = () => {
         </CardContent>
       </StyledCard>
         </Grid>
-        <Grid item xs={12} md={4} lg={6}>
-      <StyledCard sx={{mt:3}}>
-        <CardMedia 
-        component="img"
-        src="/assets/images/sp1.jpg"
-        />
-        <CardContent>
-          <Typography variant="h6" textAlign='center' fontWeight="bold" color="4f4f51">
-            Name of card
-          </Typography>
-          <Box sx={{display:'flex', justifyContent:'space-between'}}>
-        <Button variant="outlined" startIcon={
-          <Download />
-        }>DWG Download</Button>
-        <Button variant="outlined" startIcon={
-          <Visibility />
-        }>View Pdf</Button>
-        </Box>
-        </CardContent>
-      </StyledCard>
-        </Grid>
-        <Grid item xs={12} md={4} lg={6}>
-      <StyledCard sx={{mt:3}}>
-        <CardMedia 
-        component="img"
-        src="/assets/images/sp1.jpg"
-        />
-        <CardContent>
-          <Typography variant="h6" textAlign='center' fontWeight="bold" color="4f4f51">
-            Name of card
-          </Typography>
-          <Box sx={{display:'flex', justifyContent:'space-between'}}>
-        <Button variant="outlined" startIcon={
-          <Download />
-        }>DWG Download</Button>
-        <Button variant="outlined" startIcon={
-          <Visibility />
-        }>View Pdf</Button>
-        </Box>
-        </CardContent>
-      </StyledCard>
-        </Grid>
+            )
+          })
+        }
       </Grid>
     </Box>
   );

@@ -34,7 +34,7 @@ export const addShopDrawing = (formData)=> async(dispatch)=>{
 
        export const getShopDrawings = ()=> async(dispatch)=>{ 
         try{
-         const res = await axios.get(`${process.env.REACT_APP_URL}api/admin/shopDrwing`)
+         const res = await axios.get(`${process.env.REACT_APP_URL}api/user/showAllShopDrawings`)
          return res
          }catch(error){
          

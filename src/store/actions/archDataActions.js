@@ -31,3 +31,13 @@ export const addArchData = (formData)=> async(dispatch)=>{
      throw error
      }
        }
+
+       export const getArchData = ()=> async(dispatch)=>{ 
+        try{
+         const res = await axios.get(`${process.env.REACT_APP_URL}api/admin/archData`)
+         return res
+         }catch(error){
+         
+         throw error
+         }
+           }
