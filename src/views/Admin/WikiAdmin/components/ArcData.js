@@ -9,6 +9,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { addArchData } from '../../../../store/actions/archDataActions';
 import { useSnackbar } from 'notistack';
+import { Link } from 'react-router-dom';
 
 const StyledRoot = styled(Box)(({ theme }) => ({
   padding: theme.spacing(5, 2),
@@ -85,6 +86,7 @@ const ArcData = () => {
 
   return (
     <StyledRoot>
+      <Button variant='contained' className="bg-[#414ECF]" component={Link} to="/admin/update-specs">Update Specs Details</Button>
       <Typography variant="h6" textAlign="center" fontWeight="bold">
         Add Arch Data
       </Typography>
