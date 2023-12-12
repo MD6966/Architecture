@@ -55,8 +55,13 @@ const ArcData = () => {
     const sendData = new FormData();
     sendData.append('arch_title', formData.arch_title);
     sendData.append('arch_file', formData.arch_file);
-    sendData.append('specs-title', specs_titles);
-    sendData.append('specs-file', specs_files);
+    specs_titles.forEach((title, index) => {
+      sendData.append(`specs_title[${index}]`, title);
+    });
+    
+    specs_files.forEach((file, index) => {
+      sendData.append(`specs_file[${index}]`, file);
+    });
   
     dispatch(addArchData(sendData))
       .then((result) => {

@@ -1,6 +1,6 @@
 import { Box, Grid, Typography, styled } from '@mui/material'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 const StyledRoot = styled(Box)(({theme})=>({
     padding:theme.spacing(8),
 }))
@@ -15,6 +15,8 @@ const cardData = [
    
 ]
 const Hospitals = () => {
+  const {state} = useLocation()
+  console.log(state.arch_data_specs)
   return (
     <StyledRoot>
             <Typography variant='h4' textAlign="center" mb={2} color="#777" fontWeight="bold">List Of Avialable Spaces</Typography>
