@@ -9,6 +9,8 @@ import {
   Typography,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
+import FilterListIcon from '@mui/icons-material/FilterList';
 import {
   Box,
   Checkbox,
@@ -17,8 +19,6 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import { Outlet } from 'react-router';
 
 const WikiPageLayout = () => {

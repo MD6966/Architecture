@@ -32,6 +32,7 @@ const ArcData = () => {
     navigate('/wiki-page/hospitals', {state:val})
   }
   // This
+  
   return (
     <div>
         <StyledRoot>
