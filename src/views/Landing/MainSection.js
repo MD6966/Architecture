@@ -11,7 +11,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { DeleteProject, getAllPosts, getAllProjects } from '../../store/actions/userActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { ThreeDots } from 'react-loader-spinner';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -21,6 +21,7 @@ import { Carousel } from 'react-responsive-carousel';
 // import {getAllProjects} from '../../store/actions/userActions'
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 
 const StyledRoot = styled(Box)(({ theme }) => ({
@@ -41,6 +42,8 @@ const MainSection = () => {
   const [loading, setLoading] = React.useState(false)
   const [currentPage, setCurrentPage] = React.useState(1);
   const [currentProjectPage, setCurrentProjectPage] = useState(1);
+  const { t } = useTranslation();
+
   const postsPerPage = 6;
   const projectsPerPage = 5;
   const dispatch = useDispatch()
@@ -130,12 +133,15 @@ const MainSection = () => {
   const handleImageClick = (id) => {
     navigate(`/viewproject/${id}`, { state: { projectData: projects } });
   };
-
+  const value = useSelector((state)=>state.tab.tabValue)
   return (
     <div>
       <StyledRoot>
-        <Typography variant='h4' sx={{ mb: 3, fontWeight: 'bold', textAlign: 'center', mt: 2 }}>
-          Posts Section
+        {
+          value === 0 && (
+            <>
+             <Typography variant='h4' sx={{ mb: 3, fontWeight: 'bold', textAlign: 'center', mt: 2 }}>
+        {t('postSection')}
         </Typography>
         {
           loading ?
@@ -239,9 +245,16 @@ const MainSection = () => {
             },
           }}
         />
+            </>
+          )
+        }
+       
 
-        <Typography variant='h4' sx={{ mb: 3, fontWeight: 'bold', textAlign: 'center', mt: 2 }}>
-          Project Section
+        {
+          value === 1 && (
+            <>
+            <Typography variant='h4' sx={{ mb: 3, fontWeight: 'bold', textAlign: 'center', mt: 2 }}>
+        {t('projectsection')}
         </Typography>
         <Grid container spacing={2}>
           {currentProjects.map((project, index) => (
@@ -281,6 +294,9 @@ const MainSection = () => {
             },
           }}
         />
+            </>
+          )
+        }
 
       </StyledRoot>
     </div>

@@ -8,6 +8,8 @@ import { useDispatch } from 'react-redux';
 import { addPost } from '../../../../store/actions/userActions';
 import { ThreeDots } from 'react-loader-spinner';
 import { useSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
+
 const StyledRoot = styled(Box)(({theme})=> ({
   padding:theme.spacing(5),
   marginTop:theme.spacing(4)
@@ -22,6 +24,7 @@ const AddPost = () => {
   const [formValues, setFormValues] = React.useState(initialValues)
   const [loading, setLoading] = React.useState(false)
   const dispatch = useDispatch()
+  const { t } = useTranslation();
   const {enqueueSnackbar} = useSnackbar()
   const handleChange = (e) => {
     const {name,value} = e.target
@@ -85,14 +88,16 @@ const AddPost = () => {
                   style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
                  
                   >
-                    Add Picture
+                            {t('addPic')}
+
                   </Button>
                 </div>
               )}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography variant='h4' style={{ fontWeight: 'bold', color:'gray' ,marginBottom: '10px'}}>
-                Add your Title
+              {t('title')}
+
               </Typography>
               <Divider  style={{ backgroundColor: 'gray', height:'1.5px', width:'85%', marginBottom:'50px' }} />
               <TextField
@@ -113,7 +118,8 @@ const AddPost = () => {
       variant="standard"
     />
              <Typography variant='h4' style={{ fontWeight: 'bold', color:'gray' ,marginTop: '100px',marginBottom:'10px'}}>
-                Add your Description
+             {t('desc')}
+
               </Typography>
               <Divider  style={{ backgroundColor: 'gray', height:'1.5px', width:'85%', marginBottom:'50px' }} />
               <div style={{ width: '85%', marginTop: '50px', maxHeight: '4em', overflowY: 'auto' }}>
@@ -141,7 +147,7 @@ const AddPost = () => {
                 type='submit'
                 style={{ marginTop: '20px', backgroundColor: 'red', color: 'white' }}
               >
-                Create Pin
+                             {t('createPin')}
               </Button>
             </Grid>
           </Grid>

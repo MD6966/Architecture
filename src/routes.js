@@ -49,6 +49,15 @@ import EditCompetetion from "./views/Admin/AdminCompetetion/components/EditCompe
 import WikiCategories from "./views/WikiPage/WikiCategories";
 import ViewCertificate from "./views/User/UserDashboard/Certificate/components/ViewCertificate";
 import News from "./layouts/NEWS/News";
+import WikiPageLayout from "./layouts/WikiPage/WikiPageLayout";
+import ShopDrawing from "./views/WikiPage/components/ShopDrawing";
+import ArcData from "./views/WikiPage/components/ArcData/ArcData";
+import Hospitals from "./views/WikiPage/components/ArcData/components/Hospitals";
+import Test from "./Test";
+import ProjectsWiki from "./views/WikiPage/components/ProjectsWiki";
+import BlockSection from "./views/BlockSection/BlockSection";
+import WikiAdmin from "./views/Admin/WikiAdmin/WikiAdmin";
+import UpdateSpecsDetails from "./views/Admin/WikiAdmin/components/UpdateSpecsDetails";
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state) => state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state) => state.admin.isAuthenticatedUser)
@@ -66,7 +75,21 @@ export default function Router() {
         { path: '/home-competition', element: <CompetetionHome /> },
         { path: '/events', element: <EventsPage /> },
         { path: '/categories', element: <WikiCategories /> },
+        {path:'/block-section', element:<BlockSection />},
 
+        {
+            path:'/wiki-page',
+            element:<WikiPageLayout />,
+            children:[
+                {path:'shop-drawing', element:<ShopDrawing />},
+                {path:'arc-data', element:<ArcData />},
+                {path:'hospitals', element:<Hospitals />},
+                {path:'projects', element:<ProjectsWiki />},
+
+
+
+            ] 
+        },
 
 
         {
@@ -86,6 +109,9 @@ export default function Router() {
                         { path: 'add-competetion', element: <AddCompetetion /> },
                         { path: 'competetion', element: <SingleCompetetion /> },
                         { path: 'edit-competetion', element: <EditCompetetion /> },
+                        {path:'manage-wiki', element:<WikiAdmin />},
+                        {path:'update-specs', element:<UpdateSpecsDetails />},
+
 
 
 
@@ -149,6 +175,10 @@ export default function Router() {
         {
             path: '/news',
             element: <News />
+        },
+        {
+            path:'/test',
+            element:<Test />
         }
         // {
         //     path: '/profile',

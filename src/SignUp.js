@@ -24,7 +24,6 @@ export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
-    // setFormValues({ ...formValues, ...newFormValues });
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
