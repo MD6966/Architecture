@@ -9,15 +9,12 @@ import ChatIcon from '@mui/icons-material/Chat';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 // import MainSection from '../MainSection/MainSection';
 import { Link, useNavigate } from 'react-router-dom';
-<<<<<<< Updated upstream
 import { useDispatch, useSelector } from 'react-redux';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { logOut } from '../../store/actions/adminActions';
-=======
->>>>>>> Stashed changes
 const Header = () => {
-  const isAuthenticatedUser = useSelector((state)=>state.admin.user)
+  const isAuthenticatedUser = useSelector((state) => state.admin.user)
   // console.log(isAuthenticatedUser == null)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -35,7 +32,7 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const navigate = useNavigate()
+
   const handleNews = () => {
     navigate('/news')
   }
@@ -46,134 +43,22 @@ const Header = () => {
     confirmAlert({
       title: 'Log Out?',
       message: 'Are you sure to want to log out ?',
-      buttons:[
+      buttons: [
         {
           label: 'Yes',
-          onClick: ()=>{
+          onClick: () => {
             dispatch(logOut())
           }
         },
-       {
-        label: 'No',
-       }
-  
+        {
+          label: 'No',
+        }
+
       ]
     })
   }
   return (
-    <div>
-<<<<<<< Updated upstream
-  
-  <Box sx={{ flexGrow: 1 }}>
-                <AppBar sx={{ background: theme.palette.primary.main }} position="static">
-                    <Toolbar sx={{display:'flex', justifyContent:'space-between'}}>
-                        <Box sx={{display:'flex'}}>
-                        <img src='/assets/images/log.png' alt="logo" width="55px" />
-                        <Typography variant="h6" component="div" sx={{mt:1.5, fontSize:'1.5rem', color:'#3E393C', fontWeight:'bold'}}>
-                            Architecture
-                        </Typography>
-                        </Box>
-                        <Box >
-                        <TextField placeholder='Search Anything'
-                        size='small'
-                        sx={{
-                            width:'350px',
-                            background:'#fff'
-                        }}
-                        />
-                        <Button variant='contained' className="bg-[#3E3A57]" sx={{height:'40px',}}>
-                            <SearchIcon />
-                        </Button>
-                        </Box>
-                        <Box sx={{display:'flex', alignItems:'center'}}>
-                          <Button color='secondary' variant='outlined' sx={{mr:3,}}
-                          component={Link}
-                          to="/wiki"
-                          >
-                            Wiki
-                          </Button>
-                           <Button color='secondary' variant='contained' sx={{mr:3}}
-                          component={Link}
-                          to="/home-competition"
-                          >
-                            Comp
-                          </Button>
-                          <Button color='secondary' variant='contained' sx={{mr:2}}
-                          component={Link}
-                          to="/events"
-                          >
-                            Events
-                          </Button>
-                            {
-                              !(isAuthenticatedUser == null) ?
-                              <>
-                          <IconButton sx={{mr:1}}
-                          component={Link}
-                          to="/add-post"
-                          >
-                              <Tooltip title="Add Post">
-                              <AddCircleIcon />
-                            </Tooltip>
-                          </IconButton>
-                          <IconButton sx={{mr:2}}
-                          component={Link}
-                          to="/messages"
-                          >
-                            <Badge badgeContent={13} color='custom' >
-                              <Tooltip title="Messages">
-                              < ChatIcon sx={{color:'#fff', fontSize:'30px'}} />
-                              </Tooltip>
-                            </Badge>
-                          </IconButton>
-                        <Avatar src="/assets/images/user.png" 
-                        sx={{cursor:'pointer'}} 
-                        aria-controls={open ? 'basic-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? 'true' : undefined}
-                        onClick={handleClick}
-                        /> 
-                        <Button
-                        variant='contained'
-                        color='secondary'
-                        sx={{ml:2}}
-                        component={Link}
-                        to="/user/dashboard"
-                        >
-                          Go to Dashboard
-                        </Button>
-                        </>
-                        : null 
-                      }
-                        {
-                          isAuthenticatedUser == null ?
-                        <Button
-                        color='secondary'
-                        variant='contained'
-                        component={Link}
-                        to="/login"
-                        sx={{ml:2}}
-                        >
-                          Login
-                        </Button>
-                          : null 
-                        }
-                        </Box>
-                    </Toolbar>
-                </AppBar>
-                <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem onClick={handleProfile}>Profile</MenuItem>
-        {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
-        <MenuItem onClick={handleLogOut}>Logout</MenuItem>
-      </Menu>
-=======
+    <>
 
       <Box sx={{ flexGrow: 1 }}>
         <AppBar sx={{ background: theme.palette.primary.main }} position="static">
@@ -183,7 +68,6 @@ const Header = () => {
               <Typography variant="h6" component="div" sx={{ mt: 1.5, fontSize: '1.5rem', color: '#3E393C', fontWeight: 'bold' }}>
                 Architecture
               </Typography>
->>>>>>> Stashed changes
             </Box>
             <Box >
               <TextField placeholder='Search Anything'
@@ -198,7 +82,6 @@ const Header = () => {
               </Button>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Button onClick={handleNews} sx={{ backgroundColor: 'black', color: 'white', border: '1 px solid black' }}>News</Button>
               <Button color='secondary' variant='outlined' sx={{ mr: 3, }}
                 component={Link}
                 to="/wiki"
@@ -217,40 +100,59 @@ const Header = () => {
               >
                 Events
               </Button>
-              <IconButton sx={{ mr: 1 }}
-                component={Link}
-                to="/add-post"
-              >
-                <Tooltip title="Add Post">
-                  <AddCircleIcon />
-                </Tooltip>
-              </IconButton>
-              <IconButton sx={{ mr: 2 }}
-                component={Link}
-                to="/messages"
-              >
-                <Badge badgeContent={13} color='custom' >
-                  <Tooltip title="Messages">
-                    < ChatIcon sx={{ color: '#fff', fontSize: '30px' }} />
-                  </Tooltip>
-                </Badge>
-              </IconButton>
-              <Avatar src="/assets/images/user.png"
-                sx={{ cursor: 'pointer' }}
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-              />
-              <Button
-                color='secondary'
-                variant='contained'
-                component={Link}
-                to="/"
-                sx={{ ml: 2 }}
-              >
-
-              </Button>
+              {
+                !(isAuthenticatedUser == null) ?
+                  <>
+                    <IconButton sx={{ mr: 1 }}
+                      component={Link}
+                      to="/add-post"
+                    >
+                      <Tooltip title="Add Post">
+                        <AddCircleIcon />
+                      </Tooltip>
+                    </IconButton>
+                    <IconButton sx={{ mr: 2 }}
+                      component={Link}
+                      to="/messages"
+                    >
+                      <Badge badgeContent={13} color='custom' >
+                        <Tooltip title="Messages">
+                          < ChatIcon sx={{ color: '#fff', fontSize: '30px' }} />
+                        </Tooltip>
+                      </Badge>
+                    </IconButton>
+                    <Avatar src="/assets/images/user.png"
+                      sx={{ cursor: 'pointer' }}
+                      aria-controls={open ? 'basic-menu' : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? 'true' : undefined}
+                      onClick={handleClick}
+                    />
+                    <Button
+                      variant='contained'
+                      color='secondary'
+                      sx={{ ml: 2 }}
+                      component={Link}
+                      to="/user/dashboard"
+                    >
+                      Go to Dashboard
+                    </Button>
+                  </>
+                  : null
+              }
+              {
+                isAuthenticatedUser == null ?
+                  <Button
+                    color='secondary'
+                    variant='contained'
+                    component={Link}
+                    to="/login"
+                    sx={{ ml: 2 }}
+                  >
+                    Login
+                  </Button>
+                  : null
+              }
             </Box>
           </Toolbar>
         </AppBar>
@@ -263,13 +165,106 @@ const Header = () => {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
+          <MenuItem onClick={handleProfile}>Profile</MenuItem>
+          {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
+          <MenuItem onClick={handleLogOut}>Logout</MenuItem>
         </Menu>
+
+        <Box sx={{ flexGrow: 1 }}>
+          <AppBar sx={{ background: theme.palette.primary.main }} position="static">
+            <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Box sx={{ display: 'flex' }}>
+                <img src='/assets/images/log.png' alt="logo" width="55px" />
+                <Typography variant="h6" component="div" sx={{ mt: 1.5, fontSize: '1.5rem', color: '#3E393C', fontWeight: 'bold' }}>
+                  Architecture
+                </Typography>
+              </Box>
+              <Box >
+                <TextField placeholder='Search Anything'
+                  size='small'
+                  sx={{
+                    width: '350px',
+                    background: '#fff'
+                  }}
+                />
+                <Button variant='contained' className="bg-[#3E3A57]" sx={{ height: '40px', }}>
+                  <SearchIcon />
+                </Button>
+              </Box>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Button onClick={handleNews} sx={{ backgroundColor: 'black', color: 'white', border: '1 px solid black' }}>News</Button>
+                <Button color='secondary' variant='outlined' sx={{ mr: 3, }}
+                  component={Link}
+                  to="/wiki"
+                >
+                  Wiki
+                </Button>
+                <Button color='secondary' variant='contained' sx={{ mr: 3 }}
+                  component={Link}
+                  to="/home-competition"
+                >
+                  Comp
+                </Button>
+                <Button color='secondary' variant='contained' sx={{ mr: 2 }}
+                  component={Link}
+                  to="/events"
+                >
+                  Events
+                </Button>
+                <IconButton sx={{ mr: 1 }}
+                  component={Link}
+                  to="/add-post"
+                >
+                  <Tooltip title="Add Post">
+                    <AddCircleIcon />
+                  </Tooltip>
+                </IconButton>
+                <IconButton sx={{ mr: 2 }}
+                  component={Link}
+                  to="/messages"
+                >
+                  <Badge badgeContent={13} color='custom' >
+                    <Tooltip title="Messages">
+                      < ChatIcon sx={{ color: '#fff', fontSize: '30px' }} />
+                    </Tooltip>
+                  </Badge>
+                </IconButton>
+                <Avatar src="/assets/images/user.png"
+                  sx={{ cursor: 'pointer' }}
+                  aria-controls={open ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
+                />
+                <Button
+                  color='secondary'
+                  variant='contained'
+                  component={Link}
+                  to="/"
+                  sx={{ ml: 2 }}
+                >
+
+                </Button>
+              </Box>
+            </Toolbar>
+          </AppBar>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <MenuItem onClick={handleClose}>My account</MenuItem>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </Menu>
+        </Box>
+        {/* <MainSection /> */}
       </Box>
-      {/* <MainSection /> */}
-    </div>
+    </>
   )
 }
 

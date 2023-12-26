@@ -6,16 +6,7 @@ import Texts from './Texts';
 import EmojiPicker from 'emoji-picker-react';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import MenuIcon from '@mui/icons-material/Menu';
-<<<<<<< Updated upstream
-import Pusher from 'pusher-js'
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSingleChat, sendChat, sendMessageAction } from '../../../store/actions/chatActions';
-import { indexMessages, storeMessage } from '../../../store/actions/messageActions';
-const ListData = ['Add a friend', 'Create Group', 'Block Contact', 'Unblock', 'Report', 'Unsend Message', 'Edit Message', 'Forward Messages', 'Sharing post'];
-=======
-
->>>>>>> Stashed changes
 
 const ListData = ['Add a friend', 'Create Group', 'Block Contact', 'Unblock', 'Report', 'Unsend Message', 'Edit Message', 'Forward Messages', 'Sharing post'];
 const dummyUsers = [
@@ -25,12 +16,10 @@ const dummyUsers = [
   { id: 'user4', name: 'User 4', avatar: 'user4-avatar-url' },
 ];
 const Chat = (props) => {
-<<<<<<< Updated upstream
-  // console.log(props.convId, "Convvv")
-=======
+  const dispatch = useDispatch()
+
   const [groupUsers, setGroupUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
->>>>>>> Stashed changes
   const [users, setUsers] = useState({});
   const [selectedEmoji, setSelectedEmoji] = useState('');
   const [newMessage, setNewMessage] = useState('');
@@ -42,7 +31,7 @@ const Chat = (props) => {
   const [recordingTime, setRecordingTime] = useState(0);
   const [messages, setMessages] = useState([])
   const [chat, setChat] = React.useState([])
-  const userId = useSelector((state)=>state.admin.user.id)
+  const userId = useSelector((state) => state.admin.user.id)
   const messagesContainerRef = useRef(null);
   useEffect(() => {
     // Scroll to the bottom when messages change
@@ -52,7 +41,7 @@ const Chat = (props) => {
   }, [messages]);
   // console.log(userId)
   const getIndexMessages = () => {
-    dispatch(indexMessages(props.convId)).then((result) => {
+    dispatch(getIndexMessages(props.convId)).then((result) => {
       setMessages(result.data.payload.messages.data)
       console.log(result.data.payload.messages.data, "Index Messages")
     }).catch((err) => {
@@ -77,10 +66,6 @@ const Chat = (props) => {
   // getChat()
   // }, [])
   const audioRef = useRef(null);
-<<<<<<< Updated upstream
-  const dispatch = useDispatch()
-  const allMessages = []
-=======
   const [isCreateGroupDialogOpen, setCreateGroupDialogOpen] = useState(false);
   const [groupTitle, setGroupTitle] = useState('');
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -93,7 +78,6 @@ const Chat = (props) => {
   const [isForwardMessagesDialogOpen, setForwardMessagesDialogOpen] = useState(false);
   const [isSharingPostDialogOpen, setSharingPostDialogOpen] = useState(false);
 
->>>>>>> Stashed changes
   useEffect(() => {
     if (isRecording) {
       startRecording();
@@ -101,7 +85,7 @@ const Chat = (props) => {
       stopRecording();
     }
   }, [isRecording]);
-  useEffect(()=> {
+  useEffect(() => {
     Pusher.logToConsole = true;
 
     const pusher = new Pusher("66a996d7c63fe6a9fac5", {
@@ -114,7 +98,7 @@ const Chat = (props) => {
       // console.log(JSON.stringify(data), '++++++++++++++');
       console.log(data, "This is Data binding here...........")
     })
-  },[])
+  }, [])
   // console.log(messages, '+++++++++++++++')
   const startRecording = () => {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -158,13 +142,10 @@ const Chat = (props) => {
   const stopRecording = () => {
     if (mediaRecorder) {
       setIsRecording(false);
-<<<<<<< Updated upstream
-=======
       mediaRecorder.stop();
 
 
       // Convert the audio chunks to a Blob
->>>>>>> Stashed changes
       const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
       if (audioBlob) {
         sendMessage(props.selectedUser.id, audioBlob);
@@ -234,14 +215,10 @@ const Chat = (props) => {
   };
   const theme = useTheme();
 
-<<<<<<< Updated upstream
-  // const userMessages = users[props.selectedUser.id] || [];
-=======
   const userMessages = users[props.selectedUser.id] || [];
   const openCreateGroupDialog = () => {
     setCreateGroupDialogOpen(true);
   };
->>>>>>> Stashed changes
 
   const closeCreateGroupDialog = () => {
     setCreateGroupDialogOpen(false);
@@ -370,10 +347,10 @@ const Chat = (props) => {
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography fontWeight="bold" variant='h6'>
-              {props.selectedUser ? 
-              props.selectedUser.participants[0].messageable.name :
-              'Loading..'  
-            }
+              {props.selectedUser ?
+                props.selectedUser.participants[0].messageable.name :
+                'Loading..'
+              }
             </Typography>
             <FiberManualRecordIcon sx={{ fontSize: '15px', ml: 1, color: '#88EF01' }} />
           </Box>
@@ -483,7 +460,8 @@ const Chat = (props) => {
                   Are you sure you want to block this contact?
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  Blocking this contact will prevent them from sending you messages and seeing your profile.
+                  Blocking th
+                  is contact will prevent them from sending you messages and seeing your profile.
                 </Typography>
               </DialogContent>
               <DialogActions>
@@ -617,37 +595,12 @@ const Chat = (props) => {
           </Box>
         </Toolbar>
       </AppBar>
-<<<<<<< Updated upstream
-      <Box  ref={messagesContainerRef} sx={{ background: "white", height: "100vh", overflowY: 'auto', pb:25 }}>
-        {
-          messages.map((msg, ind)=> {
-            // console.log(msg)
-            return(
-              <Texts key={ind} val={msg.body} isSent={msg.participation.messageable_id == userId ? true : false} />
-            )
-          })
-        }
-      </Box>
-      <Box
-        sx={{
-          width: '100%',
-          position: 'fixed',
-          top: 'auto',
-          bottom: 0,
-          display: 'flex',
-          alignItems: 'center',
-          // justifyContent: 'space-between',
-
-        }}
-      >
-=======
       <Box style={{ background: "white", height: "calc(100vh - 55px)", overflowY: 'auto' }}>
         {userMessages.map((message, index) => (
           <Texts key={index} val={message.text} />
         ))}
       </Box>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'fixed', bottom: 0, zIndex: 1 }}>
->>>>>>> Stashed changes
         <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
           {isRecording && (
             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -661,44 +614,6 @@ const Chat = (props) => {
             {isRecording ? 'Stop' : 'Record'}
           </KeyboardVoiceIcon>
         </div>
-<<<<<<< Updated upstream
-        <TextField
-          fullWidth
-          sx={{
-            mb: 1,
-            width: '50%',
-            background: 'white',
-
-          }}
-          placeholder="Start Writing Here........"
-          value={newMessage + selectedEmoji}
-          onChange={(e) => setNewMessage(e.target.value)}
-        />
-        <Button
-          disabled={newMessage.length < 1}
-          variant='contained'
-          className='bg-[#3E3A57]'
-          sx={{ height: '55px', mb:1 }}
-          onClick={() => {
-            if (newMessage.trim() || selectedEmoji) {
-              sendMessage(props.selectedUser.id, newMessage + selectedEmoji);
-            }
-          }}
-        >
-          Send
-        </Button>
-        <Button
-        
-          variant='contained'
-          className='bg-[#3E3A57]'
-          sx={{ height: '55px', mb:1 }}
-          value={selectedEmoji}
-          onClick={handleEmojiButtonClick}
-        >
-          😃
-        </Button>
-
-=======
         <div style={{ display: 'flex', alignItems: 'center', flex: '1' }}>
           <TextField
             fullWidth
@@ -734,7 +649,6 @@ const Chat = (props) => {
             😃
           </Button>
         </div>
->>>>>>> Stashed changes
         {isEmojiPickerOpen && (
           <div style={{ position: 'absolute', bottom: '55px' }}>
             <EmojiPicker onEmojiClick={handleEmojiSelect} />

@@ -41,7 +41,6 @@ import CompetetionHome from "./views/CompetetionPage/components/CompetitionHome/
 import AdminEvents from "./views/Admin/AdminEvents";
 import EditEvent from "./views/Admin/AdminEvents/components/EditEvent";
 import ViewProject from "./views/Landing/ViewProject";
-<<<<<<< Updated upstream
 import Feed from "./views/User/UserDashboard/Feed";
 import AdminCompetetion from "./views/Admin/AdminCompetetion";
 import AddCompetetion from "./views/Admin/AdminCompetetion/components/AddCompetition/AddCompetetion";
@@ -49,9 +48,7 @@ import SingleCompetetion from "./views/Admin/AdminCompetetion/components/SingleC
 import EditCompetetion from "./views/Admin/AdminCompetetion/components/EditCompetetion";
 import WikiCategories from "./views/WikiPage/WikiCategories";
 import ViewCertificate from "./views/User/UserDashboard/Certificate/components/ViewCertificate";
-=======
 import News from "./layouts/NEWS/News";
->>>>>>> Stashed changes
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state) => state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state) => state.admin.isAuthenticatedUser)
@@ -118,7 +115,7 @@ export default function Router() {
                         { path: 'trophy', element: <Trophy /> },
                         { path: 'certificate', element: <Certificate /> },
                         { path: 'feed', element: <Feed /> },
-                        {path:'view-certificate', element:<ViewCertificate />}
+                        { path: 'view-certificate', element: <ViewCertificate /> }
 
 
                     ]
