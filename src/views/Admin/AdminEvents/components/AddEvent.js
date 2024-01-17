@@ -54,7 +54,7 @@ const AddEvent = (props) => {
       dispatch(createEvent(formData))
         .then((result) => {
           setloading(false);
-          setSelectedImage(null); 
+          setSelectedImage(null);
           setFormValues(initialValues);
           props.close();
           props.createSuccess()
@@ -137,21 +137,21 @@ const AddEvent = (props) => {
             <Button onClick={props.close} variant='outlined'>Close</Button>
 
             <Button type="submit" variant={loading ? 'disabled' : "contained"} className='bg-[#3e50ce]'>
-                  {loading ?
-                     <ThreeDots 
-                     height="30" 
-                     width="30" 
-                     radius="9"
-                     color="#fff" 
-                     ariaLabel="three-dots-loading"
-                     wrapperStyle={{}}
-                     wrapperClassName=""
-                     visible={true}
-                     />
-                     :
-                     'Create Event'  
-                }
-                </Button>
+              {loading ?
+                <ThreeDots
+                  height="30"
+                  width="30"
+                  radius="9"
+                  color="#fff"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClassName=""
+                  visible={true}
+                />
+                :
+                'Create Event'
+              }
+            </Button>
           </DialogActions>
         </form>
       </Dialog>

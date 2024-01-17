@@ -58,6 +58,10 @@ import ProjectsWiki from "./views/WikiPage/components/ProjectsWiki";
 import BlockSection from "./views/BlockSection/BlockSection";
 import WikiAdmin from "./views/Admin/WikiAdmin/WikiAdmin";
 import UpdateSpecsDetails from "./views/Admin/WikiAdmin/components/UpdateSpecsDetails";
+import Blockpage from "./views/BlockSection/components/Blockpage";
+import ManageBlocks from "./views/Admin/AdminEvents/components/MangeBlocks";
+import EditBlocks from "./views/Admin/AdminEvents/components/EditBlocks";
+import AddCategory from "./views/Admin/AdminEvents/components/AddCategory";
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state) => state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state) => state.admin.isAuthenticatedUser)
@@ -75,20 +79,21 @@ export default function Router() {
         { path: '/home-competition', element: <CompetetionHome /> },
         { path: '/events', element: <EventsPage /> },
         { path: '/categories', element: <WikiCategories /> },
-        {path:'/block-section', element:<BlockSection />},
+        { path: '/block-section', element: <BlockSection /> },
+        { path: '/block-page', element: <Blockpage /> },
 
         {
-            path:'/wiki-page',
-            element:<WikiPageLayout />,
-            children:[
-                {path:'shop-drawing', element:<ShopDrawing />},
-                {path:'arc-data', element:<ArcData />},
-                {path:'hospitals', element:<Hospitals />},
-                {path:'projects', element:<ProjectsWiki />},
+            path: '/wiki-page',
+            element: <WikiPageLayout />,
+            children: [
+                { path: 'shop-drawing', element: <ShopDrawing /> },
+                { path: 'arc-data', element: <ArcData /> },
+                { path: 'hospitals', element: <Hospitals /> },
+                { path: 'projects', element: <ProjectsWiki /> },
 
 
 
-            ] 
+            ]
         },
 
 
@@ -103,14 +108,17 @@ export default function Router() {
                         { path: 'dashboard', element: <DashboardAdmin /> },
                         { path: 'events', element: <AdminEvents /> },
                         { path: 'edit-event', element: <EditEvent /> },
+                        { path: 'edit-block', element: <EditBlocks /> },
+                        { path: 'blocks', element: <ManageBlocks /> },
+                        { path: 'category', element: <AddCategory /> },
                         { path: 'leaderboard', element: <LeaderBoard /> },
                         { path: 'order', element: <Order /> },
                         { path: 'competetions', element: <AdminCompetetion /> },
                         { path: 'add-competetion', element: <AddCompetetion /> },
                         { path: 'competetion', element: <SingleCompetetion /> },
                         { path: 'edit-competetion', element: <EditCompetetion /> },
-                        {path:'manage-wiki', element:<WikiAdmin />},
-                        {path:'update-specs', element:<UpdateSpecsDetails />},
+                        { path: 'manage-wiki', element: <WikiAdmin /> },
+                        { path: 'update-specs', element: <UpdateSpecsDetails /> },
 
 
 
@@ -177,8 +185,8 @@ export default function Router() {
             element: <News />
         },
         {
-            path:'/test',
-            element:<Test />
+            path: '/test',
+            element: <Test />
         }
         // {
         //     path: '/profile',
