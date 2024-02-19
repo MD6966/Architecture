@@ -31,7 +31,9 @@ import { useTranslation } from "react-i18next";
 import { tabChangeAction } from "../../store/actions/tabChangeActions";
 const Header = () => {
   const isAuthenticatedUser = useSelector((state) => state.admin.user);
-  const isAuthenticatedAdmin = useSelector((state)=>state.admin.isAuthenticatedAdmin)
+  const isAuthenticatedAdmin = useSelector(
+    (state) => state.admin.isAuthenticatedAdmin
+  );
   const { t } = useTranslation();
   const { i18n } = useTranslation();
   // console.log(isAuthenticatedUser == null)
@@ -51,8 +53,8 @@ const Header = () => {
   };
 
   const handleNews = () => {
-    navigate('/news')
-  }
+    navigate("/news");
+  };
 
   const theme = useTheme();
   const handleLogOut = () => {
@@ -308,7 +310,11 @@ const Header = () => {
                     color="secondary"
                     sx={{ ml: 2 }}
                     component={Link}
-                    to={isAuthenticatedAdmin ? "/admin/dashboard" : "/user/dashboard"} 
+                    to={
+                      isAuthenticatedAdmin
+                        ? "/admin/dashboard"
+                        : "/user/dashboard"
+                    }
                   >
                     {t("dash")}
                   </Button>
