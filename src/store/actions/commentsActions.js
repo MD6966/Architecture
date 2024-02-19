@@ -24,8 +24,7 @@ api.interceptors.request.use(
 
 export const addComment = (body)=> async(dispatch)=>{ 
     try{
-     const res = await api.post(`${process.env.REACT_APP_URL}api/user/comments`,body,{
-     })
+     const res = await api.post(`${process.env.REACT_APP_URL}api/user/comments`,body)
      return res
      }catch(error){
      
