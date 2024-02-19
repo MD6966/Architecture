@@ -31,7 +31,9 @@ import { useTranslation } from "react-i18next";
 import { tabChangeAction } from "../../store/actions/tabChangeActions";
 const Header = () => {
   const isAuthenticatedUser = useSelector((state) => state.admin.user);
-  const isAuthenticatedAdmin = useSelector((state)=>state.admin.isAuthenticatedAdmin)
+  const isAuthenticatedAdmin = useSelector(
+    (state) => state.admin.isAuthenticatedAdmin
+  );
   const { t } = useTranslation();
   const { i18n } = useTranslation();
   // console.log(isAuthenticatedUser == null)
@@ -51,8 +53,8 @@ const Header = () => {
   };
 
   const handleNews = () => {
-    navigate('/news')
-  }
+    navigate("/news");
+  };
 
   const theme = useTheme();
   const handleLogOut = () => {
@@ -166,7 +168,7 @@ const Header = () => {
                   </MenuItem>
                 </Menu>
               </Box>
-              <Button
+              {/* <Button
                 color="secondary"
                 variant="contained"
                 sx={{ mr: 3 }}
@@ -174,8 +176,8 @@ const Header = () => {
                 to="/block-section"
               >
                 {t("bs")}
-              </Button>
-              <Button
+              </Button> */}
+              {/* <Button
                 color="secondary"
                 variant="outlined"
                 sx={{ mr: 3 }}
@@ -183,9 +185,9 @@ const Header = () => {
                 to="/wiki"
               >
                 {t("wiki")}
-              </Button>
+              </Button> */}
 
-              <Button
+              {/* <Button
                 color="secondary"
                 variant="contained"
                 sx={{ mr: 3 }}
@@ -193,8 +195,8 @@ const Header = () => {
                 to="/home-competition"
               >
                 {t("comp")}
-              </Button>
-              <Button
+              </Button> */}
+              {/* <Button
                 color="secondary"
                 variant="contained"
                 sx={{ mr: 2 }}
@@ -202,7 +204,7 @@ const Header = () => {
                 to="/events"
               >
                 {t("events")}
-              </Button>
+              </Button> */}
 
               {isAuthenticatedUser == null ? (
                 <Button
@@ -266,6 +268,11 @@ const Header = () => {
                       label={t("projectsection")}
                       selected={selectedTab === 1}
                     />
+                    <Tab label="Wiki" selected={selectedTab === 2} />
+                    <Tab label="Competetions" selected={selectedTab === 3} />
+                    <Tab label="Events" selected={selectedTab === 4} />
+                    <Tab label="Blocks" selected={selectedTab === 5} />
+                    <Tab label="News" selected={selectedTab === 6} />
                   </Tabs>
                 </Box>
                 <Box sx={{ ml: "auto", display: "flex", alignItems: "center" }}>
@@ -308,7 +315,11 @@ const Header = () => {
                     color="secondary"
                     sx={{ ml: 2 }}
                     component={Link}
-                    to={isAuthenticatedAdmin ? "/admin/dashboard" : "/user/dashboard"} 
+                    to={
+                      isAuthenticatedAdmin
+                        ? "/admin/dashboard"
+                        : "/user/dashboard"
+                    }
                   >
                     {t("dash")}
                   </Button>
@@ -325,6 +336,11 @@ const Header = () => {
               >
                 <Tab label={t("postSection")} selected={selectedTab === 0} />
                 <Tab label={t("projectsection")} selected={selectedTab === 1} />
+                <Tab label="Wiki" selected={selectedTab === 2} />
+                <Tab label="Competetions" selected={selectedTab === 3} />
+                <Tab label="Events" selected={selectedTab === 4} />
+                <Tab label="Blocks" selected={selectedTab === 5} />
+                <Tab label="News" selected={selectedTab === 6} />
               </Tabs>
             )}
           </Toolbar>
