@@ -1,45 +1,155 @@
-import { Download } from '@mui/icons-material'
-import { Box, Card, CardContent, CardMedia, Divider, Grid, Typography, styled } from '@mui/material'
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import { Download } from "@mui/icons-material";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  Divider,
+  Grid,
+  Typography,
+  styled,
+  IconButton,
+  Stack,
+} from "@mui/material";
+import React from "react";
+import { useDispatch } from "react-redux";
 // import { useNavigate } from 'react-router'
-import { getAllBlocks } from '../../../store/actions/userActions'
-import { useNavigate } from 'react-router'
-const StyledRoot = styled(Box)(({ theme }) => ({
-    padding: theme.spacing(5)
-}))
-const StyledCard = styled(Card)(({ theme }) => ({
+import { ThreeDots } from "react-loader-spinner";
+import { useNavigate } from "react-router";
+import { getAllUsersBlocks } from "../../../store/actions/blocksActions";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import DownloadIcon from "@mui/icons-material/Download";
 
-}))
+const StyledRoot = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(5),
+}));
+const StyledCard = styled(Card)(({ theme }) => ({}));
 
 const Blocks = () => {
-    const navigate = useNavigate();
-    const [open, setOpen] = React.useState(false)
-    const [blocks, setBlocks] = React.useState([])
+  const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
+  const [blocks, setBlocks] = React.useState([]);
 
-    const [loading, setLoading] = React.useState(false)
-    const dispatch = useDispatch()
-    const getBlocks = () => {
+  const [loading, setLoading] = React.useState(false);
+  const dispatch = useDispatch();
+  const getBlocks = () => {
+    dispatch(getAllUsersBlocks())
+      .then((result) => {
+        console.log("blocks=======", result.data.payload);
+        setLoading(false);
+        setBlocks(result.data.payload);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
+  };
 
-        dispatch(getAllBlocks()).then((result) => {
-            setLoading(false)
-            setBlocks(result.data.payload)
-        }).catch((err) => {
-            setLoading(false)
-            console.log(err)
-        });
-    }
+  React.useEffect(() => {
+    getBlocks();
+  }, []);
+  const handleBlock = (data) => {
+    navigate("/block-page", { state: { blockData: data } });
+  };
 
-    React.useEffect(() => {
-        getBlocks()
-    }, [])
-    const handleBlock = (data) => {
-        navigate('/block-page', { state: { blockData: data } });
-    }
+  return (
+    <StyledRoot>
+      {!blocks.length ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "80vh",
+          }}
+        >
+          <ThreeDots
+            height="85"
+            width="80"
+            radius="9"
+            color="#3e50ce"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{}}
+            wrapperClassName=""
+            visible={true}
+          />
+        </Box>
+      ) : (
+        <Grid container sx={{ mt: 4 }} spacing={3}>
+          {blocks.map((val, ind) => {
+            // console.log(val)
+            return (
+              <Grid onClick={() => handleBlock(val)} item xs={12} md={6} lg={4}>
+                <Card sx={{ maxWidth: "500px" }}>
+                  <CardMedia
+                    sx={{ height: 200 }}
+                    image={"/assets/images/block2.jpg"}
+                    title="green iguana"
+                  />
+                  <Stack
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      px: 3,
+                      py: 2,
+                    }}
+                  >
+                    <Stack>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {val.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {val.description}
+                      </Typography>
+                    </Stack>
 
-    return (
-        <StyledRoot>
-            {/* <Grid container spacing={2}>
+                    <Stack
+                      direction="row"
+                      sx={{
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Typography variant="body2" sx={{ color: "blue" }}>
+                        <span style={{ color: "black", fontWeight: 500 }}>
+                          {" "}
+                          Tags:
+                        </span>{" "}
+                        {val.tags}
+                      </Typography>
+                      <Stack direction="row">
+                        <IconButton onClick={() => alert("bookmark")}>
+                          <BookmarkIcon
+                            sx={{ fontSize: 22, color: "#ff0000" }}
+                          />
+                        </IconButton>
+                        <IconButton onClick={() => alert("download")}>
+                          <DownloadIcon
+                            sx={{ fontSize: 22, color: "#ff0000" }}
+                          />
+                        </IconButton>
+                      </Stack>
+                    </Stack>
+                  </Stack>
+                  {/* <CardActions>
+                                    <Button size="small">Share</Button>
+                                    <Button size="small">Learn More</Button>
+                                </CardActions> */}
+                </Card>
+              </Grid>
+            );
+          })}
+        </Grid>
+      )}
+    </StyledRoot>
+  );
+};
+
+export default Blocks;
+
+{
+  /* <Grid container spacing={2}>
                 <Grid item xs={12} md={4} lg={4}>
                     <StyledCard>
                         <CardMedia
@@ -104,45 +214,5 @@ const Blocks = () => {
                         </Box>
                     </StyledCard>
                 </Grid>
-            </Grid> */}
-            <Grid container sx={{ mt: 4 }} spacing={3}>
-
-                {blocks.map((val, ind) => {
-                    // console.log(val)
-                    return (
-                        <Grid onClick={() => handleBlock(val)} item xs={12} md={6} lg={6}>
-
-                            <Card sx={{ maxWidth: '500px' }}>
-                                <CardMedia
-                                    sx={{ height: 200 }}
-                                    image={val.imgs}
-                                    title="green iguana"
-
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
-                                        {val.title}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {val.description}
-                                    </Typography>
-                                    <Typography variant="body2" sx={{ color: 'blue' }} >
-                                        <span style={{ color: 'black', fontWeight: 600 }}>  Tags:</span>   {val.tags}</Typography>
-                                </CardContent>
-                                {/* <CardActions>
-                                    <Button size="small">Share</Button>
-                                    <Button size="small">Learn More</Button>
-                                </CardActions> */}
-                            </Card>
-                        </Grid>
-                    )
-                })
-
-                }
-            </Grid>
-
-        </StyledRoot>
-    )
+            </Grid> */
 }
-
-export default Blocks

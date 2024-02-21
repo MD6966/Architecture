@@ -31,8 +31,8 @@ const News = () => {
     <>
       {/* <Header /> */}
       <Box margin={15}>
-        <Grid container>
-          <Grid lg={8} spacing={5}>
+        <Grid container columnSpacing={5}>
+          <Grid item lg={8} spacing={5}>
             <Typography sx={{ fontSize: "30px", fontWeight: "bold" }}>
               Architecture News
             </Typography>
@@ -637,8 +637,8 @@ const News = () => {
               </Box>
             </Box>
           </Grid>
-          <Grid lg={4}>
-            <Container>
+          <Grid item lg={4}>
+            <Container sx={{ backgroundColor: "red", mx: "auto" }}>
               <Box
                 sx={{
                   height: "300px",

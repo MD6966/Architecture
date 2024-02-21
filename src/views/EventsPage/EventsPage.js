@@ -13,6 +13,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import Content from "./components/Content";
 import Bottom from "./components/Bottom";
+import EventTabs from "./components/EventsTabs";
+
 const EventsPage = () => {
   const [elevation, setElevation] = useState(0);
   useEffect(() => {
@@ -34,8 +36,8 @@ const EventsPage = () => {
   }, []);
   return (
     <Page title="Events">
-      <StyledRoot>
-        {/* <AppBar sx={{ background: 'transparent', boxShadow: elevation === 0 ? 'none' : '', paddingLeft:10, paddingRight:10, pt:2 }}>
+      {/* <StyledRoot> */}
+      {/* <AppBar sx={{ background: 'transparent', boxShadow: elevation === 0 ? 'none' : '', paddingLeft:10, paddingRight:10, pt:2 }}>
         <Toolbar sx={{display:'flex', justifyContent:'space-between'}}>
             <Typography>
                 Events Page
@@ -81,9 +83,9 @@ const EventsPage = () => {
             </Box>
         </Toolbar>
       </AppBar> */}
-        <Content />
-      </StyledRoot>
-      <Bottom />
+      {/* <Content /> */}
+      {/* </StyledRoot> */}
+      <EventTabs />
     </Page>
   );
 };
