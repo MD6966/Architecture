@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../components/AppBar/Header";
 import Footer from "../Landing/Footer";
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, Typography, Stack } from "@mui/material";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 
 const News = () => {
@@ -27,6 +27,11 @@ const News = () => {
       title: "NOEMA Bar and Restaurant / K-Studio + Lambs and Lions",
     },
   ];
+
+  const truncateString = (string) => {
+    return string.length > 90 ? string.substring(0, 90) + "..." : string;
+  };
+
   return (
     <>
       {/* <Header /> */}
@@ -78,14 +83,65 @@ const News = () => {
                 projects from Australia and four projects each from Iran and the
                 United Kingdom.
               </Typography>
-              <Box
+
+              <Grid container columns={0} columnSpacing={3} rowSpacing={3}>
+                {thumbnailImages.slice(0, 4).map((image, index) => (
+                  <Grid item xs={3} key={index}>
+                    <Box
+                      flex={1}
+                      sx={{
+                        height: "170px",
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <img
+                        key={index}
+                        src={image}
+                        alt={`Thumbnail ${index}`}
+                        style={{
+                          objectFit: "cover",
+                          width: "100%",
+                          height: "100%",
+                          marginRight: "20px",
+                        }}
+                      />
+                    </Box>
+                  </Grid>
+                ))}
+                <Grid item xs={12}>
+                  <Stack
+                    direction="row"
+                    width={"full"}
+                    justifyContent={"space-between"}
+                  >
+                    <Button
+                      style={{
+                        color: "white",
+                        backgroundColor: "blue",
+                        fontWeight: "600",
+                        padding: "10px 20px",
+                      }}
+                    >
+                      Save this article
+                    </Button>
+
+                    <Button sx={{ fontWeight: "600", fontSize: "18px" }}>
+                      Read more <KeyboardDoubleArrowRightIcon />
+                    </Button>
+                  </Stack>
+                </Grid>
+              </Grid>
+              {/* <Box
                 display="flex"
                 justifyContent="flex-start"
                 alignItems="center"
                 marginTop="20px"
                 sx={{ width: "180px", height: "170px" }}
               >
-                {thumbnailImages.map((image, index) => (
+                {thumbnailImages.slice(0, 4).map((image, index) => (
                   <img
                     key={index}
                     src={image}
@@ -113,7 +169,7 @@ const News = () => {
                 <Button sx={{ fontWeight: "600", fontSize: "18px" }}>
                   Read more <KeyboardDoubleArrowRightIcon />
                 </Button>
-              </Box>
+              </Box> */}
             </Box>
             <Box
               sx={{
@@ -293,14 +349,64 @@ const News = () => {
                 but also for its white and golden structures that create a
                 futuristic city near the border with Iran.
               </Typography>
-              <Box
+              <Grid container columns={0} columnSpacing={3} rowSpacing={3}>
+                {thumbnailImages.slice(0, 4).map((image, index) => (
+                  <Grid item xs={3} key={index}>
+                    <Box
+                      flex={1}
+                      sx={{
+                        height: "170px",
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <img
+                        key={index}
+                        src={image}
+                        alt={`Thumbnail ${index}`}
+                        style={{
+                          objectFit: "cover",
+                          width: "100%",
+                          height: "100%",
+                          marginRight: "20px",
+                        }}
+                      />
+                    </Box>
+                  </Grid>
+                ))}
+                <Grid item xs={12}>
+                  <Stack
+                    direction="row"
+                    width={"full"}
+                    justifyContent={"space-between"}
+                  >
+                    <Button
+                      style={{
+                        color: "white",
+                        backgroundColor: "blue",
+                        fontWeight: "600",
+                        padding: "10px 20px",
+                      }}
+                    >
+                      Save this article
+                    </Button>
+
+                    <Button sx={{ fontWeight: "600", fontSize: "18px" }}>
+                      Read more <KeyboardDoubleArrowRightIcon />
+                    </Button>
+                  </Stack>
+                </Grid>
+              </Grid>
+              {/* <Box
                 display="flex"
                 justifyContent="flex-start"
                 alignItems="center"
                 marginTop="20px"
                 sx={{ width: "180px", height: "170px" }}
               >
-                {thumbnailImages.map((image, index) => (
+                {thumbnailImages.slice(0, 4).map((image, index) => (
                   <img
                     key={index}
                     src={image}
@@ -328,7 +434,7 @@ const News = () => {
                 <Button sx={{ fontWeight: "600", fontSize: "18px" }}>
                   Read more <KeyboardDoubleArrowRightIcon />
                 </Button>
-              </Box>
+              </Box> */}
             </Box>
             <Box
               sx={{
@@ -421,14 +527,64 @@ const News = () => {
                   there were six projects from Australia and four projects each
                   from Iran and the United Kingdom.
                 </Typography>
-                <Box
+                <Grid container columns={0} columnSpacing={3} rowSpacing={3}>
+                  {thumbnailImages.slice(0, 4).map((image, index) => (
+                    <Grid item xs={3} key={index}>
+                      <Box
+                        flex={1}
+                        sx={{
+                          height: "170px",
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <img
+                          key={index}
+                          src={image}
+                          alt={`Thumbnail ${index}`}
+                          style={{
+                            objectFit: "cover",
+                            width: "100%",
+                            height: "100%",
+                            marginRight: "20px",
+                          }}
+                        />
+                      </Box>
+                    </Grid>
+                  ))}
+                  <Grid item xs={12}>
+                    <Stack
+                      direction="row"
+                      width={"full"}
+                      justifyContent={"space-between"}
+                    >
+                      <Button
+                        style={{
+                          color: "white",
+                          backgroundColor: "blue",
+                          fontWeight: "600",
+                          padding: "10px 20px",
+                        }}
+                      >
+                        Save this article
+                      </Button>
+
+                      <Button sx={{ fontWeight: "600", fontSize: "18px" }}>
+                        Read more <KeyboardDoubleArrowRightIcon />
+                      </Button>
+                    </Stack>
+                  </Grid>
+                </Grid>
+                {/* <Box
                   display="flex"
                   justifyContent="flex-start"
                   alignItems="center"
                   marginTop="20px"
                   sx={{ width: "180px", height: "170px" }}
                 >
-                  {thumbnailImages.map((image, index) => (
+                  {thumbnailImages.slice(0, 4).map((image, index) => (
                     <img
                       key={index}
                       src={image}
@@ -456,7 +612,7 @@ const News = () => {
                   <Button sx={{ fontWeight: "600", fontSize: "18px" }}>
                     Read more <KeyboardDoubleArrowRightIcon />
                   </Button>
-                </Box>
+                </Box> */}
               </Box>
             </Box>
             <Box
@@ -502,14 +658,14 @@ const News = () => {
                 projects from Australia and four projects each from Iran and the
                 United Kingdom.
               </Typography>
-              <Box
+              {/* <Box
                 display="flex"
                 justifyContent="flex-start"
                 alignItems="center"
                 marginTop="20px"
                 sx={{ width: "180px", height: "170px" }}
               >
-                {thumbnailImages.map((image, index) => (
+                {thumbnailImages.slice(0, 4).map((image, index) => (
                   <img
                     key={index}
                     src={image}
@@ -537,7 +693,57 @@ const News = () => {
                 <Button sx={{ fontWeight: "600", fontSize: "18px" }}>
                   Read more <KeyboardDoubleArrowRightIcon />
                 </Button>
-              </Box>
+              </Box> */}
+              <Grid container columns={0} columnSpacing={3} rowSpacing={3}>
+                {thumbnailImages.slice(0, 4).map((image, index) => (
+                  <Grid item xs={3} key={index}>
+                    <Box
+                      flex={1}
+                      sx={{
+                        height: "170px",
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <img
+                        key={index}
+                        src={image}
+                        alt={`Thumbnail ${index}`}
+                        style={{
+                          objectFit: "cover",
+                          width: "100%",
+                          height: "100%",
+                          marginRight: "20px",
+                        }}
+                      />
+                    </Box>
+                  </Grid>
+                ))}
+                <Grid item xs={12}>
+                  <Stack
+                    direction="row"
+                    width={"full"}
+                    justifyContent={"space-between"}
+                  >
+                    <Button
+                      style={{
+                        color: "white",
+                        backgroundColor: "blue",
+                        fontWeight: "600",
+                        padding: "10px 20px",
+                      }}
+                    >
+                      Save this article
+                    </Button>
+
+                    <Button sx={{ fontWeight: "600", fontSize: "18px" }}>
+                      Read more <KeyboardDoubleArrowRightIcon />
+                    </Button>
+                  </Stack>
+                </Grid>
+              </Grid>
             </Box>
             <Box
               sx={{
@@ -599,14 +805,14 @@ const News = () => {
                 but also for its white and golden structures that create a
                 futuristic city near the border with Iran.
               </Typography>
-              <Box
+              {/* <Box
                 display="flex"
                 justifyContent="flex-start"
                 alignItems="center"
                 marginTop="20px"
                 sx={{ width: "180px", height: "170px" }}
               >
-                {thumbnailImages.map((image, index) => (
+                {thumbnailImages.slice(0, 4).map((image, index) => (
                   <img
                     key={index}
                     src={image}
@@ -634,30 +840,97 @@ const News = () => {
                 <Button sx={{ fontWeight: "600", fontSize: "18px" }}>
                   Read more <KeyboardDoubleArrowRightIcon />
                 </Button>
-              </Box>
+              </Box> */}
+              <Grid container columns={0} columnSpacing={3} rowSpacing={3}>
+                {thumbnailImages.slice(0, 4).map((image, index) => (
+                  <Grid item xs={3} key={index}>
+                    <Box
+                      flex={1}
+                      sx={{
+                        height: "170px",
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <img
+                        key={index}
+                        src={image}
+                        alt={`Thumbnail ${index}`}
+                        style={{
+                          objectFit: "cover",
+                          width: "100%",
+                          height: "100%",
+                          marginRight: "20px",
+                        }}
+                      />
+                    </Box>
+                  </Grid>
+                ))}
+                <Grid item xs={12}>
+                  <Stack
+                    direction="row"
+                    width={"full"}
+                    justifyContent={"space-between"}
+                  >
+                    <Button
+                      style={{
+                        color: "white",
+                        backgroundColor: "blue",
+                        fontWeight: "600",
+                        padding: "10px 20px",
+                      }}
+                    >
+                      Save this article
+                    </Button>
+
+                    <Button sx={{ fontWeight: "600", fontSize: "18px" }}>
+                      Read more <KeyboardDoubleArrowRightIcon />
+                    </Button>
+                  </Stack>
+                </Grid>
+              </Grid>
             </Box>
           </Grid>
           <Grid item lg={4}>
-            <Container sx={{ backgroundColor: "red", mx: "auto" }}>
+            <Container sx={{ mx: "auto" }}>
               <Box
                 sx={{
                   height: "300px",
                   width: "100%",
                   backgroundColor: "#F2F3F5",
                 }}
-              ></Box>
-              <Box sx={{ marginTop: "30px" }}>
-                <Typography sx={{ fontSize: "22px", fontWeight: "600" }}>
-                  IN ALLIANCE WITH ARCHITONIC
-                </Typography>
-                <Typography sx={{ fontSize: "19px" }}>
-                  Check the Latest Arcitechture News
-                </Typography>
+              >
+                <img
+                  src="/assets/images/comp1.jpg"
+                  alt="comp1"
+                  style={{ height: "100%", objectFit: "cover" }}
+                />
+              </Box>
+              <Stack sx={{ py: "30px", gap: 4 }}>
+                <Stack gap={1.5}>
+                  <Typography
+                    sx={{
+                      fontSize: "19px",
+                      fontWeight: "600",
+                      fontFamily: "Roboto",
+                      letterSpacing: "1.2px",
+                      // fontStyle: "italic",
+                    }}
+                  >
+                    IN ALLIANCE WITH ARCHITONIC
+                  </Typography>
+                  <Typography sx={{ fontSize: "17px" }}>
+                    Check the Latest Arcitechture News
+                  </Typography>
+                </Stack>
                 <Typography
                   sx={{
-                    fontSize: "22px",
+                    fontSize: "24px",
                     fontWeight: "600",
-                    marginTop: "30px",
+                    fontFamily: "Roboto",
+                    letterSpacing: "2px",
                   }}
                 >
                   MOST VISITED
@@ -669,11 +942,10 @@ const News = () => {
                       display: "flex",
                       gap: "20px",
                       justifyContent: "center",
-                      alignItems: "center",
-                      marginTop: "20px",
+                      alignItems: "start",
                     }}
                   >
-                    <Box sx={{ width: "150px", height: "150px" }}>
+                    <Box flex={1} sx={{ display: "flex", height: "150px" }}>
                       <img
                         src={item.image}
                         alt={`News Image ${index}`}
@@ -684,8 +956,8 @@ const News = () => {
                         }}
                       />
                     </Box>
-                    <Box sx={{ width: "70%", lineHeight: "30px" }}>
-                      <Typography sx={{ fontSize: "24px", fontWeight: "600" }}>
+                    <Box flex={1} sx={{ display: "flex" }}>
+                      <Typography sx={{ fontSize: "17px", fontWeight: "600" }}>
                         {item.title}
                       </Typography>
                     </Box>
@@ -693,12 +965,13 @@ const News = () => {
                 ))}
                 <Typography
                   sx={{
-                    fontSize: "22px",
+                    fontSize: "23px",
                     fontWeight: "600",
-                    marginTop: "30px",
+                    fontFamily: "Roboto",
+                    letterSpacing: "2px",
                   }}
                 >
-                  MOST VISITED Products
+                  MOST VISITED PRODUCTS
                 </Typography>
                 {newsData.map((item, index) => (
                   <Box
@@ -707,11 +980,10 @@ const News = () => {
                       display: "flex",
                       gap: "20px",
                       justifyContent: "center",
-                      alignItems: "center",
-                      marginTop: "20px",
+                      alignItems: "start",
                     }}
                   >
-                    <Box sx={{ width: "150px", height: "150px" }}>
+                    <Box flex={1} sx={{ display: "flex", height: "150px" }}>
                       <img
                         src={item.image}
                         alt={`News Image ${index}`}
@@ -722,19 +994,33 @@ const News = () => {
                         }}
                       />
                     </Box>
-                    <Box sx={{ width: "70%", lineHeight: "30px" }}>
-                      <Typography sx={{ fontSize: "24px", fontWeight: "600" }}>
-                        {item.title}
+                    <Box
+                      flex={1}
+                      sx={{
+                        display: "flex",
+                        m: 0,
+                        p: 0,
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: "17px",
+                          fontWeight: "600",
+                          m: 0,
+                          p: 0,
+                        }}
+                      >
+                        {truncateString(item.title)}
                       </Typography>
                     </Box>
                   </Box>
                 ))}
-              </Box>
+              </Stack>
             </Container>
           </Grid>
         </Grid>
       </Box>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

@@ -1,31 +1,40 @@
-import React, { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { styled, alpha } from '@mui/material/styles';
+import React, { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { styled, alpha } from "@mui/material/styles";
 import {
-  Box, Button, Drawer, Typography, Avatar,
-  List, ListItem, ListItemButton, ListItemIcon, ListItemText
-} from '@mui/material';
-import Scrollbar from '../../../../../components/scrollbar';
-import useResponsive from '../../../../../components/hooks/useResponsive';
-import LeaderboardIcon from '@mui/icons-material/Leaderboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Inventory2Icon from '@mui/icons-material/Inventory2';
+  Box,
+  Button,
+  Drawer,
+  Typography,
+  Avatar,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
+import Scrollbar from "../../../../../components/scrollbar";
+import useResponsive from "../../../../../components/hooks/useResponsive";
+import LeaderboardIcon from "@mui/icons-material/Leaderboard";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Inventory2Icon from "@mui/icons-material/Inventory2";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import TimelineIcon from '@mui/icons-material/Timeline';
-import MessageIcon from '@mui/icons-material/Message';
-import SettingsIcon from '@mui/icons-material/Settings';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import { makeStyles } from '@mui/styles';
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import TimelineIcon from "@mui/icons-material/Timeline";
+import MessageIcon from "@mui/icons-material/Message";
+import SettingsIcon from "@mui/icons-material/Settings";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { makeStyles } from "@mui/styles";
+import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import ArchitectureIcon from '@mui/icons-material/Architecture';
-import clsx from 'clsx'
+import NewspaperIcon from "@mui/icons-material/Newspaper";
+import ArchitectureIcon from "@mui/icons-material/Architecture";
+import clsx from "clsx";
 
 const NAV_WIDTH = 280;
-const StyledAccount = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
+const StyledAccount = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
   padding: theme.spacing(2, 2.5),
   borderRadius: Number(theme.shape.borderRadius) * 1.5,
   backgroundColor: alpha(theme.palette.grey[500], 0.12),
@@ -51,27 +60,33 @@ export default function Nav({ openNav, onCloseNav }) {
     },
     {
       id: 2,
-      title: 'Manage Events',
+      title: "Manage Events",
       icon: <EventAvailableIcon />,
-      to: '/admin/events'
+      to: "/admin/events",
+    },
+    {
+      id: 10,
+      title: "Manage News",
+      icon: <NewspaperIcon />,
+      to: "/admin/news",
     },
     {
       id: 22,
-      title: 'Manage Blocks',
+      title: "Manage Blocks",
       icon: <EventAvailableIcon />,
-      to: '/admin/blocks'
+      to: "/admin/blocks",
     },
     {
       id: 122,
-      title: 'Add Category',
+      title: "Add Category",
       icon: <EventAvailableIcon />,
-      to: '/admin/category'
+      to: "/admin/category",
     },
     {
       id: 33,
-      title: 'Competetions',
+      title: "Competetions",
       icon: <EmojiEventsIcon />,
-      to: '/admin/competetions'
+      to: "/admin/competetions",
     },
     {
       id: 3,
@@ -125,8 +140,8 @@ export default function Nav({ openNav, onCloseNav }) {
   const location = useLocation();
   const [dOpen, setDopen] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
-  const isDesktop = useResponsive('up', 'lg');
-  const classes = useStyles()
+  const isDesktop = useResponsive("up", "lg");
+  const classes = useStyles();
   React.useEffect(() => {
     const matchingItem = ListData.find((item) => item.to === location.pathname);
     if (matchingItem) {
@@ -146,10 +161,14 @@ export default function Nav({ openNav, onCloseNav }) {
 
   const renderContent = (
     <>
-      <Box sx={{ px: 2.5, py: 3, display: 'inline-flex', }}>
-        <Box sx={{ display: 'flex' }}>
-          <img src='/assets/images/log.png' alt="logo" width="55px" />
-          <Typography variant="h6" component="div" sx={{ mt: 1.5, fontSize: '1.5rem', fontWeight: 'bold' }}>
+      <Box sx={{ px: 2.5, py: 3, display: "inline-flex" }}>
+        <Box sx={{ display: "flex" }}>
+          <img src="/assets/images/log.png" alt="logo" width="55px" />
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ mt: 1.5, fontSize: "1.5rem", fontWeight: "bold" }}
+          >
             Architecture
           </Typography>
         </Box>
@@ -171,9 +190,7 @@ export default function Nav({ openNav, onCloseNav }) {
                 >
                   <ListItemButton
                     selected={selectedIndex === val.id}
-                    onClick={(event) =>
-                      handleListItemClick(event, val.id)
-                    }
+                    onClick={(event) => handleListItemClick(event, val.id)}
                     sx={{
                       "&:hover": {
                         borderRadius: "10px",
@@ -182,8 +199,7 @@ export default function Nav({ openNav, onCloseNav }) {
                   >
                     <ListItemIcon
                       sx={{
-                        color:
-                          selectedIndex === val.id ? "#fff" : "#686868",
+                        color: selectedIndex === val.id ? "#fff" : "#686868",
                       }}
                     >
                       {val.icon}
@@ -191,21 +207,17 @@ export default function Nav({ openNav, onCloseNav }) {
                     <ListItemText
                       primary={val.title}
                       sx={{
-                        color:
-                          selectedIndex === val.id ? "#fff" : "#686868",
+                        color: selectedIndex === val.id ? "#fff" : "#686868",
                       }}
                     />
                   </ListItemButton>
                 </ListItem>
-
               </>
             );
           })}
         </List>
       </Box>
       <Box sx={{ flexGrow: 1 }} />
-
-
     </>
   );
 
@@ -224,9 +236,9 @@ export default function Nav({ openNav, onCloseNav }) {
           PaperProps={{
             sx: {
               width: NAV_WIDTH,
-              bgcolor: 'background.default',
-              borderRightStyle: 'dashed',
-              overflowY: 'scroll'
+              bgcolor: "background.default",
+              borderRightStyle: "dashed",
+              overflowY: "scroll",
             },
           }}
         >
