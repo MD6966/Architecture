@@ -40,6 +40,7 @@ import ProfilePage from "./layouts/ProfilePage/ProfilePage";
 import CompetetionHome from "./views/CompetetionPage/components/CompetitionHome/CompetetionHome";
 import AdminEvents from "./views/Admin/AdminEvents";
 import EditEvent from "./views/Admin/AdminEvents/components/EditEvent";
+import EditNews from "./views/Admin/News/components/EditNews";
 import ViewProject from "./views/Landing/ViewProject";
 import Feed from "./views/User/UserDashboard/Feed";
 import AdminCompetetion from "./views/Admin/AdminCompetetion";
@@ -109,6 +110,7 @@ export default function Router() {
             { path: "events", element: <AdminEvents /> },
             { path: "news", element: <AdminNews /> },
             { path: "edit-event", element: <EditEvent /> },
+            { path: "edit-news", element: <EditNews /> },
             { path: "edit-block", element: <EditBlocks /> },
             { path: "blocks", element: <ManageBlocks /> },
             { path: "category", element: <AddCategory /> },

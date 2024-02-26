@@ -3,6 +3,7 @@ import Header from "../../components/AppBar/Header";
 import Footer from "../Landing/Footer";
 import { Box, Button, Container, Grid, Typography, Stack } from "@mui/material";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import { truncateString } from "../../utils";
 
 const News = () => {
   const thumbnailImages = [
@@ -27,10 +28,6 @@ const News = () => {
       title: "NOEMA Bar and Restaurant / K-Studio + Lambs and Lions",
     },
   ];
-
-  const truncateString = (string) => {
-    return string.length > 90 ? string.substring(0, 90) + "..." : string;
-  };
 
   return (
     <>
@@ -1010,7 +1007,7 @@ const News = () => {
                           p: 0,
                         }}
                       >
-                        {truncateString(item.title)}
+                        {truncateString(item.title, 90)}
                       </Typography>
                     </Box>
                   </Box>

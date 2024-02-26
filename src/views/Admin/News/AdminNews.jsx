@@ -15,34 +15,37 @@ import React from "react";
 import Page from "../../../components/page";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AddNews from "./components/AddNews";
 import { useDispatch } from "react-redux";
-import { deleteEvent, getAllEvents } from "../../../store/actions/userActions";
+import { getAllNews, deleteNews } from "../../../store/actions/userActions";
 import { ThreeDots } from "react-loader-spinner";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useSnackbar } from "notistack";
+
 import { Link, useNavigate } from "react-router-dom";
+import { truncateString } from "../../../utils";
+
 const StyledRoot = styled(Box)(({ theme }) => ({
   minHeight: "100vh",
   padding: theme.spacing(4),
 }));
 const AdminNews = () => {
   const [open, setOpen] = React.useState(false);
-  const [events, setEvents] = React.useState([]);
+  const [news, setNews] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [delLoading, setDelLoading] = React.useState(false);
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const getEvents = () => {
+  const getNews = () => {
     setLoading(true);
-    dispatch(getAllEvents())
+    dispatch(getAllNews())
       .then((result) => {
         setLoading(false);
-        setEvents(result.data.payload);
+        console.log("=========result data========", result.data.payload);
+        setNews(result.data.payload);
       })
       .catch((err) => {
         setLoading(false);
@@ -51,24 +54,24 @@ const AdminNews = () => {
   };
 
   React.useEffect(() => {
-    getEvents();
+    getNews();
   }, []);
   const handleDelete = (id) => {
     setDelLoading(true);
     confirmAlert({
       title: "Delete?",
-      message: "Are you sure to want to delete this event ?",
+      message: "Are you sure to want to delete this news ?",
       buttons: [
         {
           label: "Yes",
           onClick: () => {
-            dispatch(deleteEvent(id))
+            dispatch(deleteNews(id))
               .then((result) => {
                 setDelLoading(false);
                 enqueueSnackbar(result.data.message, {
                   variant: "success",
                 });
-                getEvents();
+                getNews();
               })
               .catch((err) => {
                 setDelLoading(false);
@@ -82,8 +85,9 @@ const AdminNews = () => {
       ],
     });
   };
+
   const handleEdit = (data) => {
-    navigate("/admin/edit-event", { state: data });
+    navigate("/admin/edit-news", { state: data });
   };
   return (
     <Page title="Events Manager">
@@ -128,21 +132,21 @@ const AdminNews = () => {
               />
             </Box>
           ) : (
-            events.map((val, ind) => {
-              // console.log(val)
+            news.map((val, ind) => {
+              // console.log(val);
               return (
-                <Grid item xs={12} md={6} lg={6}>
+                <Grid key={ind} item xs={12} md={6} lg={6}>
                   <Card>
                     <CardActionArea>
                       <CardMedia
                         component="img"
                         style={{ height: 200 }}
-                        image={`${process.env.REACT_APP_URL}${val.image}`}
+                        image={`${process.env.REACT_APP_URL}${val.banner_image}`}
                         alt="green iguana"
                       />
                       <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
-                          {val.name}
+                          {val.title}
                         </Typography>
                         <Box
                           sx={{
@@ -160,34 +164,11 @@ const AdminNews = () => {
                             }}
                           >
                             <CalendarTodayIcon />
-                            <Typography>{val.date}</Typography>
-                          </Box>
-                          <Box
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "end",
-                              gap: 1,
-                            }}
-                          >
-                            <LocationOnIcon />
-                            <Typography>{val.location}-</Typography>
-                            <Typography sx={{ color: "blue" }}>
-                              Show in Map
+                            <Typography>
+                              {truncateString(val.description, 50)}
                             </Typography>
                           </Box>
                         </Box>
-                        <Button
-                          style={{
-                            backgroundColor: "#B2BEB5",
-                            color: "white",
-                            borderRadius: "18px",
-                            marginTop: "12px",
-                          }}
-                          fullWidth
-                        >
-                          Join Now
-                        </Button>
                       </CardContent>
                     </CardActionArea>
                     <CardActions>
@@ -218,7 +199,7 @@ const AdminNews = () => {
         <AddNews
           open={open}
           close={() => setOpen(false)}
-          createSuccess={getEvents}
+          createSuccess={getNews}
         />
       </StyledRoot>
     </Page>

@@ -157,8 +157,7 @@ export const createEvent = (formData) => async (dispatch) => {
   try {
     const res = await api.post(
       `${process.env.REACT_APP_URL}api/admin/events`,
-      formData,
-      {}
+      formData
     );
     return res;
   } catch (error) {
@@ -166,6 +165,26 @@ export const createEvent = (formData) => async (dispatch) => {
   }
 };
 
+export const getAllNews = () => async (dispatch) => {
+  try {
+    const res = await api.get(`api/admin/news`);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createNews = (formData) => async (dispatch) => {
+  try {
+    const res = await api.post(
+      `${process.env.REACT_APP_URL}api/admin/news`,
+      formData
+    );
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
 export const getAllEvents = () => async (dispatch) => {
   try {
     const res = await axios.get(
@@ -202,6 +221,32 @@ export const editEvent = (body, id) => async (dispatch) => {
     throw error;
   }
 };
+
+export const editNews = (body, id) => async (dispatch) => {
+  try {
+    const res = await api.put(
+      `${process.env.REACT_APP_URL}api/admin/news/${id}`,
+      body,
+      {}
+    );
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteNews = (id) => async (dispatch) => {
+  try {
+    const res = await api.delete(
+      `${process.env.REACT_APP_URL}api/admin/news/${id}`,
+      {}
+    );
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const DeleteProject = (id) => async (dispatch) => {
   try {
     const res = await api.delete(
