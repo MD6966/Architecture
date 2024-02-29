@@ -175,11 +175,11 @@ export default function Nav({ openNav, onCloseNav }) {
       </Box>
       <Box sx={{ p: 2 }}>
         <List component="nav">
-          {ListData.map((val) => {
+          {ListData.map((val, index) => {
             return (
               <>
                 <ListItem
-                  key={val}
+                  key={index}
                   disablePadding
                   className={clsx(classes.root, {
                     [classes.selected]: selectedIndex === val.id,

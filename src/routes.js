@@ -49,7 +49,7 @@ import SingleCompetetion from "./views/Admin/AdminCompetetion/components/SingleC
 import EditCompetetion from "./views/Admin/AdminCompetetion/components/EditCompetetion";
 import WikiCategories from "./views/WikiPage/WikiCategories";
 import ViewCertificate from "./views/User/UserDashboard/Certificate/components/ViewCertificate";
-import News from "./layouts/NEWS/News";
+import News from "./views/NEWS";
 import WikiPageLayout from "./layouts/WikiPage/WikiPageLayout";
 import ShopDrawing from "./views/WikiPage/components/ShopDrawing";
 import ArcData from "./views/WikiPage/components/ArcData/ArcData";
@@ -64,6 +64,8 @@ import Blockpage from "./views/BlockSection/components/Blockpage";
 import ManageBlocks from "./views/Admin/AdminEvents/components/MangeBlocks";
 import EditBlocks from "./views/Admin/AdminEvents/components/EditBlocks";
 import AddCategory from "./views/Admin/AdminEvents/components/AddCategory";
+import NewsDetails from "./views/NEWS/NewsDetails";
+
 export default function Router() {
   const isAuthenticatedAdmin = useSelector(
     (state) => state.admin.isAuthenticatedAdmin
@@ -175,8 +177,11 @@ export default function Router() {
       element: <ContactUs />,
     },
     {
-      path: "/news",
-      element: <News />,
+      path: "/",
+      children: [
+        { path: "/news", element: <News /> },
+        { path: "/news/:newsId", element: <NewsDetails /> },
+      ],
     },
     {
       path: "/test",

@@ -168,6 +168,7 @@ export const createEvent = (formData) => async (dispatch) => {
 export const getAllNews = () => async (dispatch) => {
   try {
     const res = await api.get(`api/admin/news`);
+
     return res;
   } catch (error) {
     throw error;
@@ -222,12 +223,12 @@ export const editEvent = (body, id) => async (dispatch) => {
   }
 };
 
-export const editNews = (body, id) => async (dispatch) => {
+export const editNews = (formData, id) => async (dispatch) => {
+  // const { title, description, author, banner_image, images } = formValues;
   try {
-    const res = await api.put(
-      `${process.env.REACT_APP_URL}api/admin/news/${id}`,
-      body,
-      {}
+    const res = await api.post(
+      `${process.env.REACT_APP_URL}api/admin/updateNews/${id}`,
+      formData
     );
     return res;
   } catch (error) {
@@ -235,6 +236,17 @@ export const editNews = (body, id) => async (dispatch) => {
   }
 };
 
+export const updateNewsImage = (formData, id) => async (dispatch) => {
+  try {
+    const res = await api.post(
+      `${process.env.REACT_APP_URL}api/admin/updateNewsImage/${id}`,
+      formData
+    );
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
 export const deleteNews = (id) => async (dispatch) => {
   try {
     const res = await api.delete(

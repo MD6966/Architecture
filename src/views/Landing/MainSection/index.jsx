@@ -1,53 +1,35 @@
 import {
   Box,
-  Button,
   Grid,
   Typography,
   styled,
-  IconButton,
-  Avatar,
-  MobileStepper,
   Pagination,
   Stack,
-  TextField,
-  Tabs,
-  Tab,
 } from "@mui/material";
 import React, { useState } from "react";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+
+import { useLocation, useNavigate } from "react-router-dom";
+
 import WikiPage from "../../WikiPage";
 import {
   DeleteProject,
+  getAllNews,
   getAllPosts,
   getAllProjects,
 } from "../../../store/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
+
 import { ThreeDots } from "react-loader-spinner";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import { red } from "@mui/material/colors";
+
 import { Carousel } from "react-responsive-carousel";
-// import {getAllProjects} from '../../store/actions/userActions'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+
 import { useTranslation } from "react-i18next";
-// import CompetetionHome from "../../CompetetionPage/components/CompetitionHome/CompetetionHome";
 import EventsPage from "../../EventsPage";
 import BlockSection from "../../BlockSection/BlockSection";
-import News from "../../../layouts/NEWS/News";
+import News from "../../NEWS";
 // import StackGrid, { transitions } from "react-stack-grid";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import SearchIcon from "@mui/icons-material/Search";
 import { tabChangeAction } from "../../../store/actions/tabChangeActions";
 import { CompetetionTabs } from "../../CompetetionPage/components/CompetitionHome";
 
@@ -68,7 +50,7 @@ const MainSection = () => {
   const [projects, setProject] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [currentProjectPage, setCurrentProjectPage] = useState(1);
+  // const [newes, setNewes] = useState([]);
   const [selectedTab, setSelectedTab] = useState(0);
   const tabValue = useSelector((state) => state.tab.tabValue);
   // console.log("tabValue in Main Section====", tabValue);
@@ -78,7 +60,9 @@ const MainSection = () => {
 
   const postsPerPage = 6;
   const projectsPerPage = 5;
+
   const dispatch = useDispatch();
+
   const getAllProject = () => {
     setLoading(true);
     dispatch(getAllProjects())
@@ -99,16 +83,18 @@ const MainSection = () => {
         console.log(err);
       });
   };
+
   React.useEffect(() => {
     if (projects.length > 0) {
       const newImgData = projects.map((project) => project.image);
       imgData.push(...newImgData);
     }
   }, [projects]);
-  // console.log(imgData, 'thissssssssss')
+
   React.useEffect(() => {
     getAllProject();
   }, []);
+
   const getPosts = () => {
     setLoading(true);
     dispatch(getAllPosts())
@@ -122,6 +108,7 @@ const MainSection = () => {
         console.log(err);
       });
   };
+
   React.useEffect(() => {
     getPosts();
   }, []);
@@ -132,6 +119,20 @@ const MainSection = () => {
       getPosts();
     }
   }, [tabValue]);
+
+  // React.useEffect(() => {
+  //   setLoading(true);
+  //   dispatch(getAllNews())
+  //     .then((result) => {
+  //       console.log("=========result data========", result.data.payload);
+  //       setNewes(result.data.payload);
+  //       setLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       setLoading(false);
+  //       console.log(err);
+  //     });
+  // }, [tabValue === "News"]);
 
   const navigate = useNavigate();
   const [currentImage, setCurrentImage] = React.useState(0);
@@ -150,7 +151,6 @@ const MainSection = () => {
   };
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
   //project pagination
   const indexOfLastProject = currentPage * projectsPerPage;
   const indexOfFirstProject = indexOfLastProject - projectsPerPage;
@@ -160,7 +160,7 @@ const MainSection = () => {
     setCurrentPage(value);
     event.preventDefault();
   };
-  // console.log(state)
+  console.log(tabValue);
   const handleDelete = (id) => {
     dispatch(DeleteProject(id))
       .then((res) => {
@@ -189,58 +189,13 @@ const MainSection = () => {
       <StyledRoot>
         {tabValue === "postsection" && (
           <Stack spacing={7}>
-            {/* <Box
-              color="#000"
-              sx={{
-                ml: "auto",
-                display: "flex",
-                flexDirection: "row",
-                gap: 3,
-                justifyContent: "center",
-              }}
-            > */}
-            {/* <Tabs
-                value={selectedTab}
-                textColor="primary"
-                indicatorColor="primary"
-                centered
-                onChange={handleTabChange}
-              >
-                <Tab label={t("postSection")} selected={selectedTab === 0} />
-                <Tab label={t("projectsection")} selected={selectedTab === 1} />
-                <Tab label="Wiki" selected={selectedTab === 2} />
-                <Tab label="Competetions" selected={selectedTab === 3} />
-                <Tab label="Events" selected={selectedTab === 4} />
-                <Tab label="Blocks" selected={selectedTab === 5} />
-                <Tab label="News" selected={selectedTab === 6} />
-              </Tabs> */}
-
-            {/* {navbarMenus.map((menu, index) => (
-                <Typography
-                  name={menu.name}
-                  key={index}
-                  onClick={() => handleTabChange(menu.name)}
-                  sx={{
-                    cursor: "pointer",
-                    color: selectedTab === index ? "#00B5E2" : "#000",
-                    fontWeight: selectedTab === index ? 600 : 400,
-                    fontSize: "18px",
-                    pr: 0.5,
-                    mt: 0.5,
-                  }}
-                >
-                  {t(menu.name)}
-                </Typography>
-              ))} */}
-            {/* </Box> */}
-
             {loading ? (
               <Box
                 sx={{
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  height: "80vh",
+                  height: "100%",
                 }}
               >
                 <ThreeDots
@@ -255,46 +210,6 @@ const MainSection = () => {
                 />
               </Box>
             ) : (
-              // <StackGrid
-              //   columnWidth={400}
-              //   gutterWidth={15}
-              //   gutterHeight={15}
-              //   appear={scaleDown.appear}
-              //   appeared={scaleDown.appeared}
-              //   enter={scaleDown.enter}
-              //   entered={scaleDown.entered}
-              //   leaved={scaleDown.leaved}
-              // >
-              //   {posts.map((post, index) => (
-              //     <Stack
-              //       key={index}
-              //       sx={{
-              //         borderRadius: "10px",
-              //         backgroundColor: "#d3d3d3",
-              //         justifyContent: "center",
-              //         alignItems: "center",
-              //       }}
-              //     >
-              //       <Box sx={{ width: "100%" }}>
-              //         <img
-              //           src={`${process.env.REACT_APP_URL}${post.image}`}
-              //           alt={post.title}
-              //           style={{
-              //             width: "100%",
-              //             height: "100%",
-              //             objectFit: "cover",
-              //             borderTopLeftRadius: "10px",
-              //             borderTopRightRadius: "10px",
-              //           }}
-              //         />
-              //       </Box>
-
-              //       <Typography sx={{ fontSize: "18px", fontWeight: "bold" }}>
-              //         {post.title}
-              //       </Typography>
-              //     </Stack>
-              //   ))}
-              // </StackGrid>
               <div
                 style={{
                   width: "60%",

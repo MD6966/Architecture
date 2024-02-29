@@ -35,7 +35,7 @@ const Blocks = () => {
   const getBlocks = () => {
     dispatch(getAllUsersBlocks())
       .then((result) => {
-        console.log("blocks=======", result.data.payload);
+        // console.log("blocks=======", result.data.payload);
         setLoading(false);
         setBlocks(result.data.payload);
       })

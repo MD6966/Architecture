@@ -31,7 +31,6 @@ const AddNews = (props) => {
   };
   const [formValues, setFormValues] = useState(initialValues);
   const [bannerImage, setBannerImage] = useState(null);
-  const [images, setImages] = useState([]);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
@@ -58,7 +57,7 @@ const AddNews = (props) => {
         filesArray.push(files[key]);
       }
     }
-    console.log("====filesArray======", filesArray);
+    // console.log("====filesArray======", filesArray);
     setFormValues({ ...formValues, [name]: filesArray });
   };
 
@@ -81,7 +80,10 @@ const AddNews = (props) => {
       formData.append("description", formValues.description);
       formData.append("author", formValues.author);
       formData.append("banner_image", formValues.banner_image);
-      formData.append("images", formValues.images);
+
+      formValues.images.forEach((image, index) => {
+        formData.append(`images[${index}]`, image);
+      });
       dispatch(createNews(formData))
         .then((result) => {
           setLoading(false);
@@ -98,7 +100,7 @@ const AddNews = (props) => {
         });
     }
   };
-  // console.log("=====formValues========", formValues);
+  console.log("=====formValues ========", formValues);
 
   return (
     <Dialog
@@ -177,7 +179,7 @@ const AddNews = (props) => {
                     }}
                   >
                     <IconButton
-                      onClick={(index) => deleteImage(index)}
+                      onClick={() => deleteImage(index)}
                       sx={{
                         position: "absolute",
                         borderRadius: "50%",
