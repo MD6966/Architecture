@@ -45,7 +45,7 @@ import News from "../../layouts/NEWS/News";
 const StyledRoot = styled(Box)(({ theme }) => ({
   minHeight: "100vh",
   padding: theme.spacing(1),
-  background: "#f2f2f2",
+  // background: "#f2f2f2",
 }));
 
 const imgData = [];
@@ -203,7 +203,7 @@ const MainSection = () => {
                           transition: "transform 0.2s",
                           "&:hover": {
                             transform: "scale(1.05)",
-                            background: "#e2e2e2",
+                            // background: "#e2e2e2",
                           },
                         }}
                       >

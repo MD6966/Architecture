@@ -21,7 +21,7 @@ const Menue_Comp = () => {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <MenuIcon sx={{ color: "#000" }} />
+        <MenuIcon />
       </IconButton>
       <Menu
         id="basic-menu"
