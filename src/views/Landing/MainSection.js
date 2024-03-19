@@ -21,6 +21,7 @@ import CardActions from "@mui/material/CardActions";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import StackGrid, { transitions } from "react-stack-grid";
@@ -172,7 +173,7 @@ const MainSection = () => {
     <div>
       <StyledRoot>
         {value === 0 && (
-          <Stack spacing={5}>
+          <Box sx={{ py: 4, px: 6 }}>
             <Typography
               variant="h4"
               sx={{ mb: 3, fontWeight: "bold", textAlign: "center", mt: 2 }}
@@ -246,45 +247,134 @@ const MainSection = () => {
                 />
               </Box>
             ) : (
-              <div style={{ padding: "20px" }}>
-                <StackGrid
-                  columnWidth={400}
-                  gutterWidth={20}
-                  gutterHeight={20}
-                  style={{
-                    backgroundColor: "red",
-                  }}
-                >
-                  {currentPosts.map((post, index) => (
-                    <Stack
-                      key={index}
-                      sx={{
-                        borderRadius: "10px",
-                        backgroundColor: "#fff",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Box sx={{ width: "100%" }}>
-                        <img
-                          src={`${process.env.REACT_APP_URL}${post.image}`}
-                          alt={post.title}
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                            borderTopLeftRadius: "10px",
-                            borderTopRightRadius: "10px",
-                          }}
-                        />
-                      </Box>
+              // <Grid container spacing={2}>
+              //   {currentPosts.map((val) => {
+              //     const formattedDate = moment(val.created_at).format(
+              //       "MMMM D, YYYY"
+              //     );
+              //     return (
+              //       <Grid item xs={12} md={6} lg={4}>
+              //         <Card
+              //           sx={{
+              //             cursor: "pointer",
+              //             transition: "transform 0.2s",
+              //             "&:hover": {
+              //               transform: "scale(1.05)",
+              //               background: "#e2e2e2",
+              //             },
+              //           }}
+              //         >
+              //           <CardHeader
+              //             avatar={
+              //               <Avatar
+              //                 sx={{ bgcolor: red[500] }}
+              //                 aria-label="recipe"
+              //               >
+              //                 R
+              //               </Avatar>
+              //             }
+              //             title={val.title}
+              //             subheader={formattedDate}
+              //           />
+              //           <CardMedia
+              //             component="img"
+              //             style={{ height: "400px" }}
+              //             maxHeight="194"
+              //             image={`${process.env.REACT_APP_URL}${val.image}`}
+              //             alt="Image"
+              //           />
 
-                      <Typography sx={{ fontSize: "18px", fontWeight: "bold" }}>
-                        {post.title}
-                      </Typography>
-                    </Stack>
-                  ))}
-                </StackGrid>
+              //           <CardContent
+              //             style={{
+              //               height: "100px",
+              //               overflow: "hidden",
+              //             }}
+              //           >
+              //             <Typography
+              //               variant="body2"
+              //               color="text.secondary"
+              //               style={{
+              //                 display: "-webkit-box",
+              //                 WebkitLineClamp: 3,
+              //                 WebkitBoxOrient: "vertical",
+              //                 overflow: "hidden",
+              //                 textOverflow: "ellipsis",
+              //               }}
+              //             >
+              //               {val.description}
+              //             </Typography>
+              //           </CardContent>
+              //           <CardActions disableSpacing>
+              //             <IconButton aria-label="add to favorites">
+              //               <FavoriteIcon />
+              //             </IconButton>
+              //             <IconButton aria-label="share">
+              //               <ShareIcon />
+              //             </IconButton>
+              //           </CardActions>
+              //         </Card>
+              //       </Grid>
+              //     );
+              //   })}
+              // </Grid>
+              <div>
+                <ResponsiveMasonry
+                  style={{
+                    width: "70%",
+                    margin: "0 auto",
+                    padding: "20px 0 30px 0",
+                  }}
+                  columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 4 }}
+                >
+                  <Masonry gutter="30px">
+                    {currentPosts.map((val) => {
+                      const formattedDate = moment(val.created_at).format(
+                        "MMMM D, YYYY"
+                      );
+                      return (
+                        <Card
+                          sx={{
+                            cursor: "pointer",
+                            transition: "transform 0.2s",
+                            "&:hover": {
+                              transform: "scale(1.05)",
+                              background: "#e2e2e2",
+                            },
+                          }}
+                        >
+                          <CardMedia
+                            component="img"
+                            // style={{ height: "400px" }}
+                            // maxHeight="194"
+                            image={`${process.env.REACT_APP_URL}${val.image}`}
+                            alt="Image"
+                          />
+
+                          <CardContent
+                            style={{
+                              height: "100px",
+                              overflow: "hidden",
+                            }}
+                          >
+                            <Typography
+                              variant="body2"
+                              color="text.secondary"
+                              style={{
+                                display: "-webkit-box",
+                                WebkitLineClamp: 3,
+                                WebkitBoxOrient: "vertical",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                              }}
+                            >
+                              {val.description}
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
+                  </Masonry>
+                </ResponsiveMasonry>
               </div>
             )}
 
@@ -304,7 +394,7 @@ const MainSection = () => {
                 },
               }}
             />
-          </Stack>
+          </Box>
         )}
 
         {value === 1 && (
