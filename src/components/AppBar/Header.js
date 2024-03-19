@@ -11,6 +11,8 @@ import {
   Tooltip,
   Tab,
   Tabs,
+  Stack,
+  InputAdornment,
 } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import SearchIcon from "@mui/icons-material/Search";
@@ -29,6 +31,8 @@ import LanguageIcon from "@mui/icons-material/Language";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useTranslation } from "react-i18next";
 import { tabChangeAction } from "../../store/actions/tabChangeActions";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import Menue_Comp from "../Menu/Menue_Comp";
 const Header = () => {
   const isAuthenticatedUser = useSelector((state) => state.admin.user);
   const isAuthenticatedAdmin = useSelector(
@@ -97,12 +101,12 @@ const Header = () => {
     <div>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar
-          sx={{ background: theme.palette.primary.main }}
           position="static"
+          sx={{ background: "transparent" }}
           elevation={0}
         >
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Box sx={{ display: "flex" }}>
+            <Box sx={{ display: "flex", jutifyContent: "space-between" }}>
               <img src="/assets/images/log.png" alt="logo" width="55px" />
               <Typography
                 variant="h6"
@@ -117,115 +121,97 @@ const Header = () => {
                 <p>{t("header")}</p>
               </Typography>
             </Box>
-            <Box>
-              <TextField
-                placeholder={t("search")}
-                size="small"
-                sx={{
-                  width: "350px",
-                  background: "#fff",
-                }}
-              />
-              <Button
-                variant="contained"
-                className="bg-[#3E3A57]"
-                sx={{ height: "40px" }}
-              >
-                <SearchIcon />
-              </Button>
-            </Box>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Box
-                sx={{
-                  display: !isAuthenticatedUser ? "flex" : "none",
-                  alignItems: "center",
+              <IconButton>
+                <NotificationsIcon />
+              </IconButton>
+              <IconButton sx={{ mr: 2 }} component={Link} to="/messages">
+                <Badge badgeContent={13} color="custom">
+                  <Tooltip title={t("msgs")}>
+                    <ChatIcon
+                      sx={{
+                        color: "#fff",
+                        fontSize: "30px",
+                        color: "#000",
+                      }}
+                    />
+                  </Tooltip>
+                </Badge>
+              </IconButton>
+              <Typography sx={{ color: "#000" }}>
+                <LanguageIcon /> {t("langH")} {t("lang")}
+              </Typography>
+              <IconButton
+                aria-controls="language-menu"
+                aria-haspopup="true"
+                onClick={handleClick2}
+              >
+                <ArrowDropDownIcon />
+              </IconButton>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl2}
+                open={open2}
+                onClose={handleClose2}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
                 }}
               >
-                <Typography sx={{ color: "#000" }}>
-                  <LanguageIcon /> {t("langH")} {t("lang")}
-                </Typography>
-                <IconButton
-                  aria-controls="language-menu"
-                  aria-haspopup="true"
-                  onClick={handleClick2}
-                >
-                  <ArrowDropDownIcon />
-                </IconButton>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl2}
-                  open={open2}
-                  onClose={handleClose2}
-                  MenuListProps={{
-                    "aria-labelledby": "basic-button",
-                  }}
-                >
-                  <MenuItem onClick={() => handleLanguageChange("en")}>
-                    English
-                  </MenuItem>
-                  <MenuItem onClick={() => handleLanguageChange("ar")}>
-                    العربی
-                  </MenuItem>
-                </Menu>
-              </Box>
-              {/* <Button
-                color="secondary"
-                variant="contained"
-                sx={{ mr: 3 }}
-                component={Link}
-                to="/block-section"
-              >
-                {t("bs")}
-              </Button> */}
-              {/* <Button
-                color="secondary"
-                variant="outlined"
-                sx={{ mr: 3 }}
-                component={Link}
-                to="/wiki"
-              >
-                {t("wiki")}
-              </Button> */}
-
-              {/* <Button
-                color="secondary"
-                variant="contained"
-                sx={{ mr: 3 }}
-                component={Link}
-                to="/home-competition"
-              >
-                {t("comp")}
-              </Button> */}
-              {/* <Button
-                color="secondary"
-                variant="contained"
-                sx={{ mr: 2 }}
-                component={Link}
-                to="/events"
-              >
-                {t("events")}
-              </Button> */}
-
-              {isAuthenticatedUser == null ? (
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  component={Link}
-                  to="/login"
-                  sx={{ ml: 2 }}
-                >
-                  {t("login")}
-                </Button>
-              ) : null}
+                <MenuItem onClick={() => handleLanguageChange("en")}>
+                  English
+                </MenuItem>
+                <MenuItem onClick={() => handleLanguageChange("ar")}>
+                  العربی
+                </MenuItem>
+              </Menu>
+              <Avatar src="/assets/images/user.png" />
+              <Menue_Comp />
             </Box>
           </Toolbar>
         </AppBar>
-        <AppBar position="static" sx={{ bgcolor: "#fff" }} elevation={5}>
+        <Box sx={{ display: "flex", justifyContent: "center", mt: -8 }}>
+          <Stack>
+            <img
+              src="/assets/images/log.png"
+              style={{ width: "200px", marginLeft: "45px" }}
+            />
+            <Typography
+              variant="h4"
+              sx={{
+                textAlign: "center",
+                fontWeight: "bold",
+                mt: -4,
+              }}
+            >
+              Architecture
+            </Typography>
+          </Stack>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 7 }}>
+          <TextField
+            variant="outlined"
+            placeholder="Search..."
+            size="small"
+            sx={{ background: "#e2e2e2", width: "500px" }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Box>
+        <AppBar
+          position="static"
+          sx={{ background: "transparent", mt: 2 }}
+          elevation={0}
+        >
           <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
             {!(isAuthenticatedUser == null) ? (
               <>
                 <Box>
-                  <Typography
+                  {/* <Typography
                     fontSize={16}
                     ml={2}
                     display="inline"
@@ -237,8 +223,8 @@ const Header = () => {
                     <Tooltip title={t("addPost")}>
                       <AddCircleIcon />
                     </Tooltip>
-                  </IconButton>
-                  <IconButton sx={{ mr: 2 }} component={Link} to="/messages">
+                  </IconButton> */}
+                  {/* <IconButton sx={{ mr: 2 }} component={Link} to="/messages">
                     <Badge badgeContent={13} color="custom">
                       <Tooltip title={t("msgs")}>
                         <ChatIcon
@@ -250,7 +236,7 @@ const Header = () => {
                         />
                       </Tooltip>
                     </Badge>
-                  </IconButton>
+                  </IconButton> */}
                 </Box>
                 <Box color="#000" sx={{ ml: "auto" }}>
                   <Tabs
@@ -276,7 +262,7 @@ const Header = () => {
                   </Tabs>
                 </Box>
                 <Box sx={{ ml: "auto", display: "flex", alignItems: "center" }}>
-                  <Typography sx={{ color: "#000" }}>
+                  {/* <Typography sx={{ color: "#000" }}>
                     <LanguageIcon /> {t("langH")} {t("lang")}
                   </Typography>
                   <IconButton
@@ -285,24 +271,9 @@ const Header = () => {
                     onClick={handleClick2}
                   >
                     <ArrowDropDownIcon />
-                  </IconButton>
-                  <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl2}
-                    open={open2}
-                    onClose={handleClose2}
-                    MenuListProps={{
-                      "aria-labelledby": "basic-button",
-                    }}
-                  >
-                    <MenuItem onClick={() => handleLanguageChange("en")}>
-                      English
-                    </MenuItem>
-                    <MenuItem onClick={() => handleLanguageChange("ar")}>
-                      العربی
-                    </MenuItem>
-                  </Menu>
-                  <Avatar
+                  </IconButton> */}
+
+                  {/* <Avatar
                     src="/assets/images/user.png"
                     sx={{ cursor: "pointer" }}
                     aria-controls={open ? "basic-menu" : undefined}
@@ -322,7 +293,7 @@ const Header = () => {
                     }
                   >
                     {t("dash")}
-                  </Button>
+                  </Button> */}
                 </Box>
               </>
             ) : null}
@@ -330,7 +301,6 @@ const Header = () => {
               <Tabs
                 value={selectedTab}
                 textColor="primary"
-                indicatorColor="primary"
                 centered
                 onChange={handleTabChange}
               >
