@@ -53,6 +53,7 @@ const AddEvent = (props) => {
       formData.append('image', selectedImage);
       dispatch(createEvent(formData))
         .then((result) => {
+          console.log(result, 'EVEMNT')
           setloading(false);
           setSelectedImage(null);
           setFormValues(initialValues);

@@ -260,3 +260,48 @@ export const deleteCategory = (id) => async (dispatch) => {
     throw error
   }
 }
+
+export const PostNews = (formData) => async (dispatch) => {
+  try {
+    const res = await api.post(`${process.env.REACT_APP_URL}api/admin/news`, formData, {
+    })
+    return res
+  } catch (error) {
+    throw error
+  }
+
+}
+export const getNews = () => async (dispatch) => {
+  try {
+    const token = getToken();
+    const res = await axios.get(`${process.env.REACT_APP_URL}api/admin/news`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const delNews = (id) => async (dispatch) => {
+  try {
+    const res = await api.delete(`${process.env.REACT_APP_URL}api/admin/news/${id}`, {
+    })
+    return res
+  } catch (error) {
+
+    throw error
+  }
+}
+export const editNews = (body, id) => async (dispatch) => {
+  try {
+    const res = await api.put(`${process.env.REACT_APP_URL}api/admin/news/${id}`, body, {
+    })
+    return res
+  } catch (error) {
+
+    throw error
+  }
+}

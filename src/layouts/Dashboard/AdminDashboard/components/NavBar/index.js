@@ -68,6 +68,12 @@ export default function Nav({ openNav, onCloseNav }) {
       to: '/admin/category'
     },
     {
+      id: 123,
+      title: 'Manage News',
+      icon: <EventAvailableIcon />,
+      to: '/admin/news'
+    },
+    {
       id: 33,
       title: 'Competetions',
       icon: <EmojiEventsIcon />,

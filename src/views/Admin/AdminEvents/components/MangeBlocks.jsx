@@ -19,6 +19,7 @@ const ManageBlocks = () => {
     const getBlocks = () => {
         dispatch(getAllBlocks())
             .then((result) => {
+                console.log(result, 'ss');
                 setLoading(false);
 
                 setBlocks(result.data.payload);

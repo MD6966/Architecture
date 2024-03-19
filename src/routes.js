@@ -62,6 +62,10 @@ import Blockpage from "./views/BlockSection/components/Blockpage";
 import ManageBlocks from "./views/Admin/AdminEvents/components/MangeBlocks";
 import EditBlocks from "./views/Admin/AdminEvents/components/EditBlocks";
 import AddCategory from "./views/Admin/AdminEvents/components/AddCategory";
+import AddNews from "./views/Admin/AdminEvents/components/AddNews";
+import ManageNews from "./views/Admin/AdminEvents/components/ManageNews";
+import EditNews from "./views/Admin/AdminEvents/components/EditNews";
+import NewsPage from "./views/WikiPage/NewsPage";
 export default function Router() {
     const isAuthenticatedAdmin = useSelector((state) => state.admin.isAuthenticatedAdmin)
     const isAuthenticatedUser = useSelector((state) => state.admin.isAuthenticatedUser)
@@ -119,12 +123,8 @@ export default function Router() {
                         { path: 'edit-competetion', element: <EditCompetetion /> },
                         { path: 'manage-wiki', element: <WikiAdmin /> },
                         { path: 'update-specs', element: <UpdateSpecsDetails /> },
-
-
-
-
-
-
+                        { path: 'news', element: <ManageNews /> },
+                        { path: 'edit-news', element: <EditNews /> },
                     ]
                 },
             ]
@@ -187,6 +187,10 @@ export default function Router() {
         {
             path: '/test',
             element: <Test />
+        },
+        {
+            path: '/newss',
+            element: <NewsPage />
         }
         // {
         //     path: '/profile',

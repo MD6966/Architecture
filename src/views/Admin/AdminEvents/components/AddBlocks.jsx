@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { createBlockCategory, createBlocks, deleteCategory, getCategory } from '../../../../store/actions/userActions';
 import { enqueueSnackbar } from 'notistack';
 import { confirmAlert } from 'react-confirm-alert';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const AddBlocks = (props) => {
     const initialValues = {
@@ -86,6 +87,7 @@ const AddBlocks = (props) => {
     const getBlockCategory = () => {
         dispatch(getCategory())
             .then((result) => {
+             
                 setBlockCategory(result.data.payload);
             })
             .catch((err) => {
@@ -160,7 +162,7 @@ const AddBlocks = (props) => {
                                                     'Update'
                                             }
                                         </Button>
-                                        <Butt color='error' variant='outlined'
+                                        <Button color='error' variant='outlined'
                                             onClick={() => handleDelete(val.id)}
                                             endIcon={
                                                 <DeleteIcon color="error" />
