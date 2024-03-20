@@ -94,6 +94,7 @@ const Header = () => {
   // console.log(isAuthenticatedUser == null)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const darkMode = useSelector((state) => state.theme.darkMode);
+  const tabValue = useSelector((state) => state.tab.tabValue);
   console.log(darkMode);
   const [checked, setChecked] = useState(darkMode);
 
@@ -146,10 +147,8 @@ const Header = () => {
     i18n.changeLanguage(lng);
     setAnchorEl2(null);
   };
-  const [selectedTab, setSelectedTab] = React.useState(0);
 
   const handleTabChange = (event, newValue) => {
-    setSelectedTab(newValue);
     dispatch(tabChangeAction(newValue));
   };
   const handleChange = (e) => {
@@ -303,27 +302,24 @@ const Header = () => {
                     </Badge>
                   </IconButton> */}
                 </Box>
-                <Box color="#000" sx={{ ml: "auto" }}>
+                <Box color="#000" sx={{ ml: "auto", color: "primary" }}>
                   <Tabs
-                    value={selectedTab}
+                    value={tabValue}
                     textColor="primary"
                     indicatorColor="primary"
                     centered
                     onChange={handleTabChange}
                   >
-                    <Tab
-                      label={t("postSection")}
-                      selected={selectedTab === 0}
-                    />
+                    <Tab label={t("postSection")} selected={tabValue === 0} />
                     <Tab
                       label={t("projectsection")}
-                      selected={selectedTab === 1}
+                      selected={tabValue === 1}
                     />
-                    <Tab label="Wiki" selected={selectedTab === 2} />
-                    <Tab label="Competetions" selected={selectedTab === 3} />
-                    <Tab label="Events" selected={selectedTab === 4} />
-                    <Tab label="Blocks" selected={selectedTab === 5} />
-                    <Tab label="News" selected={selectedTab === 6} />
+                    <Tab label="Wiki" selected={tabValue === 2} />
+                    <Tab label="Competetions" selected={tabValue === 3} />
+                    <Tab label="Events" selected={tabValue === 4} />
+                    <Tab label="Blocks" selected={tabValue === 5} />
+                    <Tab label="News" selected={tabValue === 6} />
                   </Tabs>
                 </Box>
                 <Box sx={{ ml: "auto", display: "flex", alignItems: "center" }}>
@@ -364,18 +360,18 @@ const Header = () => {
             ) : null}
             {!isAuthenticatedUser && (
               <Tabs
-                value={selectedTab}
+                value={tabValue}
                 textColor="primary"
                 centered
                 onChange={handleTabChange}
               >
-                <Tab label={t("postSection")} selected={selectedTab === 0} />
-                <Tab label={t("projectsection")} selected={selectedTab === 1} />
-                <Tab label="Wiki" selected={selectedTab === 2} />
-                <Tab label="Competetions" selected={selectedTab === 3} />
-                <Tab label="Events" selected={selectedTab === 4} />
-                <Tab label="Blocks" selected={selectedTab === 5} />
-                <Tab label="News" selected={selectedTab === 6} />
+                <Tab label={t("postSection")} selected={tabValue === 0} />
+                <Tab label={t("projectsection")} selected={tabValue === 1} />
+                <Tab label="Wiki" selected={tabValue === 2} />
+                <Tab label="Competetions" selected={tabValue === 3} />
+                <Tab label="Events" selected={tabValue === 4} />
+                <Tab label="Blocks" selected={tabValue === 5} />
+                <Tab label="News" selected={tabValue === 6} />
               </Tabs>
             )}
           </Toolbar>

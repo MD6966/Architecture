@@ -41,6 +41,7 @@ import CompetetionHome from "../CompetetionPage/components/CompetitionHome/Compe
 import EventsPage from "../EventsPage";
 import BlockSection from "../BlockSection/BlockSection";
 import News from "../../layouts/NEWS/News";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 const StyledRoot = styled(Box)(({ theme }) => ({
   minHeight: "100vh",
@@ -190,76 +191,136 @@ const MainSection = () => {
                 />
               </Box>
             ) : (
-              <Grid container spacing={2}>
-                {currentPosts.map((val) => {
-                  const formattedDate = moment(val.created_at).format(
-                    "MMMM D, YYYY"
-                  );
-                  return (
-                    <Grid item xs={12} md={6} lg={4}>
-                      <Card
-                        sx={{
-                          cursor: "pointer",
-                          transition: "transform 0.2s",
-                          "&:hover": {
-                            transform: "scale(1.05)",
-                            // background: "#e2e2e2",
-                          },
-                        }}
-                      >
-                        <CardHeader
-                          avatar={
-                            <Avatar
-                              sx={{ bgcolor: red[500] }}
-                              aria-label="recipe"
-                            >
-                              R
-                            </Avatar>
-                          }
-                          title={val.title}
-                          subheader={formattedDate}
-                        />
-                        <CardMedia
-                          component="img"
-                          style={{ height: "400px" }}
-                          maxHeight="194"
-                          image={`${process.env.REACT_APP_URL}${val.image}`}
-                          alt="Image"
-                        />
+              // <Grid container spacing={2}>
+              //   {currentPosts.map((val) => {
+              //     const formattedDate = moment(val.created_at).format(
+              //       "MMMM D, YYYY"
+              //     );
+              //     return (
+              //       <Grid item xs={12} md={6} lg={4}>
+              //         <Card
+              //           sx={{
+              //             cursor: "pointer",
+              //             transition: "transform 0.2s",
+              //             "&:hover": {
+              //               transform: "scale(1.05)",
+              //               // background: "#e2e2e2",
+              //             },
+              //           }}
+              //         >
+              //           <CardHeader
+              //             avatar={
+              //               <Avatar
+              //                 sx={{ bgcolor: red[500] }}
+              //                 aria-label="recipe"
+              //               >
+              //                 R
+              //               </Avatar>
+              //             }
+              //             title={val.title}
+              //             subheader={formattedDate}
+              //           />
+              //           <CardMedia
+              //             component="img"
+              //             style={{ height: "400px" }}
+              //             maxHeight="194"
+              //             image={`${process.env.REACT_APP_URL}${val.image}`}
+              //             alt="Image"
+              //           />
 
-                        <CardContent
-                          style={{
-                            height: "100px",
-                            overflow: "hidden",
+              //           <CardContent
+              //             style={{
+              //               height: "100px",
+              //               overflow: "hidden",
+              //             }}
+              //           >
+              //             <Typography
+              //               variant="body2"
+              //               color="text.secondary"
+              //               style={{
+              //                 display: "-webkit-box",
+              //                 WebkitLineClamp: 3,
+              //                 WebkitBoxOrient: "vertical",
+              //                 overflow: "hidden",
+              //                 textOverflow: "ellipsis",
+              //               }}
+              //             >
+              //               {val.description}
+              //             </Typography>
+              //           </CardContent>
+              //           <CardActions disableSpacing>
+              //             <IconButton aria-label="add to favorites">
+              //               <FavoriteIcon />
+              //             </IconButton>
+              //             <IconButton aria-label="share">
+              //               <ShareIcon />
+              //             </IconButton>
+              //           </CardActions>
+              //         </Card>
+              //       </Grid>
+              //     );
+              //   })}
+              // </Grid>
+
+              <div>
+                <ResponsiveMasonry
+                  style={{
+                    width: "70%",
+                    margin: "0 auto",
+                    padding: "20px 0 30px 0",
+                  }}
+                  columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 4 }}
+                >
+                  <Masonry gutter="30px">
+                    {currentPosts.map((val) => {
+                      const formattedDate = moment(val.created_at).format(
+                        "MMMM D, YYYY"
+                      );
+                      return (
+                        <Card
+                          sx={{
+                            cursor: "pointer",
+                            transition: "transform 0.2s",
+                            "&:hover": {
+                              transform: "scale(1.05)",
+                              background: "#e2e2e2",
+                            },
                           }}
                         >
-                          <Typography
-                            variant="body2"
-                            color="text.secondary"
+                          <CardMedia
+                            component="img"
+                            // style={{ height: "400px" }}
+                            // maxHeight="194"
+                            image={`${process.env.REACT_APP_URL}${val.image}`}
+                            alt="Image"
+                          />
+
+                          <CardContent
                             style={{
-                              display: "-webkit-box",
-                              WebkitLineClamp: 3,
-                              WebkitBoxOrient: "vertical",
+                              height: "100px",
                               overflow: "hidden",
-                              textOverflow: "ellipsis",
                             }}
                           >
-                            {val.description}
-                          </Typography>
-                        </CardContent>
-                        <CardActions disableSpacing>
-                          <IconButton aria-label="add to favorites">
-                            <FavoriteIcon />
-                          </IconButton>
-                          <IconButton aria-label="share">
-                            <ShareIcon />
-                          </IconButton>
-                        </CardActions>
-                      </Card>
-                    </Grid>
-                  );
-                })}
-              </Grid>
+                            <Typography
+                              variant="body2"
+                              color="text.secondary"
+                              style={{
+                                display: "-webkit-box",
+                                WebkitLineClamp: 3,
+                                WebkitBoxOrient: "vertical",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                              }}
+                            >
+                              {val.description}
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
+                  </Masonry>
+                </ResponsiveMasonry>
+              </div>
             )}
             <Pagination
               count={Math.ceil(posts.length / postsPerPage)}
