@@ -28,7 +28,7 @@ const StyledRoot = styled(Box)(({ theme }) => ({
   padding: theme.spacing(10),
 }));
 const BlockSectionContent = () => {
-  const [anchorEl, setAnchorEl] = React.useState(true);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleFilterButtonClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -44,16 +44,15 @@ const BlockSectionContent = () => {
   };
   return (
     <StyledRoot>
-      <Box sx={{ px: 10 }}>
-        <Box sx={{ display: "flex", gap: 3 }}>
+      <Box>
+        <Box sx={{ display: "flex", backgroundColor: "#fff" }}>
           <Box flex={1}>
             <Box
               sx={{
                 border: "1px solid rgba(0,0,0,0.1)",
-                height: "100vh",
-                overflowY: "auto",
+                height: "100%",
                 p: 2,
-                position: "relative",
+                overflowY: "auto",
               }}
             >
               <TextField
@@ -82,13 +81,19 @@ const BlockSectionContent = () => {
                   Filter
                 </Typography>
               </IconButton>
-              <Box
-                sx={{
-                  position: "absolute",
-                  left: 0,
-                  width: "100%",
-                  pb: 4,
+              {/* <Menu
+                id="filter-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                PaperProps={{
+                  style: {
+                    width: "280px",
+                    backgroundColor: "orange",
+                  },
                 }}
+                sx={{ mt: 7, mr: 2 }}
               >
                 <MenuItem>
                   <Typography variant="h6">Refine by:</Typography>
@@ -109,8 +114,8 @@ const BlockSectionContent = () => {
                 <MenuItem>
                   <FormControlLabel control={<Checkbox />} label="Category 4" />
                 </MenuItem>
-                <Typography variant="subtitle1" sx={{ textAlign: "center" }}>
-                  Application Supported
+                <Typography variant="subtitle1" sx={{ ml: 2 }}>
+                  Application supported
                 </Typography>
 
                 <MenuItem>
@@ -125,34 +130,15 @@ const BlockSectionContent = () => {
                 <MenuItem>
                   <FormControlLabel control={<Checkbox />} label="App 4" />
                 </MenuItem>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    width: "!00%",
-                    mt: "20px",
-                  }}
-                >
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      width: "60%",
-                      backgroundColor: "green",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignSelf: "center",
-                      fontSize: "14px",
-                      textTransform: "none",
-                    }}
-                  >
-                    Apply filters
-                  </Button>
-                </Box>
-              </Box>
+                <Button variant="outlined" sx={{ m: 3, ml: 8 }}>
+                  Apply filters
+                </Button>
+              </Menu> */}
+              <SidebarContent />
             </Box>
           </Box>
           <Box flex={3}>
-            <AppBar
+            {/* <AppBar
               position="static"
               sx={{ background: "#fff", color: "#000" }}
               elevation={1}
@@ -170,7 +156,8 @@ const BlockSectionContent = () => {
                   <Tab label="Materials" />
                 </Tabs>
               </Toolbar>
-            </AppBar>
+            </AppBar> */}
+            
             <Blocks />
           </Box>
         </Box>

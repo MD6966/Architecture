@@ -22,7 +22,6 @@ const resources = {
       postsection: "Posts Section",
       projectsection: "Project Section",
       addPic: "Add Picture",
-      chooseImage: "Choose An Image",
       title: "Add your Title",
       desc: "Add your Description",
       createPin: "Create Pin",
