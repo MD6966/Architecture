@@ -21,9 +21,9 @@ const getDesignTokens = (mode) => ({
     ...(mode === "light"
       ? {
           primary: {
-            main: "#fffbeb",
+            main: "#004282",
           },
-          divider: "#fde68a",
+          divider: "#dbf4ff",
           background: {
             default: "#ffffff",
             paper: "#ffffff",

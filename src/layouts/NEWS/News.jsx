@@ -31,7 +31,7 @@ const News = () => {
     <>
       {/* <Header /> */}
       <Box margin={15}>
-        <Grid container>
+        <Grid container spacing={6}>
           <Grid lg={8} spacing={5}>
             <Typography sx={{ fontSize: "30px", fontWeight: "bold" }}>
               Architecture News
@@ -85,7 +85,7 @@ const News = () => {
                 marginTop="20px"
                 sx={{ width: "180px", height: "170px" }}
               >
-                {thumbnailImages.map((image, index) => (
+                {thumbnailImages.slice(0, 3).map((image, index) => (
                   <img
                     key={index}
                     src={image}
@@ -234,7 +234,7 @@ const News = () => {
                 </Button>
               </Box>
             </Box>
-            <Box
+            {/* <Box
               sx={{
                 display: "flex",
                 justifyContent: "left",
@@ -242,8 +242,8 @@ const News = () => {
                 gap: "20px",
                 marginTop: "50px",
               }}
-            >
-              <Typography sx={{ fontSize: "22px", fontWeight: "semibold" }}>
+            > */}
+            {/* <Typography sx={{ fontSize: "22px", fontWeight: "semibold" }}>
                 Decarbonization and Regional Solutions: The Main
                 Architecture-Related Themes to Look Out for at COP28 <br />
                 <span
@@ -255,15 +255,15 @@ const News = () => {
                 >
                   about 8 hours ago
                 </span>
-              </Typography>
-              <Box sx={{ width: "100%" }}>
+              </Typography> */}
+            {/* <Box sx={{ width: "100%" }}>
                 <img
                   src="/assets/images/comp2.jpeg"
                   alt="abc"
                   style={{ height: "60vh", width: "100%", objectFit: "cover" }}
                 />
-              </Box>
-              <Typography sx={{ fontSize: "20px" }}>
+              </Box> */}
+            {/* <Typography sx={{ fontSize: "20px" }}>
                 The second round of award winners of the{" "}
                 <span style={{ color: "blue", textDecoration: "none" }}>
                   {" "}
@@ -292,8 +292,8 @@ const News = () => {
                 known not only for its strict access and control restrictions
                 but also for its white and golden structures that create a
                 futuristic city near the border with Iran.
-              </Typography>
-              <Box
+              </Typography> */}
+            {/* <Box
                 display="flex"
                 justifyContent="flex-start"
                 alignItems="center"
@@ -328,9 +328,9 @@ const News = () => {
                 <Button sx={{ fontWeight: "600", fontSize: "18px" }}>
                   Read more <KeyboardDoubleArrowRightIcon />
                 </Button>
-              </Box>
-            </Box>
-            <Box
+              </Box> */}
+            {/* </Box> */}
+            {/* <Box
               sx={{
                 display: "flex",
                 justifyContent: "left",
@@ -635,27 +635,27 @@ const News = () => {
                   Read more <KeyboardDoubleArrowRightIcon />
                 </Button>
               </Box>
-            </Box>
+            </Box> */}
           </Grid>
           <Grid lg={4}>
             <Container>
               <Box
                 sx={{
-                  height: "300px",
+                  height: "230px",
                   width: "100%",
                   backgroundColor: "#F2F3F5",
                 }}
               ></Box>
               <Box sx={{ marginTop: "30px" }}>
-                <Typography sx={{ fontSize: "22px", fontWeight: "600" }}>
+                <Typography sx={{ fontSize: "18px", fontWeight: "600" }}>
                   IN ALLIANCE WITH ARCHITONIC
                 </Typography>
-                <Typography sx={{ fontSize: "19px" }}>
+                <Typography sx={{ fontSize: "15px" }}>
                   Check the Latest Arcitechture News
                 </Typography>
                 <Typography
                   sx={{
-                    fontSize: "22px",
+                    fontSize: "18px",
                     fontWeight: "600",
                     marginTop: "30px",
                   }}
@@ -669,7 +669,7 @@ const News = () => {
                       display: "flex",
                       gap: "20px",
                       justifyContent: "center",
-                      alignItems: "center",
+                      alignItems: "start",
                       marginTop: "20px",
                     }}
                   >
@@ -685,7 +685,7 @@ const News = () => {
                       />
                     </Box>
                     <Box sx={{ width: "70%", lineHeight: "30px" }}>
-                      <Typography sx={{ fontSize: "24px", fontWeight: "600" }}>
+                      <Typography sx={{ fontSize: "16px", fontWeight: "500" }}>
                         {item.title}
                       </Typography>
                     </Box>
@@ -707,7 +707,7 @@ const News = () => {
                       display: "flex",
                       gap: "20px",
                       justifyContent: "center",
-                      alignItems: "center",
+                      alignItems: "start",
                       marginTop: "20px",
                     }}
                   >
@@ -723,7 +723,7 @@ const News = () => {
                       />
                     </Box>
                     <Box sx={{ width: "70%", lineHeight: "30px" }}>
-                      <Typography sx={{ fontSize: "24px", fontWeight: "600" }}>
+                      <Typography sx={{ fontSize: "16px", fontWeight: "500" }}>
                         {item.title}
                       </Typography>
                     </Box>
@@ -734,7 +734,6 @@ const News = () => {
           </Grid>
         </Grid>
       </Box>
-      <Footer />
     </>
   );
 };

@@ -349,36 +349,101 @@ const MainSection = () => {
             >
               {t("projectsection")}
             </Typography>
-            <Grid container spacing={2}>
-              {currentProjects.map((project, index) => (
-                <Grid item key={index} xs={12} md={6} lg={index == 0 ? 8 : 4}>
-                  <Carousel showArrows={true} showThumbs={false}>
-                    {project.image.map((val, imageIndex) => (
-                      <div
-                        key={imageIndex}
-                        className="image-slide"
-                        onClick={() => handleImageClick(project.id)}
-                      >
-                        <img
-                          src={val.image}
-                          alt={`Project ${imageIndex + 1}`}
-                          style={{
-                            height: "400px",
-                            objectFit: "cover",
-                            width: "100%",
-                            userSelect: "none",
-                          }}
-                        />
+            <Grid container spacing={3} sx={{ px: 10 }}>
+              {currentProjects.map((project, index) => {
+                return (
+                  <Grid
+                    item
+                    key={index}
+                    xs={12}
+                    md={6}
+                    lg={index === 0 ? 8 : 4}
+                    sx={{ bordeRadius: 10 }}
+                  >
+                    <Box sx={{ boxShadow: 2 }}>
+                      <Carousel showArrows={true} showThumbs={false}>
+                        {project.image.map((val, imageIndex) => (
+                          <div
+                            key={imageIndex}
+                            className="image-slide w-[100%]"
+                            onClick={() => handleImageClick(project.id)}
+                          >
+                            <img
+                              src={val.image}
+                              alt={`Project ${imageIndex + 1}`}
+                              style={{
+                                height: "400px",
+                                objectFit: "cover",
+
+                                userSelect: "none",
+                              }}
+                            />
+                          </div>
+                        ))}
+                      </Carousel>
+
+                      <div className="py-3">
+                        <p className="text-1xl, font-semibold text-center">
+                          {project.title}
+                        </p>
+                        <p className="text-1xl, font-semibold text-center">
+                          {project.description}
+                        </p>
                       </div>
-                    ))}
-                  </Carousel>
-                  <p className="text-1xl, font-semibold">{project.title}</p>
-                  <p className="text-1xl, font-semibold">
-                    {project.description}
-                  </p>
+                    </Box>
+                  </Grid>
+                );
+              })}
+            </Grid>
+            {/* <Grid container sx={{ px: 10 }}>
+              {currentProjects.map((project, index) => (
+                <Grid
+                  item
+                  key={index}
+                  xs={12}
+                  md={6}
+                  lg={index === 0 ? 8 : 4}
+                  sx={{
+                    borderRadius: "10px",
+                    boxShadow: 2,
+                    backgroundColor: "red",
+                    // boxSizing: "border-box",
+                  }}
+                >
+                  <Box>
+                    <Carousel showArrows={true} showThumbs={false}>
+                      {project.image.map((val, imageIndex) => (
+                        <div
+                          key={imageIndex}
+                          className="image-slide w-[100%]"
+                          onClick={() => handleImageClick(project.id)}
+                        >
+                          <img
+                            src={val.image}
+                            alt={`Project ${imageIndex + 1}`}
+                            style={{
+                              height: "400px",
+                              objectFit: "cover",
+
+                              userSelect: "none",
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </Carousel>
+
+                    <div className="py-3">
+                      <p className="text-1xl, font-semibold text-center">
+                        {project.title}
+                      </p>
+                      <p className="text-1xl, font-semibold text-center">
+                        {project.description}
+                      </p>
+                    </div>
+                  </Box>
                 </Grid>
               ))}
-            </Grid>
+            </Grid> */}
             <Pagination
               count={Math.ceil(projects.length / projectsPerPage)}
               page={currentPage}
